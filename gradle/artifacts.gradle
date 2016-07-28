@@ -1,0 +1,33 @@
+apply plugin: 'maven-publish'
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+      artifact sourceJar {
+        classifier 'sources'
+      }
+//      artifact javadocJar {
+//        classifier 'javadoc'
+//      }
+    }
+  }
+  repositories {
+    maven {
+      credentials {
+        username nexusUsername
+        password nexusPassword
+      }
+      url project.version.endsWith('-SNAPSHOT') ? nexusSnapshotURL : nexusReleaseURL
+    }
+  }
+}
+
+task sourceJar(type: Jar) {
+  from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+  from javadoc.destinationDir
+}

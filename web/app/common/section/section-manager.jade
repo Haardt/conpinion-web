@@ -1,0 +1,49 @@
+section-manager
+  <yield/>
+
+  style.
+    section-manager {
+      width: 100%;
+    }
+
+  script(type='text/coffeescript').
+    @mixin 'redux'
+    currentActiveSection = null
+
+    @on 'mount', () ->
+
+      @_forEachSec (siteSec) =>
+        siteSec.setActive @opts['active-section'] == siteSec.opts.name
+
+      @subscribe () =>
+        globalState = @getState()
+        state = @getState()['section-manager']
+
+        if state.section?
+          currentSec = null
+          nextSec = null
+          @_forEachSec (siteSec) =>
+            if siteSec.isActive()
+              currentSec = siteSec
+            if state.section == siteSec.opts.name
+              nextSec = siteSec
+          if ! nextSec || nextSec == @currentActiveSection
+            return
+          @currentActiveSection = nextSec
+          if nextSec.opts.noanimation == 'true'
+            currentSec.setActive false, {}
+            nextSec.setActive true
+          else
+            if currentSec
+              currentSec.fadeOut () ->
+                currentSec.setActive false
+                nextSec.setActive true
+                nextSec.fadeIn()
+            else
+              nextSec.setActive true
+              nextSec.fadeIn()
+
+
+    @_forEachSec = (func) ->
+      for secKey of @tags
+        func @tags[secKey]

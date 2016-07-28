@@ -1,0 +1,30 @@
+site-section(hide!="{ ! active }")
+  div(id!="{ @opts.name}-container")
+    <yield/>
+  style.
+    #section {
+      /*margin-top: 16px;*/
+    }
+
+  script(type='text/coffeescript').
+    @mixin 'redux'
+    @active = opts.active == 'true'
+
+    @setActive = (newActive, state, params) =>
+      @active = newActive
+      @update()
+
+    @isActive = () ->
+      @active
+
+    @fadeIn = (callback) ->
+      $("#" + @opts.name + "-container", @root).animo
+        animation: 'fadeInUp'
+        duration: 0.5
+
+    @fadeOut = (callback) ->
+      $("#" + @opts.name + "-container", @root).animo
+        animation: 'fadeOutUp'
+        duration: 0.2
+      , () ->
+        callback()

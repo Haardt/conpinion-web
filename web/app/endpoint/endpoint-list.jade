@@ -1,0 +1,24 @@
+endpoint-list
+  telcat-table(name="endpointTable", action-label="table.action", add-label="endpoint.add-endpoint-entry", add-entry-route="endpoints/new")
+    //telcat-table-header(key="id", label="id")
+    telcat-table-header(key="name", label="endpoint.name")
+    telcat-table-header(key="sipURI", label="endpoint.sipURI")
+
+    telcat-table-action-button(icon="edit", route="/endpoints")
+    telcat-table-action-button(icon="delete", redux-action="endpoint-delete-entry")
+
+  rest-resource(name="restResource", path="/endpoints", timeout="2000" list-name="endpoints")
+
+  script(type='text/coffeescript').
+    @mixin 'redux'
+    @mixin 'section'
+    @mixin 'crud-list'
+
+    @load = (done) ->
+      @tags.restResource.load done
+
+    @loadError = (error) ->
+      console.log 'Load error!!!!'
+
+    @delete = (entityId, done) ->
+      @tags.restResource.delete done, entityId

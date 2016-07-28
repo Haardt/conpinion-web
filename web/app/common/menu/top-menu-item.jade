@@ -1,0 +1,20 @@
+top-menu-item(onclick='{ itemClicked }')
+  a(class!="{ active && 'active' || '' }").item { @t(opts.label) }
+
+  style.
+    top-menu-item a {
+      padding-top: 16px !important;
+      padding-bottom: 16px !important;
+    }
+
+  script(type='text/coffeescript').
+    @mixin('i18next')
+
+    @active = false
+    @itemClicked = (e) ->
+      @parent.selectedItem @opts.route
+      @active = true
+
+    @setActive = (newActive) ->
+      @active = newActive
+      @update()

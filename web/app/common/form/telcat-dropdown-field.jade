@@ -1,0 +1,47 @@
+telcat-dropdown-field
+  .field(class!="{ markError && 'error' || ''}")
+    label { t(label) }
+    .ui.fluid.selection.dropdown
+      input(type="hidden" name!="{ opts.valueKey }")
+      i.dropdown.icon
+      .default.text  { t(label) }
+      .menu
+        .item(each!="{ dropdownData }", data-value!="{ id }") { getDropdownData(this) }
+  .ui.basic.red.pointing.prompt.label.transition.visible(if!="{ markError }") { @errorText }
+
+  style.
+    telcat-dropdown-field {
+      width: 100%;
+    }
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/label.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/dropdown.css")
+
+  script(type="text/coffeescript").
+    @mixin 'i18next'
+    @mixin 'form'
+
+    @dropdownData = []
+
+    @getDropdownData = (jsonObject) =>
+      jsonObject[@opts.selectLabelKey]
+
+    @setDropdownData = (data) ->
+      console.log 'Dropdown-data', data
+      console.log "*** THIS ***", @
+      #@dropdownData = []
+      @dropdownData.length = 0
+      data.forEach (d) =>
+        @dropdownData.push d
+
+    @setValue = =>
+      #@[@opts.valueKey].value = @dataObject[@opts.valueKey]
+      #$('.ui.dropdown', @root).dropdown()
+      #@update()
+
+    @getValue = ->
+      @[@opts.valueKey].value
+
+    @setErrorMark = (markAsError, errorText) ->
+      @markError = markAsError
+      @errorText = errorText

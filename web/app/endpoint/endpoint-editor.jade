@@ -1,0 +1,61 @@
+endpoint-editor
+
+  telcat-form(name="endpoint", data-object="{ entity }", cancel-route="/endpoints", save-action="endpoint-store-entity",
+        modifying!="{ modifying }", loading!="{ loading }", save='save', cancel='cancel')
+    telcat-form-header(title="endpoint.formTitle")
+    telcat-form-fields(number="two")
+      telcat-string-field(value-key="name")
+      telcat-string-field(value-key="displayName")
+    telcat-string-field(value-key="sipURI")
+
+    telcat-form-divider(title="endpoint.credentials")
+    telcat-string-field(value-key="user")
+    telcat-string-field(value-key="password")
+
+  telact-modal-dialog(name="endpointError", title="Error", ok-label="ok", cancel-label="cancel")
+    | { @t('error') }
+
+  rest-resource(name="restResource", path="/endpoints", timeout="2000")
+
+  script(type='text/coffeescript').
+    @mixin 'i18next'
+    @mixin 'redux'
+    @mixin 'section'
+    @mixin 'route'
+    @mixin 'crud-editor'
+
+
+    @newEntity = () ->
+      @tags.endpoint.cleanErrors()
+
+    @load = (done) ->
+      @tags.restResource.load done, @entity.id
+
+    @loadError = (error) ->
+      switch error.statusCode
+        when 404
+          @tags.endpointError.show
+            type: 'new-route'
+            url: '/home'
+          ,
+            type: 'new-route'
+            url: '/home'
+        else
+          @tags.endpointError.show
+            type: 'new-route'
+            url: '/home'
+          ,
+            type: 'new-route'
+            url: '/home'
+
+
+
+    @save = (done) ->
+      @tags.restResource.save done, @entity
+
+    @saveError = (error) =>
+      console.log 'SaveError', error
+      @modifying = false
+      @tags.endpointForm.showError
+        field2: 'Das Feld bla darf nicht leer sein!'
+      @update()

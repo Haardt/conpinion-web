@@ -1,0 +1,16 @@
+{
+  "db":[
+    {
+      "dbFile": 'dialplan.json',
+      "listName:": "dialplan"
+    },
+    {
+      "dbFile": 'devices.json',
+      "listName:": "devices"
+    },
+    {
+      "dbFile": 'gateways.json',
+      "listName:": "gateways"
+    }
+  ]
+}

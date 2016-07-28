@@ -1,0 +1,9 @@
+redux-button
+  button.ui.button
+    <yield/>
+
+  script(type='text/coffeescript').
+    console.log 'button'
+
+    @on 'update', (props) ->
+      console.log 'button', props

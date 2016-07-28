@@ -1,0 +1,34 @@
+//buildscript {
+//  repositories {
+//    maven {
+//      url "https://plugins.gradle.org/m2/"
+//    }
+//  }
+//
+//  dependencies {
+//    classpath 'com.moowork.gradle:gradle-grunt-plugin:0.12'
+//  }
+//}
+//
+//apply plugin: 'com.moowork.grunt'
+//
+//grunt {
+//  // Set the directory where Gruntfile.js should be found
+//  workDir = file("${project.projectDir}")
+//
+//// Whether colors should output on the terminal
+//  colors = true
+//
+//  // Whether output from Grunt should be buffered - useful when running tasks in parallel
+//  bufferOutput = false
+//}
+
+
+//task copyWebContent(type: Copy) {
+//  from 'public'
+//  into 'build/resources/main/public'
+//}
+
+//copyWebContent.dependsOn grunt_build
+
+//jar.dependsOn copyWebContent

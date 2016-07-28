@@ -1,0 +1,69 @@
+simplesbc-app
+  site-header
+    .ui.container
+      .ui.grid.one.column
+        .row
+          .ui.huge.header
+            .content
+              | simpleSBC
+              .sub.header
+                | by conpinion
+        .row
+    top-menu(active-item='home')
+      top-menu-item(route='/home', label='menu.home')
+      top-menu-item(route='/dialplans', label='menu.dialplan')
+      top-menu-item(route='/endpoints', label='menu.endpoints')
+      top-menu-item(route='/interfaces', label='menu.interfaces')
+      .right.menu
+        .item
+          .ui.button
+            | Login
+
+  .ui.grid.container
+    .row
+    .row.one.column
+      section-manager(active-section="home")
+        site-section(name='home')
+          activities-view
+        site-section(name='dialplan-list')
+          dialplan-list
+        site-section(name='dialplan-editor')
+          dialplan-editor
+        site-section(name='endpoint-list')
+          endpoint-list
+        site-section(name='endpoint-editor')
+          endpoint-editor
+        site-section(name='interface-list')
+          interface-list
+        site-section(name='interface-editor')
+          interface-editor
+  router
+    route(path="/home", section="home")
+    route(path="/dialplans", section="dialplan-list")
+    route(path="/dialplans/*", section="dialplan-editor")
+    route(path="/endpoints", section="endpoint-list")
+    route(path="/endpoints/*", section="endpoint-editor")
+    route(path="/interfaces", section="interface-list")
+    route(path="/interfaces/*", section="interface-editor")
+
+  redux-reducer-registry
+    reducer(name="dialplan-list")
+      list-reducer(entity-name="dialplan")
+    reducer(name="dialplan-entity")
+      entity-reducer(entity-name="dialplan")
+    reducer(name="endpoint-list")
+      list-reducer(entity-name="endpoint")
+    reducer(name="endpoint-entity")
+      entity-reducer(entity-name="endpoint")
+    reducer(name="interface-list")
+      list-reducer(entity-name="interface")
+    reducer(name="interface-entity")
+      entity-reducer(entity-name="interface")
+    reducer(name="route")
+      route-reducer
+    reducer(name="section-manager")
+      section-manager-reducer
+
+  //login-manager
+
+  script(type='text/coffeescript').

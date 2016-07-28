@@ -1,0 +1,24 @@
+interface-list
+  telcat-table(name="interfaceTable", action-label="table.action", add-label="interface.add-device-entry", add-entry-route="interfaces/new")
+    //telcat-table-header(key="id", label="id")
+    telcat-table-header(key="domain", label="device.domain")
+    telcat-table-header(key="bindAddress", label="device.bindAddress")
+
+    telcat-table-action-button(icon="edit", route="/interfaces")
+    telcat-table-action-button(icon="delete", redux-action="interface-delete-entry")
+
+  rest-resource(name="restResource", path="/interfaces", timeout="2000" list-name="interfaces")
+
+  script(type='text/coffeescript').
+    @mixin 'redux'
+    @mixin 'section'
+    @mixin 'crud-list'
+
+    @load = (done) ->
+      @tags.restResource.load done
+
+    @loadError = (error) ->
+      console.log 'Load error!!!!'
+
+    @delete = (entityId, done) ->
+      @tags.restResource.delete done, entityId

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="WARN">
+
+  <appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout
+          pattern="%highlight{%d{HH:mm:ss.SSS} %-5level [%t] %logger{1} - %msg}{FATAL=bg_red bright white, ERROR=bg_red bright white, WARN=bg_yellow black, INFO=green, DEBUG=dim normal, TRACE=dim normal}%n"/>
+    </Console>
+    <File name="File" fileName="logs/web.log">
+      <PatternLayout
+          pattern="%d{HH:mm:ss.SSS} %-5level [%t] %logger{1} - %msg%n"/>
+    </File>
+  </appenders>
+
+  <loggers>
+    <!-- 3rd party library logger -->
+    <logger name="com.hazelcast" level="info"/>
+    <logger name="io.netty" level="info"/>
+    <logger name="io.vertx" level="debug"/>
+
+    <root level="info">
+      <appender-ref ref="Console"/>
+      <appender-ref ref="File"/>
+    </root>
+
+  </loggers>
+
+</Configuration>

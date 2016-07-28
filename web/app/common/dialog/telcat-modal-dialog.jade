@@ -1,0 +1,25 @@
+telact-modal-dialog
+  .ui.modal(id != "{ @opts.name }")
+    .header { @t(@opts.title) }
+    .content
+      <yield/>
+    .ui.actions
+      div(if!="{ @opts.okLabel }").ui.approve.button { @t(@opts.okLabel) }
+      div(if!="{ @opts.cancelLabel }").ui.cancel.button { @t(@opts.cancelLabel) }
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/modal.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/header.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/button.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/dimmer.css")
+
+  script(type="text/coffeescript").
+    @mixin 'i18next'
+    @mixin 'redux'
+
+    @show = (ok, cancel) ->
+      #Jade/Coffeescript template bug
+      $("##{'#{@opts.name}'}").modal
+        closable: false
+        onApprove: (element) => @dispatch ok
+        onCancel: (element) => @dispatch cancel
+      $("##{'#{@opts.name}'}").modal 'show'

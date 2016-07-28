@@ -1,0 +1,37 @@
+router
+  <yield/>
+
+  script(type='text/coffeescript').
+    @mixin 'redux'
+    @mixin 'utils'
+
+    riot.route.start()
+    @currentUrl = '___'
+    #console.log 'Current-Route:', riot.route()
+
+    @on 'mount', () ->
+      @_forEachTagWithFilter 'route', (tag) =>
+        subRoute = riot.route.create()
+        subRoute tag.opts.path, (name) =>
+          @currentUrl = tag.opts.path
+          @dispatchAsync
+            type: 'new-route'
+            url: tag.opts.path
+            params: riot.route.query()
+          @dispatchAsync
+            type: 'show-new-section'
+            section: tag.opts.section
+            path: if name == undefined then '' else name
+            params: riot.route.query()
+
+      @subscribe () =>
+        state = @getState()
+
+        if state.route?
+          route = state.route
+          if route.url.search(@currentUrl) < 0
+            @currentUrl = route.url
+            if route.params? && route.params.id?
+              riot.route @currentUrl + "/" + route.params.id
+             else
+              riot.route @currentUrl

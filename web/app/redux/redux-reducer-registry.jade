@@ -1,0 +1,12 @@
+redux-reducer-registry
+  <yield/>
+
+  script(type="text/coffeescript").
+    @mixin('redux')
+    @mixin('utils')
+
+    @on 'mount', () ->
+      console.log 'reducer: ', @tags
+      @_forEachTag (tag) =>
+        @addReducer tag.getReducerTag()
+      @createStore()

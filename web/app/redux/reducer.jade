@@ -1,0 +1,9 @@
+reducer
+  <yield/>
+
+  script(type="text/coffeescript").
+    @getReducerTag = () ->
+      #TODO: Browser tests?!?
+      tag = @tags[Object.keys(@tags)[0]]
+      tag['reducerName'] = @opts.name
+      tag

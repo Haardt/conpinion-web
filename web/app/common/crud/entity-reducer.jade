@@ -1,0 +1,72 @@
+entity-reducer
+  script(type='text/coffeescript').
+
+    @reduce = (state = null, action) =>
+      if state == null
+        return @initialState()
+
+      switch action.type
+
+        # If we show a new section we must clear our gui state and copy the request params
+        when 'new-route'
+          state = $.extend {}, state,
+            phase: 'NONE'
+            requestParams: $.extend {path: action.path}, action.params
+
+        when 'show-new-section'
+          state = $.extend {}, state,
+            phase: 'START'
+            error: null
+            editObject: null
+            createdObject: null
+            requestParams: $.extend {path: action.path}, action.params
+
+        when "#{'#{@opts.entityName}'}-entity-request"
+          state = $.extend {}, state, { phase: 'FETCHING' }
+
+        when "#{'#{@opts.entityName}'}-entity-load"
+          state = $.extend {}, state,
+            phase: 'LOADED'
+            lastUpdate: Date.now()
+            editorId: action.data.id
+            entityById: $.extend {}, state.entityById, "#{'#{action.data.id}'}": action.data
+
+        when "#{'#{@opts.entityName}'}-entity-show"
+          state = $.extend {}, state,
+            phase: 'SHOW'
+
+        when "#{'#{@opts.entityName}'}-store-entity"
+          if (action.data.id?)
+            state = $.extend {}, state,
+              phase: 'SYNCING'
+              editObject: action.data
+          else
+            state = $.extend {}, state,
+              phase: 'SYNCING'
+              createdObject: action.data
+
+        when "#{'#{@opts.entityName}'}-entity-synced"
+          state = $.extend {}, state,
+            phase: 'SYNCED'
+            editObject: null
+            createdObject: null
+
+        when "#{'#{@opts.entityName}'}-load-error"
+          state = $.extend {}, state,
+            phase: 'LOAD-ERROR'
+            error: action.error
+            editObject: null
+            createdObject: null
+
+      state
+
+    @initialState = () ->
+      initialState =
+        phase: 'NONE'
+        editorId: -1
+        editObject: null
+        createdObject: null
+        requestParams: {}
+        lastUpdate: null
+        entityById: {}
+        error: null

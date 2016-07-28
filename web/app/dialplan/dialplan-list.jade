@@ -1,0 +1,27 @@
+dialplan-list
+  telcat-table(name="dialplanTable", action-label="table.action", add-label="dialplan.add-dialplan-entry", add-entry-route="dialplans/new")
+    //telcat-table-header(key="id", label="id")
+    telcat-table-header(key="prio", label="dialplan.prio")
+    telcat-table-header(key="sourceDevice.name", label="dialplan.sourceDevice")
+    telcat-table-header(key="sourceExtension", label="dialplan.sourceExtension")
+    telcat-table-header(key="destinationDevice.name", label="dialplan.destinationDevice")
+    telcat-table-header(key="destinationExtension", label="dialplan.destinationExtension")
+
+    telcat-table-action-button(icon="edit", route="/dialplans")
+    telcat-table-action-button(icon="delete", redux-action="dialplan-delete-entry")
+
+  rest-resource(name="restResource", path="/dialplans", timeout="2000", list-name="dialplans")
+
+  script(type='text/coffeescript').
+    @mixin 'redux'
+    @mixin 'section'
+    @mixin 'crud-list'
+
+    @load = (done) ->
+      @tags.restResource.load done
+
+    @loadError = (error) ->
+      console.log 'Load error!!!!'
+
+    @delete = (entityId, done) ->
+      @tags.restResource.delete done, entityId

@@ -1,0 +1,21 @@
+section-manager-reducer
+  script(type='text/coffeescript').
+
+    @reduce = (state = null, action) =>
+      if state == null
+        return @initialState()
+
+      switch action.type
+        when 'show-new-section'
+          state = $.extend {}, state,
+            section: action.section
+            params: $.extend {path: action.path}, action.params
+
+      console.log 'SM-Reducer', action, state
+
+      state
+
+    @initialState = () ->
+      initialState =
+        section: '/'
+        params: ''

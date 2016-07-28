@@ -1,0 +1,58 @@
+apply plugin: 'application'
+
+dependencies {
+  compile([
+      project(":web"),
+//      libraries.completable_futures,
+      libraries.guava,
+//      libraries.guava_collectors,
+      libraries.slf4j_api,
+      libraries.vertx_codegen,
+      libraries.vertx_web,
+//      libraries.vertx_service_proxy,
+//      libraries.vertx_helper,
+  ])
+
+  runtime([
+      libraries.log4j_slf4j_impl,
+      libraries.log4j_core,
+  ])
+
+  testCompile([
+    testLibraries.spock_core,
+  ])
+
+  testRuntime([
+      libraries.log4j_slf4j_impl,
+      libraries.log4j_core,
+  ])
+}
+
+//
+// Compiler & source generation configuration
+//
+applicationDefaultJvmArgs = [
+    '-showversion',
+    '-XX:+PrintCommandLineFlags',
+//    '-XX:+PrintFlagsFinal',
+    '-XX:+HeapDumpOnOutOfMemoryError',
+    '-XX:+UseG1GC',
+    '-Dhazelcast.logging.class=com.hazelcast.logging.Slf4jFactory',
+    '-DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector',
+    '-Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory',
+]
+mainClassName = "io.vertx.core.Launcher"
+
+applicationDefaultJvmArgs = [
+    '-XX:+HeapDumpOnOutOfMemoryError',
+    '-XX:+PrintCommandLineFlags',
+    '-XX:+UnlockCommercialFeatures',
+    '-XX:+FlightRecorder',
+    '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005',
+    '-enableassertions',
+    ]
+run {
+  args = ['run', 'de.conpinion.web.WebBootstrap', "--redeploy=src/**/*.java", '--launcher-class=io.vertx.core.Launcher',
+          "--on-redeploy=${rootProject.projectDir}/./gradlew classes"
+  ]
+}

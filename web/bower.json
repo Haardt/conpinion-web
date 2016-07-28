@@ -1,0 +1,46 @@
+{
+  "name": "simplesbc-web",
+  "description": "The simpleSBC frontend app",
+  "version": "0.1.0",
+  "main": "index.html",
+  "license": "TELCAT",
+  "ignore": [
+    "app",
+    "bin",
+    "build",
+    "lib",
+    "node_modules",
+    "test",
+    "tmpl",
+    "package.json",
+    "**/.*",
+    "**/*.log",
+    "**/*.sublime-*",
+    "atlassian-ide-plugin.xml"
+  ],
+  "keywords": [
+    ""
+  ],
+  "authors": [
+    "Dirk Grappendorf <dirk.grappendorf@telcat.de>",
+    "Andreas Haardt <andreas.haardt@telcat.de>",
+    "Tim Völpel <tim.voelpel@telcat.de>"
+  ],
+  "homepage": "http://stash.telcatdo.telcat.de/tucng/tuc-simplesbc",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@git.telcatdo.telcat.de:7999/tucng/tuc-simplesbc.git"
+  },
+  "dependencies": {
+    "animo.js": "#1.0.3",
+    "i18next": "1.11.0",
+    "isomer": "#0.2.4",
+    "riot-route": "2.3.0",
+    "riotjs": "2.3.13",
+    "semantic-ui": "2.1.4"
+  },
+  "devDependencies": {
+    "coffee-script": "1.9.3",
+    "jquery": "2.1.4"
+  }
+}

@@ -1,0 +1,24 @@
+gateway-list
+  telcat-table(name="gatewayTable", action-label="table.action", add-label="gateway.add-device-entry", add-entry-route="gateways/new")
+    //telcat-table-header(key="id", label="id")
+    telcat-table-header(key="name", label="device.name")
+    telcat-table-header(key="sipURI", label="device.sipURI")
+
+    telcat-table-action-button(icon="edit", route="/gateways")
+    telcat-table-action-button(icon="delete", redux-action="gateway-delete-entry")
+
+  rest-resource(name="restResource", path="/gateways", timeout="2000" list-name="gateways")
+
+  script(type='text/coffeescript').
+    @mixin 'redux'
+    @mixin 'section'
+    @mixin 'crud-list'
+
+    @load = (done) ->
+      @tags.restResource.load done
+
+    @loadError = (error) ->
+      console.log 'Load error!!!!'
+
+    @delete = (entityId, done) ->
+      @tags.restResource.delete done, entityId

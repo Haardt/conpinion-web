@@ -1,0 +1,77 @@
+telcat-table
+  table.ui.very.selectable.padded.orange.table
+    thead
+      tr
+        th(each!="{ headers }")  { @t(label) }
+        th(if!="{ showActionContent }") { t(@opts.actionLabel) }
+    tbody
+      tr(each!="{ rows }", data-dialplan-id!="{ id }")
+        td(each!="{ keys }") { getValue(parent, key) }
+
+        td
+          .ui.buttons.small
+            button.ui.button(each!="{ buttons }", onclick!="{ parent.clickRow }")
+              i(class!="{ icon }").icon
+    tfoot.full-width
+      tr
+        th
+        th(colspan="{ columns }")
+          button(onclick!="{ addEntry }").ui.right.floated.small.primary.labeled.icon.button
+            i.user.icon
+            |  { t(opts.addLabel) }
+  #config
+    <yield/>
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/table.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/button.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/icon.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/label.css")
+
+  style.
+    #config {
+      display: none;
+    }
+  script(type='text/coffeescript').
+    @mixin('i18next')
+    @mixin('redux')
+    @mixin('utils')
+
+    @showActionContent = true
+
+    @rows = []
+    @headers = []
+    @keys = []
+    @buttons = []
+    @columns = 0
+
+    @clickRow = (event) =>
+      tr = (elem for elem in event.path when elem.nodeName == 'TR')[0]
+      id = tr.getAttributeNode("data-dialplan-id").value
+      if event.item.route?
+        riot.route event.item.route + "/" + id
+      else
+        @dispatch
+          type: event.item.reduxAction
+          id: id
+
+    @addEntry = (event) ->
+      riot.route @opts.addEntryRoute
+
+    @updateData = (data) ->
+      @rows = data
+      @update()
+
+    @getValue = (parent, key) ->
+      @_getValueByJsonPath parent, key
+
+    @on 'mount', () ->
+      @_forEachTagWithFilter 'telcat-table-action-button', (tag) =>
+        @buttons.push
+          icon: tag.opts.icon
+          reduxAction: tag.opts.reduxAction
+          route: tag.opts.route
+
+      @_forEachTagWithFilter 'telcat-table-header', (tag) =>
+        @columns++
+        @keys.push key: tag.opts.key
+        @headers.push label: tag.opts.label

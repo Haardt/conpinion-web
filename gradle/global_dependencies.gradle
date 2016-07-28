@@ -1,0 +1,45 @@
+configurations {
+  all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+      // incl. by cglib
+      if (details.requested.group == 'org.ow2.asm' && details.requested.name == 'asm') { details.useVersion versions.asm }
+      // use the same library version for all projects and libraries
+      if (details.requested.group == 'com.google.guava' && details.requested.name == 'guava') { details.useVersion versions.guava }
+//      if (details.requested.group == 'io.netty') { details.useVersion versions.netty }
+      if (details.requested.group == 'com.google.code.findbugs' && details.requested.name == 'jsr305') { details.useVersion versions.jsr305 }
+      if (details.requested.group == 'com.fasterxml.jackson.core' ) { details.useVersion versions.jackson }
+      // bridge legacy logging frameworks used in libraries to slf4j
+      if (details.requested.name == 'log4j') { details.useTarget libraries.slf4j_bridge_log4j_1_2 }
+      if (details.requested.name == 'commons-logging') { details.useTarget libraries.slf4j_bridge_jcl }
+      // incomplete jain sip artifacts
+      if (details.requested.group == 'javax.sdp' && details.requested.name == 'nist-sdp') { details.useTarget libraries.jain_sip_ri }
+      // relocated artifact transitively included by org.mobicents.sipunit and de.telcat:spec-comp-annotation-processor
+      if (details.requested.group == 'xml-apis' && details.requested.name == 'xml-apis') { details.useVersion versions.xml_apis }
+      // do not use bugged influxdb-java package
+      if (details.requested.group == 'org.influxdb') { details.useVersion versions.influxdb_api }
+    }
+  }
+}
+
+dependencies {
+  compileOnly([
+      libraries.lombok,
+      libraries.jsr305,
+  ])
+
+  apt([
+      libraries.lombok,
+  ])
+
+  // test frameworks for all modules
+  testCompile([
+      testLibraries.guava_testlib,
+//      testLibraries.objenesis,
+  ])
+  testCompile(testLibraries.spock_core) { exclude module: 'groovy-all' }
+  testCompile(libraries.groovy_all)
+
+  testRuntime([
+      libraries.cglib,
+  ])
+}

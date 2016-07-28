@@ -1,0 +1,19 @@
+activities-view
+  | Hallo
+  canvas(width="800", height="600", name="art")
+
+  style.
+    #art {
+      width: 400px;
+      height: 300px;
+    }
+
+  script(type="text/coffeescript").
+    iso = new Isomer @art
+    Shape = Isomer.Shape;
+    Point = Isomer.Point;
+
+    blue = new Isomer.Color 50, 60, 160
+    cube = Shape.Prism Point.ORIGIN, 3, 3, 1
+    iso.add cube
+    iso.add cube.rotateZ(Point(1.5, 1.5, 0), Math.PI / 12).translate(0, 0, 1.1), blue

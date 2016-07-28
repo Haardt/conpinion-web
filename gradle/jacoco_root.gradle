@@ -1,0 +1,24 @@
+configurations {
+  jacoco
+}
+
+dependencies {
+  jacoco "org.jacoco:org.jacoco.ant:${jacocoVersion}"
+}
+
+task jacocoTestReportCombined(type: JacocoReport, description: 'Generates a combined test coverage report for the whole project') {
+  jacocoClasspath = configurations.jacoco
+  // Add execution data from all subprojects
+  executionData fileTree(project.rootDir.absolutePath).include('**/build/jacoco/*.exec')
+  // Add source classes from all subprojects
+  subprojects.each {
+    sourceSets it.sourceSets.main
+  }
+
+  reports {
+    html {
+      enabled true
+      destination 'build/reports/jacoco'
+    }
+  }
+}

@@ -1,0 +1,54 @@
+build
+generated
+logs
+repos
+.gradle/
+.groovy/
+*.log
+*~
+*.hprof
+atlassian-ide-plugin.xml
+
+# sip traces
+*.trace
+!tracing/src/test/resources/traces/* # for test traces
+
+# fsm diagrams
+*.dot
+*.scxml
+*FSM*.png
+
+# Vertx
+.vertx
+
+#web
+node_modules
+web/public/lib
+web/public/app
+web/public/npm_deps/*
+web/public/index.html
+web/screenshots
+
+# asciidoc artifacts
+/asciidoc/overview-by-classes.asc
+/asciidoc/overview-by-specifications.asc
+/asciidoc/specifications-table.asc
+
+# local development configuration and commands
+development-configuration/
+development-shell-commands/
+
+# eclipse
+.externalToolBuilders/
+.settings/
+.project
+.classpath
+
+#netbeans
+.nb_gradle/
+
+# intelliJ
+.idea/
+*.iml
+*.iws
+*.ipr

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Standard Meta -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properities -->
+  <title>TELCAT-UC simpleSBC</title>
+
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/reset.css">
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/site.css">
+
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/container.css">
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/grid.css">
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/header.css">
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/image.css">
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/divider.css">
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/sidebar.css">
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/transition.css">
+
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/segment.css">
+
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/list.min.css">
+  <link rel="stylesheet" type="text/css" href="../lib/semantic-ui/dist/components/label.min.css">
+
+  <link rel="stylesheet" type="text/css" href="../lib/animo.js/animate-animo.css">
+
+  <style type="riot"></style>
+
+  <script src="../lib/jquery/dist/jquery.min.js"></script>
+  <script src="../lib/animo.js/animo.js"></script>
+  <script src="../lib/semantic-ui/dist/components/visibility.js"></script>
+  <script src="../lib/semantic-ui/dist/components/sidebar.js"></script>
+  <script src="../lib/semantic-ui/dist/components/transition.js"></script>
+  <script src="../lib/semantic-ui/dist/components/modal.js"></script>
+  <script src="../lib/semantic-ui/dist/components/dimmer.js"></script>
+  <script src="../lib/semantic-ui/dist/components/dropdown.js"></script>
+
+  <script src="../lib/i18next/i18next.js"></script>
+  <script src="../npm_deps/redux/dist/redux.js"></script>
+  <script src="../lib/riotjs/riot.js"></script>
+  <script src="../lib/isomer/dist/isomer.js"></script>
+
+  <script src="bootstrap/init.js"></script>
+
+  <!-- utils -->
+  <script src="utils/enum.js"></script>
+
+  <!-- riotjs mixins -->
+  <script src="mixins/i18next-mixin.js"></script>
+  <script src="mixins/redux-mixin.js"></script>
+  <script src="mixins/route-mixin.js"></script>
+  <script src="mixins/utils-mixin.js"></script>
+  <script src="common/section/section-mixin.js"></script>
+
+  <!-- Common Components -->
+  <script src="common/rest/rest-resource.js"></script>
+
+  <script src="common/router/route.js"></script>
+  <script src="common/router/router.js"></script>
+  <script src="common/router/route-reducer.js"></script>
+
+  <script src="common/layout/site-content.js"></script>
+  <script src="common/layout/site-footer.js"></script>
+  <script src="common/layout/site-header.js"></script>
+
+  <script src="common/table/telcat-table.js"></script>
+  <script src="common/table/telcat-table-header.js"></script>
+  <script src="common/table/telcat-table-action-button.js"></script>
+
+  <script src="common/section/section-manager.js"></script>
+  <script src="common/section/section-manager-reducer.js"></script>
+  <script src="common/section/site-section.js"></script>
+
+  <script src="common/menu/top-menu.js"></script>
+  <script src="common/menu/top-menu-item.js"></script>
+
+  <script src="common/form/telcat-form.js"></script>
+  <script src="common/form/telcat-form-mixin.js"></script>
+  <script src="common/form/telcat-form-header.js"></script>
+  <script src="common/form/telcat-form-divider.js"></script>
+  <script src="common/form/telcat-form-fields.js"></script>
+  <script src="common/form/telcat-string-field.js"></script>
+  <script src="common/form/telcat-checkbox-field.js"></script>
+  <script src="common/form/telcat-dropdown-field.js"></script>
+
+  <script src="common/dialog/telcat-modal-dialog.js"></script>
+
+  <script src="common/button/redux-button.js"></script>
+
+  <!-- Redux reducer registry -->
+  <script src="redux/reducer.js"></script>
+  <script src="redux/redux-reducer-registry.js"></script>
+
+  <!-- crud-->
+
+  <script src="common/crud/list-reducer.js"></script>
+  <script src="common/crud/entity-reducer.js"></script>
+  <script src="common/crud/crud-editor-mixin.js"></script>
+  <script src="common/crud/crud-list-mixin.js"></script>
+
+  <!-- Application Components -->
+  <script src="dialplan/dialplan-list.js"></script>
+  <script src="dialplan/dialplan-editor.js"></script>
+
+  <script src="endpoint/endpoint-list.js"></script>
+  <script src="endpoint/endpoint-editor.js"></script>
+
+  <script src="gateway/gateway-list.js"></script>
+  <script src="gateway/gateway-editor.js"></script>
+
+  <script src="interface/interface-list.js"></script>
+  <script src="interface/interface-editor.js"></script>
+
+  <script src="home/activities-view.js"></script>
+
+  <script src="simplesbc-app.js"></script>
+
+</head>
+<body>
+   <simplesbc-app></simplesbc-app>
+   <script src="bootstrap/bootstrap.js"></script>
+</body>
+</html>

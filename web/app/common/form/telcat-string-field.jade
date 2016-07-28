@@ -1,0 +1,29 @@
+telcat-string-field
+  .field(class!="{ markError && 'error' || ''}")
+    label { t(label) }
+    input(type="text" name!="{ opts.valueKey }" value!="{ stringValue }")
+    .ui.basic.red.pointing.prompt.label.transition.visible(if!="{ markError }") { @errorText }
+
+  style.
+    telcat-string-field {
+      width: 100%;
+    }
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/label.css")
+
+  script(type="text/coffeescript").
+    @mixin 'i18next'
+    @mixin 'form'
+
+    @stringValue = ''
+    @markError = false
+
+    @setValue = ->
+      @stringValue = @dataObject[@opts.valueKey]
+
+    @getValue = ->
+      @[@opts.valueKey].value
+
+    @setErrorMark = (markAsError, errorText) ->
+      @markError = markAsError
+      @errorText = errorText

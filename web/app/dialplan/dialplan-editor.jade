@@ -1,0 +1,91 @@
+dialplan-editor
+
+  telcat-form(name="dialplan", data-object="{ entity }", cancel-route="/dialplans", save-action="dialplan-store-entity",
+        modifying!="{ modifying }", loading!="{ loading }", save='save', cancel='cancel')
+
+    telcat-string-field(value-key="prio")
+    telcat-form-header(title="dialplan.source")
+    telcat-form-fields(number="two")
+      telcat-dropdown-field(name="dropdownEndpointSource", value-key="sourceDevice", select-label-key="name")
+      telcat-string-field(value-key="sourceExtension")
+
+    telcat-form-divider(title="dialplan.destination")
+    telcat-form-fields(number="three")
+      telcat-dropdown-field(name="dropdownEndpointDest", value-key="destinationDevice", select-label-key="name")
+      telcat-string-field(value-key="destinationExtension")
+      telcat-string-field(value-key="replaceDestination")
+
+  telact-modal-dialog(name="dialplanError", title="Error", ok-label="ok", cancel-label="cancel")
+    | { @t('error') }
+
+  rest-resource(name="restResource", path="/dialplans", timeout="2000")
+  rest-resource(name="endpointResource", path="/endpoints", timeout="2000", list-name="endpoints")
+
+  script(type='text/coffeescript').
+    @mixin 'i18next'
+    @mixin 'redux'
+    @mixin 'section'
+    @mixin 'route'
+    @mixin 'crud-editor'
+    @mixin 'utils'
+
+    @newEntity = () ->
+      @tags.dialplan.cleanErrors()
+      #@entity = {}
+      @_loadEndpoints
+        success: () ->
+          console.log 'loaded'
+        error: () ->
+          console.log "Can't load endpoints"
+
+    @load = (done) ->
+      @_loadEndpoints
+        success: () =>
+          @tags.restResource.load done, @entity.id
+        error: () ->
+          console.log "Can't load endpoints"
+
+    @_loadEndpoints = (done) ->
+      endpointDone =
+        success: (data) =>
+          @_forTagWithName @tags, 'dropdownEndpointSource', (tag) ->
+            tag.setDropdownData data
+          #@_forTagWithName @tags, 'dropdownEndpointDest', (tag) ->
+          #  tag.setDropdownData data
+          done.success()
+        error: (error) ->
+          console.log "Endpoints-Error"
+          done.error()
+
+      @tags.endpointResource.load endpointDone
+
+    @loadError = (error) ->
+      switch error.statusCode
+        when 404
+          @tags.dialplanError.show
+            type: 'new-route'
+            url: '/home'
+          ,
+            type: 'new-route'
+            url: '/home'
+        else
+          @tags.dialplanError.show
+            type: 'new-route'
+            url: '/home'
+          ,
+            type: 'new-route'
+            url: '/home'
+
+
+
+    @save = (done) ->
+      @tags.restResource.save done, @entity
+
+
+    @saveError = (error) =>
+      console.log 'SaveError', error
+      @modifying = false
+      @tags.dialplan.showError
+        field2: 'Das Feld bla darf nicht leer sein!'
+      console.log 'NOW UPDATE!'
+      @update()

@@ -1,0 +1,20 @@
+route-reducer
+  script(type='text/coffeescript').
+
+    @reduce = (state = null, action) =>
+      if state == null
+        return @initialState()
+
+      switch action.type
+        when 'new-route'
+          state = $.extend {}, state,
+            url: action.url
+            params: $.extend {path: action.path}, action.params
+
+
+      state
+
+    @initialState = () ->
+      initialState =
+        url: '/'
+        params: ''

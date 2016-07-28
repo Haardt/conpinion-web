@@ -1,0 +1,31 @@
+telcat-checkbox-field
+  .field(class!="{ markError && 'error' || ''}")
+    .ui.checkbox
+      input(type="checkbox" name!="{ opts.valueKey }" checked!="{ booleanValue }")
+      label { t(label) }
+  .ui.basic.red.pointing.prompt.label.transition.visible(if!="{ markError }") { @errorText }
+
+  style.
+    telcat-checkbox-field {
+      width: 100%;
+    }
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/label.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/checkbox.css")
+
+  script(type="text/coffeescript").
+    @mixin 'i18next'
+    @mixin 'form'
+
+    @booleanValue = false
+    @markError = false
+
+    @setValue = ->
+      @booleanValue = @dataObject[@opts.valueKey]
+
+    @getValue = ->
+      @[@opts.valueKey].value
+
+    @setErrorMark = (markAsError, errorText) ->
+      @markError = markAsError
+      @errorText = errorText

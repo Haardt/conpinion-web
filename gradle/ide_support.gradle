@@ -1,0 +1,27 @@
+apply plugin: 'idea'
+
+configurations {
+  ideaRuntimeClassPath
+  ideaTestRuntimeClassPath
+}
+
+dependencies {
+  ideaRuntimeClassPath([
+      files('build/resources/main'),
+  ])
+
+  ideaTestRuntimeClassPath([
+      files('build/resources/test'),
+  ])
+}
+
+idea {
+  module {
+    inheritOutputDirs = false
+    scopes.RUNTIME.plus += [configurations.ideaRuntimeClassPath]
+    scopes.TEST.plus += [configurations.ideaTestRuntimeClassPath]
+
+    generatedSourceDirs += generatedSourcesJavaDir
+    testSourceDirs += generatedSourcesJavaTestDir
+  }
+}

@@ -1,0 +1,10 @@
+telcat-form-header
+  h4.ui.orange.dividing.header { t(opts.title) }
+  <yield/>
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/divider.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/header.css")
+
+  script(type="text/coffeescript").
+    @mixin 'i18next'
+    @mixin 'form'

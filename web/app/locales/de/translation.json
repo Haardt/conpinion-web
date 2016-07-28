@@ -1,0 +1,47 @@
+{
+  "table": {
+    "action": ""
+  },
+
+  "form": {
+    "ok": "Bestätigen",
+    "cancel": "Abbrechen"
+  },
+
+  "menu": {
+    "home": "home",
+    "dialplan": "Nummerierungsplan",
+    "devices": "Geräte",
+    "gateways": "Provider",
+    "interfaces": "Schnittstellen"
+  },
+
+  "device": {
+    "formTitle": "Geräte",
+    "credentials": "Account-Informationen",
+    "name": "Name",
+    "displayName": "Display-Name",
+    "sipURI": "SIP-URI",
+    "user": "Account-Name",
+    "password": "Passwort",
+    "add-device-entry": "Gerät hinzufügen"
+  },
+
+  "dialplan": {
+    "source": "Quelle",
+    "sourceDevice": "Quell-Gerät",
+    "sourceExtension": "Muster",
+    "destination": "Ziel",
+    "destinationDevice": "Ziel-Gerät",
+    "destinationExtension": "Muster",
+    "add-dialplan-entry": "Regel hinzufügen"
+  },
+
+  "gateway": {
+    "fromTitle": "Provider"
+  },
+
+  "interface": {
+    "fromTitle": "Schnittstelle"
+  }
+}

@@ -1,0 +1,49 @@
+rest-resource
+
+  script(type="text/coffeescript").
+    console.log "hallo"
+    @load = (done, entityId) ->
+        start = new Date().getMilliseconds()
+        if entityId?
+          path = @opts.path + "/" + entityId
+        else
+          path = @opts.path
+
+        $.ajax path,
+            dataType: "json"
+            timeout: @opts.timeout
+        .done (data) =>
+            done.success if entityId? then data else data[@opts.listName]
+        .fail (error) =>
+            done.failure error
+
+    @loadError = (error) ->
+        console.log 'Load error!!!!'
+
+    @delete = (done, entityId) ->
+        $.ajax "#{'#{@opts.path}'}/#{'#{entityId}'}",
+            dataType: "json"
+            type: "DELETE"
+            data: JSON.stringify id: entityId
+            contentType: "application/json"
+            dataType: 'json'
+        .done (data) =>
+            done.success entityId
+        .fail (error) =>
+            done.failure error
+
+    @save = (done, entity) ->
+        start = new Date().getMilliseconds();
+        console.log 'EntityId: ', entity.id
+        $.ajax
+            url: @opts.path + "/" + entity.id
+            type: "POST"
+            data: JSON.stringify entity
+            contentType: "application/json"
+            dataType: 'json'
+        .done (result) ->
+            console.log 'Stop', (new Date().getMilliseconds() - start)
+            done.success result
+        .fail (error) ->
+            done.failure (error)
+

@@ -1,0 +1,27 @@
+top-menu
+  .ui.attached.stackable.menu
+    .ui.container
+      <yield/>
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/menu.css")
+
+  script(type='text/coffeescript').
+    @mixin('utils')
+    @mixin('redux')
+    @mixin('route')
+
+    @on 'mount', () ->
+      @_forEachTagWithFilter 'top-menu-item', (item) =>
+        item.setActive @opts['active-item'] == item.opts.name
+
+      @subscribe () =>
+        state = @getState()['route']
+        if state.url?
+          @_forEachTagWithFilter 'top-menu-item', (item) ->
+            item.setActive state.url == item.opts.route
+          @update()
+
+    @selectedItem = (route) =>
+      @_forEachTagWithFilter 'top-menu-item', (item) -> item.setActive false
+      @route route
+

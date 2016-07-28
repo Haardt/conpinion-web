@@ -1,0 +1,56 @@
+telcat-form
+  form(onsubmit!="{why}", class!="{ (opts.loading && 'loading' || '') ||  (showErrorMessage && 'error' || '')}").ui.form.fluid.segment
+    <yield/>
+
+    .ui.error.message
+      .header { @t('form-error') }
+      ul.ui.bulleted.list
+        ui(each!="{ errors }").item { error }
+
+    .actions
+      button(onclick!="{ onSave }", class!="{ @opts.modifying && 'loading' || '' }").ui.approve.green.button { t(opts.save) }
+      button(onclick!="{ onCancel }").ui.cancel.red.button { t(opts.cancel) }
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/segment.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/form.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/divider.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/header.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/message.css")
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/list.css")
+
+  script(type="text/coffeescript").
+    @mixin 'i18next'
+    @mixin 'redux'
+    @mixin 'form'
+
+    @dataObject = {}
+    @showErrorMessage = false
+
+    @why = (e) ->
+      console.log "AAAAAAAAAAAHHHHHHHHHHHHHHHHHHH WHY"
+
+    @on 'update', ->
+      console.log 'Form update', @opts.modifying
+      @setDataObject @opts.dataObject
+      @updateLabels @opts.name
+
+    @onSave = (event) =>
+      @save()
+      @dispatchAsync
+        type: @opts.saveAction
+        data: @dataObject
+
+    @onCancel = (event) ->
+      riot.route @opts.cancelRoute
+
+    @showError = (errors) ->
+      @errors = (value for own key, value of errors).map (errorText) -> error: errorText
+      if (@errors.length > 0)
+        # disable errors on form: false
+        @showErrorMessage = false
+      else
+        @showErrorMessage = false
+      @error errors
+
+    @cleanErrors = ->
+      @showError {}

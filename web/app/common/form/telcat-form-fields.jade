@@ -1,0 +1,26 @@
+telcat-form-fields
+  div(class!="{ @opts.number }").ui.fields
+    <yield/>
+
+  link(rel="stylesheet",type="text/css", href="../lib/semantic-ui/dist/components/form.css")
+
+  style.
+    telcat-form-fields telcat-string-field {
+      padding-right: 0.8em;
+    }
+
+    telcat-form-fields telcat-string-field:last-child  {
+      padding-right: 0;
+    }
+
+    telcat-form-fields telcat-dropdown-field {
+      padding-right: 0.8em;
+    }
+
+    telcat-form-fields telcat-dropdown-field:last-child  {
+      padding-right: 0;
+    }
+
+
+  script(type="text/coffeescript").
+    @mixin 'form'

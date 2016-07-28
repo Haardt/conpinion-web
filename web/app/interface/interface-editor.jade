@@ -1,0 +1,61 @@
+interface-editor
+
+  telcat-form(name="interface", data-object="{ entity }", cancel-route="/interfaces", save-action="interface-store-entity",
+        modifying!="{ modifying }", loading!="{ loading }", save='save', cancel='cancel')
+    telcat-form-header(title="interface.formTitle")
+    telcat-string-field(value-key="bindAddress")
+    telcat-string-field(value-key="contactAddress")
+    telcat-string-field(value-key="port")
+    telcat-string-field(value-key="domain")
+
+    telcat-form-divider(title="interface.timeouts")
+    telcat-string-field(value-key="minRegistrationExpires")
+    telcat-string-field(value-key="defaultRegistrationExpires")
+
+  telact-modal-dialog(name="interfaceError", title="interface.error", ok-label="form.ok", cancel-label="form.cancel")
+    | { @t('error') }
+
+  rest-resource(name="restResource", path="/interfaces", timeout="2000")
+
+  script(type='text/coffeescript').
+    @mixin 'i18next'
+    @mixin 'redux'
+    @mixin 'section'
+    @mixin 'route'
+    @mixin 'crud-editor'
+
+    @newEntity = () ->
+      @tags.interface.cleanErrors()
+
+    @load = (done) ->
+      @tags.restResource.load done, @entity.id
+
+    @loadError = (error) ->
+      switch error.statusCode
+        when 404
+          @tags.deviceError.show
+            type: 'new-route'
+            url: '/home'
+          ,
+            type: 'new-route'
+            url: '/home'
+        else
+          @tags.deviceError.show
+            type: 'new-route'
+            url: '/home'
+          ,
+            type: 'new-route'
+            url: '/home'
+
+
+
+    @save = (done) ->
+      @tags.restResource.save done, @entity
+
+    @saveError = (error) =>
+      console.log 'SaveError', error
+      @modifying = false
+      @tags.deviceForm.showError
+        field2: 'Das Feld bla darf nicht leer sein!'
+      console.log 'NOW UPDATE!'
+      @update()
