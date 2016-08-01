@@ -13,15 +13,15 @@ publishing {
 //      }
     }
   }
-  repositories {
-    maven {
-      credentials {
-        username nexusUsername
-        password nexusPassword
-      }
-      url project.version.endsWith('-SNAPSHOT') ? nexusSnapshotURL : nexusReleaseURL
-    }
-  }
+//  repositories {
+//    maven {
+//      credentials {
+//        username nexusUsername
+//        password nexusPassword
+//      }
+//      url project.version.endsWith('-SNAPSHOT') ? nexusSnapshotURL : nexusReleaseURL
+//    }
+//  }
 }
 
 task sourceJar(type: Jar) {

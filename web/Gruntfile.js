@@ -39,32 +39,15 @@ module.exports = function (grunt) {
             }
         },
 
-        coffeelint: {
-            src: ['app/**/*.coffee'],
-            options: {
-                configFile: '.coffeelint.json'
-            }
-        },
-
-        coffee: {
-            dist: {
-                cwd: 'app/',
-                src: ['**/*.coffee'],
-                dest: 'public/app',
-                ext: '.js',
-                expand: true
-            }
-        },
-
         riot: {
             options: {
-                template: 'jade',
-                type: 'coffeescript',
+                template: 'pug',
+                type: 'babel',
                 concat: false
             },
             dist: {
                 expand: true,
-                src: ['app/**/*.jade'],
+                src: ['app/**/*.pug'],
                 dest: 'public',
                 ext: '.js'
             }
@@ -73,7 +56,7 @@ module.exports = function (grunt) {
         htmlbuild: {
             dist: {
                 cwd: 'app',
-                src: ['**/*.html', '**/*.json'],
+                src: ['**/*.html', '**/*.json', '**/*.js'],
                 dest: 'public/app',
                 expand: true,
                 options: {
@@ -129,17 +112,17 @@ module.exports = function (grunt) {
                 files: ['app/**/*.less'],
                 tasks: ['newer:less', 'newer:htmlbuild']
             },
-            scripts: {
-                files: ['app/**/*.coffee'],
-                tasks: ['newer:coffee', 'newer:htmlbuild']
-            },
             riot: {
-                files: ['app/**/*.jade'],
+                files: ['app/**/*.pug'],
                 tasks: ['newer:riot']
             },
             html: {
                 files: 'app/**/*.html',
                 tasks: ['newer:htmlbuild']
+            },
+            js: {
+                files: 'app/**/*.js',
+                tasks: ['newer:jsbuild']
             },
             tests: {
                 files: 'test/*.html',
@@ -209,7 +192,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-webdriver');
 
     grunt.registerTask('build', 'Compile all assets and create the distribution files',
-        ['less', 'coffeelint', 'coffee', 'riot', 'htmlbuild']);
+        ['less', 'riot', 'htmlbuild']);
 
     grunt.registerTask('cucumber-test', 'Run the cucumber tests', function () {
         grunt.event.once('connect.tests.listening', function (host, port) {

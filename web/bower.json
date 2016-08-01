@@ -35,12 +35,11 @@
     "animo.js": "#1.0.3",
     "i18next": "1.11.0",
     "isomer": "#0.2.4",
-    "riot-route": "2.3.0",
-    "riotjs": "2.3.13",
+    "riot-route": "2.4.0",
+    "riotjs": "2.5.0",
     "semantic-ui": "2.1.4"
   },
   "devDependencies": {
-    "coffee-script": "1.9.3",
     "jquery": "2.1.4"
   }
 }

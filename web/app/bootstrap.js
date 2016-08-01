@@ -1,0 +1,2 @@
+
+riot.mount("web-app");
