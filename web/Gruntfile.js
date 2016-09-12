@@ -43,7 +43,14 @@ module.exports = function (grunt) {
             options: {
                 template: 'pug',
                 type: 'babel',
-                concat: false
+                concat : true,
+                modular: {
+                        type: 'umd',
+                        deps: [
+                          'riot',
+                          {'jquery': '$'}
+                        ]
+                      }
             },
             dist: {
                 expand: true,

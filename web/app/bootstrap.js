@@ -1,2 +1,2 @@
-
-riot.mount("web-app");
+import './web-app.js'
+riot.mount('web-app')

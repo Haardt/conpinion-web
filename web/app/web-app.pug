@@ -1,9 +1,11 @@
+require('./test/test.pug')
 web-app
 
-  h3  { test }
+  h3  { testValue }
+  testValue
+  p | bla
 
   script(type='babel').
-
-    this.test = "Bla";
+    this.test = "web-app";
 
 
