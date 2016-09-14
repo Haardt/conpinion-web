@@ -34,6 +34,11 @@
     "gulp-notify":"*",
     "browser-sync":"*",
     "gulp-watch":"*",
+    "gulp-riotts":"*",
+    "gulp-typescript":"*",
+    "gulp-concat": "*",
+    "gulp-sourcemaps":"*",
+    "tsify":"*",
 
 
     "babel-plugin-external-helpers-2": "^6.3.13",

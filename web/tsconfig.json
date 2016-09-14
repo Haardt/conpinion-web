@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "removeComments": true,
+    "target": "ES5",
+    "module":"commonjs",
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "files": [
+    "public/lib/riot-ts/riot-ts.d.ts"
+  ]
+}

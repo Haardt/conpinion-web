@@ -1,2 +1,4 @@
-import './web-app.js'
-riot.mount('web-app')
+
+var webapp = require('./typescript/my-app.ts')
+
+riot.mount('*')
