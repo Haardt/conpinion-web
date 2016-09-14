@@ -1,6 +1,6 @@
 import './my-test';
 
-@template("my-app.html")
+@template("view/my-app.html")
 class MyApp extends Riot.Element
 {
    // ...

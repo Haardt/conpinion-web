@@ -23,9 +23,7 @@
     "browserify": "*",
     "gulp": "*",
     "gulp-cli": "*",
-    "browserify": "*",
     "watchify": "*",
-    "riotify": "*",
     "babelify": "*",
     "vinyl-source-stream": "*",
     "vinyl-buffer": "*",
@@ -43,14 +41,7 @@
 
     "babel-plugin-external-helpers-2": "^6.3.13",
     "bower": "*",
-    "chai": "3.5.0",
-    "chai-as-promised": "5.3.0",
-    "coffeelint": "1.15.7",
-    "coffee-script": "1.10.0",
     "pug": "*",
-    "mocha": "3.0.0",
-    "riot": "2.5",
-    "selenium-standalone": "5.5.0",
-    "webdriverio": "4.2.3"
+    "riot": "*"
   }
 }

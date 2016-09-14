@@ -14,80 +14,135 @@ var ts = require('gulp-typescript');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var tsify = require("tsify");
+var gutil = require("gulp-util");
 
-gulp.task("typescript", function () {
-    return browserify({
-        basedir: '.',
-        debug: true,
-        entries: ['app/tsapp.ts','app/my-app.ts','public/lib/riot-ts/riot-ts.d.ts'],
-        cache: {},
-        packageCache: {}
-    })
-    .plugin(tsify)
-    .bundle()
-    .on('error', function (error) { console.error(error.toString()); })
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest("public/app"));
+gulp.task("copy-html", function () {
+    return gulp.src("app/**/*.html")
+            .pipe(gulp.dest("public/app"));
 });
 
+gulp.task('riotts', function () {
+return precompiledHtmlTags;
+});
+
+var watchedBrowserify = watchify(browserify({
+    basedir: 'app',
+    debug: true,
+    entries: ['my-app.ts'],
+    cache: {},
+    packageCache: {}
+}).plugin(tsify));
+
+var precompiledHtmlTags = gulp.src('./app/view/*.html')
+        .pipe(changed('./app/view/*.html'))
+        .pipe(minifyHTML())
+        .pipe(riotts({indexByTagName: true, modular: false, compact: true }))
+        .pipe(gulp.dest('./app/generated/'));
+        
+
+watchedBrowserify.on('log', gutil.log);
+
+gulp.task('bundle', ['copy-html'], function()
+        {
+            return watchedBrowserify
+                .bundle()
+                .on('error', function (error) {
+                console.error(error.toString());
+                })
+                            
+                .pipe(source('bundle.js'))
+                .pipe(buffer())
+                .pipe(precompiledHtmlTags)
+                .pipe(gulp.dest("public/app"));
+        });
+
+gulp.task('watch', ['bundle'], function ()
+{
+    var watcher = gulp.watch('./app/**/*', ['refresh']);
+    watcher.on('change', function (event)
+    {
+        console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
+    });
+});
+
+/**
+ * This task starts browserSync. Allowing refreshes to be called from the gulp
+ * bundle task.
+ */
+gulp.task('browser-sync', ['bundle', 'watch'], function ()
+{
+    return browserSync({server: {baseDir: './public'}});
+});
+
+/**
+ * This is the default task which chains the rest.
+ */
+gulp.task('default', ['browser-sync']);
+
+/**
+ * Using a dependency ensures that the bundle task is finished before reloading.
+ */
+gulp.task('refresh', ['bundle'], browserSync.reload);
+
+
+
+
+
+
+
+
+// old
 gulp.task('typescript2', function () {
 
     var tsResult = gulp.src(['app/**/*.ts', 'public/lib/riot-ts/riot-ts.d.ts'])
-      .pipe(sourcemaps.init())
-      .pipe(ts({
-          sortOutput: true,
-          typescript: require('typescript'),
-          module: 'commonjs',
-          "experimentalDecorators": true
-      }));
+            .pipe(sourcemaps.init())
+            .pipe(ts({
+                sortOutput: true,
+                typescript: require('typescript'),
+                module: 'commonjs',
+                "experimentalDecorators": true
+            }));
     return tsResult.js.pipe(concat('app.js'))
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest('./public/app/'));
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest('./public/app/'));
 });
 
 // minify new or changed HTML pages
-gulp.task('htmlpage', function() {
-  var htmlSrc = './app/*.html',
-      htmlDst = './public/app/';
+gulp.task('htmlpage', function () {
+    var htmlSrc = './app/*.html',
+            htmlDst = './public/app/';
 
-  gulp.src(htmlSrc)
-    .pipe(changed(htmlDst))
-    .pipe(minifyHTML())
-    .pipe(gulp.dest(htmlDst));
+    gulp.src(htmlSrc)
+            .pipe(changed(htmlDst))
+            .pipe(minifyHTML())
+            .pipe(gulp.dest(htmlDst));
 });
 
-gulp.task('riotts', function() {
-    	return gulp.src('./app/typescript/*.html')
-    		.pipe(riotts( {indexByTagName: true, modular: true }))
-    		            .pipe(gulp.dest('./public/app/tags'));
-
-    });
-
 gulp.task('bundle:app', function () {
-  browserify({ entries: ['app/bootstrap.js'] })
+    browserify({entries: ['app/bootstrap.js']})
 
-    .transform(riotify, {  type: 'babel' }) // pass options if you need
-    .transform(babelify)
-    .bundle()
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./public/app/'));
+            .transform(riotify, {type: 'babel'}) // pass options if you need
+            .transform(babelify)
+            .bundle()
+            .pipe(source('bundle.js'))
+            .pipe(gulp.dest('./public/app/'));
 
- /*
-  var b = browserify(watchify.args)
-//      b.external(VENDORS)
-//      b.add(APP_ENTRY)
-      b.transform(babelify)
-      b.transform(riotify)
-      b.bundle()
-        .pipe(source('bundle.js'))
-        .pipe(buffer())
-        .pipe(gulp.dest('./public/app/'))
-
-  return b
-  */
+    /*
+     var b = browserify(watchify.args)
+     //      b.external(VENDORS)
+     //      b.add(APP_ENTRY)
+     b.transform(babelify)
+     b.transform(riotify)
+     b.bundle()
+     .pipe(source('bundle.js'))
+     .pipe(buffer())
+     .pipe(gulp.dest('./public/app/'))
+     
+     return b
+     */
 })
 
-gulp.task('browser-sync', function() {
+gulp.task('browser-sync-old', function () {
     browserSync.init({
         server: {
             baseDir: "./public"
