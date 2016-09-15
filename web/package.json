@@ -37,6 +37,9 @@
     "gulp-concat": "*",
     "gulp-sourcemaps":"*",
     "tsify":"*",
+    "gulp-stream":"*",
+    "gulp-print":"*",
+    "merge2":"*",
 
 
     "babel-plugin-external-helpers-2": "^6.3.13",

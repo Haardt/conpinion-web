@@ -15,6 +15,9 @@ var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var tsify = require("tsify");
 var gutil = require("gulp-util");
+var merge = require("gulp-stream");
+var merge2 = require("merge2");
+var print = require("gulp-print");
 
 gulp.task("copy-html", function () {
     return gulp.src("app/**/*.html")
@@ -22,39 +25,45 @@ gulp.task("copy-html", function () {
 });
 
 gulp.task('riotts', function () {
-return precompiledHtmlTags;
+    return precompiledHtmlTags;
 });
 
-var watchedBrowserify = watchify(browserify({
+var watchedBrowserify = browserify({
     basedir: 'app',
     debug: true,
     entries: ['my-app.ts'],
     cache: {},
     packageCache: {}
-}).plugin(tsify));
+}).plugin(tsify);
 
 var precompiledHtmlTags = gulp.src('./app/view/*.html')
-        .pipe(changed('./app/view/*.html'))
-        .pipe(minifyHTML())
-        .pipe(riotts({indexByTagName: true, modular: false, compact: true }))
-        .pipe(gulp.dest('./app/generated/'));
-        
+//        .pipe(changed('./app/view/*.html'))
+//        .pipe(minifyHTML())
+        .pipe(riotts({indexByTagName: true, modular: false, compact: true}))
+        // .pipe(concat('preCompHmtl.js'))
+        .pipe(print());
+//        .pipe(gulp.dest('./app/generated/'));
 
-watchedBrowserify.on('log', gutil.log);
 
-gulp.task('bundle', ['copy-html'], function()
-        {
-            return watchedBrowserify
-                .bundle()
-                .on('error', function (error) {
+//watchedBrowserify.on('log', gutil.log);
+
+gulp.task('bundle', ['copy-html'], function ()
+{
+    return merge2(watchedBrowserify
+            .bundle()
+            .on('error', function (error) {
                 console.error(error.toString());
-                })
-                            
-                .pipe(source('bundle.js'))
-                .pipe(buffer())
-                .pipe(precompiledHtmlTags)
-                .pipe(gulp.dest("public/app"));
-        });
+            }).pipe(source('bundle.js'))
+            .pipe(buffer()),
+            gulp.src('./app/view/*.html')
+//        .pipe(changed('./app/view/*.html'))
+//        .pipe(minifyHTML())
+            .pipe(riotts({indexByTagName: true, modular: false, compact: true})))
+            .pipe(print())
+            .pipe(concat('bundle-all.js'))
+            .pipe(gulp.dest("public/app"));
+
+});
 
 gulp.task('watch', ['bundle'], function ()
 {
