@@ -36,8 +36,7 @@
     "i18next": "1.11.0",
     "isomer": "#0.2.4",
     "riot-route": "2.4.0",
-    "riotjs": "2.6.1",
-    "riot-ts": "0.1.0-alpha.1",
+    "riotjs": "2.6.2",
     "semantic-ui": "2.1.4"
   },
   "devDependencies": {

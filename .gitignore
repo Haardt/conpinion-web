@@ -26,9 +26,12 @@ atlassian-ide-plugin.xml
 node_modules
 web/public/lib
 web/public/app
+web/public/semantic-ui
 web/public/npm_deps/*
 web/public/index.html
 web/screenshots
+web/dist
+wev/semantic-ui
 
 # asciidoc artifacts
 /asciidoc/overview-by-classes.asc

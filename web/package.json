@@ -13,7 +13,8 @@
     "url": ""
   },
   "dependencies": {
-    "redux": "3.5.2",
+    "semantic-ui": "*",
+    "redux": "*",
     "babel-core": "^6.3.26",
     "babel-preset-stage-2": "*",
     "babel-preset-stage-0": "*",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "browserify": "*",
     "gulp": "*",
+    "gulp-riot":"*",
     "gulp-cli": "*",
     "watchify": "*",
     "babelify": "*",
@@ -32,15 +34,17 @@
     "gulp-notify":"*",
     "browser-sync":"*",
     "gulp-watch":"*",
-    "gulp-riotts":"*",
     "gulp-typescript":"*",
     "gulp-concat": "*",
     "gulp-sourcemaps":"*",
-    "tsify":"*",
     "gulp-stream":"*",
     "gulp-print":"*",
+    "gulp-rename":"*",
+    "gulp-uglify":"*",
     "merge2":"*",
-
+    "typescript-simple":"*",
+    "vinyl-transform":"*",
+    "chalk":"*",
 
     "babel-plugin-external-helpers-2": "^6.3.13",
     "bower": "*",
