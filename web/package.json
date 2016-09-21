@@ -41,6 +41,7 @@
     "gulp-print":"*",
     "gulp-rename":"*",
     "gulp-uglify":"*",
+    "browserify-css":"*",
     "merge2":"*",
     "typescript-simple":"*",
     "vinyl-transform":"*",

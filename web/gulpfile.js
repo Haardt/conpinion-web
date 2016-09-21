@@ -20,113 +20,129 @@ var riot = require("gulp-riot");
 var chalk = require('chalk')
 var rename = require('gulp-rename')
 var uglify = require('gulp-uglify')
+var uglify = require('gulp-uglify')
 
 // Configuration
 
 var sourceSet = {
-  src:'./app',
-  app:'./public/app/my-app.js',
-  tags:'./app/**/*.tag'
-  }
+    src: './app',
+    app: './public/app/my-app.js',
+    css: './public/app/app.css',
+    tags: './app/**/*.tag'
+}
 
 var destSet = {
-  dest:'./public/app',
-  bundleName: 'bundle.js',
-  dist:'./dist'
+    dest: './public/app',
+    bundleJs: 'bundle.js',
+    bundleCss: 'bundle.css',
+    dist: './dist'
 }
 
 // Functions
 
 function tags() {
-  return gulp.src (sourceSet.tags)
-                     .pipe(changed(destSet.dest, {extension: '.js'}))
-                     .pipe(print())
-                     .pipe(riot(
-                     {
-                       type: 'typescript',
-                       modular: true
-                     }));
-}
-
-function bundle_js(bundler) {
-  return bundler.bundle()
-    .on('error', map_error)
-    .pipe(source(destSet.bundleName))
-    .pipe(buffer())
-    .pipe(gulp.dest(destSet.dest))
-    .pipe(rename(destSet.bundleName))
-    .pipe(sourcemaps.init({ loadMaps: true }))
-      // capture sourcemaps from transforms
-    //.pipe(uglify())
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(destSet.dest));
+    return gulp.src(sourceSet.tags)
+            .pipe(changed(destSet.dest, {extension: '.js'}))
+            .pipe(print())
+            .pipe(riot(
+                    {
+                        type: 'typescript',
+                        modular: true
+                    }));
 }
 
 function map_error(err) {
-  if (err.fileName) {
-    // regular error
-    gutil.log(chalk.red(err.name)
-      + ': '
-      + chalk.yellow(err.fileName.replace(__dirname + sourceSet.src, ''))
-      + ': '
-      + 'Line '
-      + chalk.magenta(err.lineNumber)
-      + ' & '
-      + 'Column '
-      + chalk.magenta(err.columnNumber || err.column)
-      + ': '
-      + chalk.blue(err.description))
-  } else {
-    // browserify error..
-    gutil.log(chalk.red(err.name)
-      + ': '
-      + chalk.yellow(err.message))
-  }
+    if (err.fileName) {
+        // regular error
+        gutil.log(chalk.red(err.name)
+                + ': '
+                + chalk.yellow(err.fileName.replace(__dirname + sourceSet.src, ''))
+                + ': '
+                + 'Line '
+                + chalk.magenta(err.lineNumber)
+                + ' & '
+                + 'Column '
+                + chalk.magenta(err.columnNumber || err.column)
+                + ': '
+                + chalk.blue(err.description))
+    } else {
+        // browserify error..
+        gutil.log(chalk.red(err.name)
+                + ': '
+                + chalk.yellow(err.message))
+    }
 
-  this.emit('end');
+    this.emit('end');
+}
+
+function bundle(bundler, destName, dest) {
+    return bundler.bundle()
+            .on('error', map_error)
+            .pipe(source(destName))
+            .pipe(buffer())
+            .pipe(gulp.dest(dest))
+            .pipe(rename(destName));
 }
 
 // Tasks
 
-gulp.task("copy-html", function () {
-    return gulp.src(["./app/**/*.html", "./app/**/*.js"])
+// Without watchify
+gulp.task('bundle:js', function () {
+    var bundler = browserify(sourceSet.app, {debug: true})
+    return bundle(bundler, destSet.bundleJs, destSet.dest)
+            .pipe(sourcemaps.init({loadMaps: true}))
+            // capture sourcemaps from transforms
+            //.pipe(uglify())
+            .pipe(sourcemaps.write('.'))
             .pipe(gulp.dest(destSet.dest));
 });
+
+// Without sourcemaps
+gulp.task('bundle:production', function () {
+    var bundler = browserify(sourceSet.app)
+
+    return bundler.bundle()
+            .on('error', map_error)
+            .pipe(source(sourceSet.app))
+            .pipe(buffer())
+            .pipe(rename('app.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest(destSet.dist))
+});
+
+gulp.task("copy-html", function () {
+    return gulp.src(["./app/**/*.html", "./app/**/*.js", "./app/**/*.css"])
+            .pipe(gulp.dest(destSet.dest));
+});
+
+gulp.task('bundle:css', function () {
+    var bundler = browserify(sourceSet.css, {debug: true})
+    bundler.transform('browserify-css', {autoInject: true});
+    return bundle(bundler, destSet.bundleCss, destSet.dest)
+            .pipe(gulp.dest(destSet.dest));
+})
+
 gulp.task("riot", function () {
     return tags().pipe(gulp.dest(destSet.dest));
 });
 
 gulp.task('watchify', function () {
-  var args = merge(watchify.args, { debug: true })
-  var bundler = watchify(browserify(sourceSet.app, args))
-  bundle_js(bundler)
+    var args = merge(watchify.args, {debug: true})
+    var bundler = watchify(browserify(sourceSet.app, args))
+    bundle(bundler, sourceSet.app, destSet.bundleJs)
+    .pipe(sourcemaps.init({loadMaps: true}))
+            // capture sourcemaps from transforms
+            //.pipe(uglify())
+            .pipe(sourcemaps.write('.'))
+            .pipe(gulp.dest(dest));
 
-  bundler.on('update', function () {
-    bundle_js(bundler)
-  })
+    bundler.on('update', function () {
+        bundle_js(bundler)
+    })
 })
 
-// Without watchify
-gulp.task('browserify', function () {
-  var bundler = browserify(sourceSet.app, { debug: true })
-  return bundle_js(bundler);
-})
-
-// Without sourcemaps
-gulp.task('browserify-production', function () {
-  var bundler = browserify(sourceSet.app)
-
-  return bundler.bundle()
-    .on('error', map_error)
-    .pipe(source(sourceSet.app))
-    .pipe(buffer())
-    .pipe(rename('app.min.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest(destSet.dist))
-});
-
-gulp.task('bundle:dev',['riot','copy-html','browserify']);
-gulp.task('bundle:dist',['riot','browserify-production']);
+gulp.task('bundle:dev', ['riot', 'copy-html', 'bundle:css', 'bundle:js']);
+gulp.task('bundle:dist', ['riot', 'browserify-production']);
 
 gulp.task('watch', function ()
 {
@@ -149,7 +165,9 @@ gulp.task('refresh', ['bundle:dev', ], browserSync.reload);
  */
 gulp.task('browser-sync', ['bundle:dev', 'watch'], function ()
 {
-    return browserSync({server: {baseDir: './public'}});
+    return browserSync({server: {
+            baseDir: './public/app',
+            index: 'index.html'}});
 });
 
 /**
