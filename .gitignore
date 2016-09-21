@@ -31,7 +31,8 @@ web/public/npm_deps/*
 web/public/index.html
 web/screenshots
 web/dist
-wev/semantic-ui
+web/semantic
+web/public/app/semantic
 
 # asciidoc artifacts
 /asciidoc/overview-by-classes.asc
