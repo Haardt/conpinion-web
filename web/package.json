@@ -46,6 +46,12 @@
     "typescript-simple":"*",
     "vinyl-transform":"*",
     "chalk":"*",
+    
+    "karma": "*",
+    "karma-mocha": "*",
+    "karma-mocha-reporter": "*",
+    "karma-phantomjs-launcher": "*",
+    "karma-riot": "*",
 
     "babel-plugin-external-helpers-2": "^6.3.13",
     "bower": "*",
