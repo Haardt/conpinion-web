@@ -20,7 +20,7 @@ var riot = require("gulp-riot");
 var chalk = require('chalk')
 var rename = require('gulp-rename')
 var uglify = require('gulp-uglify')
-var uglify = require('gulp-uglify')
+var Server = require('karma').Server;
 
 // Configuration
 
@@ -174,4 +174,14 @@ gulp.task('browser-sync', ['bundle:dev', 'watch'], function ()
  * This is the default task which chains the rest.
  */
 gulp.task('default', ['browser-sync']);
+
+/**
+ * Run test once and exit
+ */
+gulp.task('test', function (done) {
+  new Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
 

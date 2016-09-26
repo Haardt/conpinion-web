@@ -1,8 +1,9 @@
+require('./bundle.css');
+
 require('./common/section/section-manager');
 
 require('./my-test');
 
-require('./bundle.css');
 
 
 <my-app>
@@ -26,5 +27,4 @@ require('./bundle.css');
 
 </my-app>
 
-console.log ('Hallo');
 riot.mount('*');
