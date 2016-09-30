@@ -22,9 +22,9 @@ require('./my-test');
     <my-test>
 
     </my-test>
-
-    var hello: string = 'Hallo2';
-
+    <script type="text/typescript">
+        var hello: string = 'Hallo2';
+    </script>
 </my-app>
 
 riot.mount('*');

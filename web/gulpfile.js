@@ -97,7 +97,6 @@ gulp.task('bundle:js', function () {
             .pipe(gulp.dest(destSet.dest));
 });
 
-// Without sourcemaps
 gulp.task('bundle:production', function () {
     var bundler = browserify(sourceSet.app)
 
@@ -178,7 +177,7 @@ gulp.task('default', ['browser-sync']);
 /**
  * Run test once and exit
  */
-gulp.task('test', function (done) {
+gulp.task('test', ['bundle:dev'], function (done) {
   new Server({
     configFile: __dirname + '/karma.conf.js',
     singleRun: true

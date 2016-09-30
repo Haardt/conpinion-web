@@ -1,11 +1,12 @@
 <my-test>
     <div>
-       Test123456 { hello }
+        Test123456 { hello }
     </div>
-
-    var text: string = 'hallo!!!1';
-    this.hello = text;
-    this.on ('update', function() {
-      this.hello = text;
-      });
+    <script type="text/typescript">
+        var text: string = 'hallo!!!1';
+        this.hello = text;
+        this.on ('update', function() {
+          this.hello = text;
+          });
+    </script>
 </my-test>
