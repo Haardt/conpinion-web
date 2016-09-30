@@ -57,3 +57,4 @@ development-shell-commands/
 *.iml
 *.iws
 *.ipr
+/web/nbproject/private/
