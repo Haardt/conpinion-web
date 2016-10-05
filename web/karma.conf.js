@@ -38,6 +38,7 @@ module.exports = function (config) {
             './test/**/*.js': ['browserify']
         },
         browserify: {
+            transform: [ ["babelify" ] ],
             debug: true
         },
 

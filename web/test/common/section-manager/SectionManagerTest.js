@@ -6,17 +6,29 @@ jasmine.getFixtures().fixturesPath = 'base/test/common/section-manager';
 
 require("../../../public/app/common/section/section-manager");
 
-describe('karma-riot specs', function() {
+describe('section-manager', () => {
+    describe('site-section', () => {
 
+        describe('with the active attribute set to true', () => {
 
-  it('mounts hello tag', function() {
-//    var html = document.createElement('section-manager');
-//    document.body.appendChild(html);
-    loadFixtures('section-manager-test.html');
+            loadFixtures('section-manager-test.html');
+            riot.mount('*');
 
-    riot.mount('*');
-    expect(document.querySelector('p').textContent)
-            .to.equal('Test1');
-  });
+            it('should be visible', function () {
+                expect(document.querySelector('#visible').textContent)
+                        .to.equal('Test1');
+            });
+        });
 
+        describe('with the active attribute set to false', () => {
+
+            loadFixtures('section-manager-test.html');
+            riot.mount('*');
+
+            it('should be invisible', function () {
+                expect(document.querySelector('#invisible'))
+                        .to.be.equal(null);
+            });
+        });
+    });
 });

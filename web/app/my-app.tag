@@ -1,20 +1,19 @@
 require('./bundle.css');
-
 require('./common/section/section-manager');
-
+require('./common/menu/top-menu');
+require('./common/menu/top-menu-item');
 require('./my-test');
 
-
-
 <my-app>
-    <div>
-        This is a my custom element!!!!!1
-    </div>
-
+    <top-menu>
+        <top-menu-item>Menu-Item-1</top-menu-item>
+        <top-menu-item active='true'>Menu-Item-2</top-menu-item>
+    </top-menu>
+    
     <section-manager>
         <site-section active="true">
             <div class="ui center aligned header">
-                Section-Test
+                Section-Test123
             </div>
         </site-ssection>
     </section-manager>
