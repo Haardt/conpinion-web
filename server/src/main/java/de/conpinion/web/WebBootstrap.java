@@ -11,11 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WebBootstrap extends AbstractVerticle {
     
-    public BiFunction<Integer, Integer, Integer> add = (x,y) -> x + y;
-    public BiFunction<Integer, Integer, Integer> add5 = add.andThen(x -> x * 5);
-    
-    
-
     public static void main(String[] args) {
 
         Vertx vertx = Vertx.vertx();
@@ -26,8 +21,7 @@ public class WebBootstrap extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
-        Integer apply = new WebBootstrap().add5.apply(2, 5);
-        log.info("web-comfort starting...{}", apply);
+        log.info("web-comfort starting...{}");
 
         DeploymentOptions webServerOptions = new DeploymentOptions();
         vertx.deployVerticle(WebServerVerticle.class.getName(), webServerOptions);
