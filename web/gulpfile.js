@@ -21,11 +21,13 @@ var chalk = require('chalk')
 var rename = require('gulp-rename')
 var uglify = require('gulp-uglify')
 var Server = require('karma').Server;
+var tsProject = ts.createProject("tsconfig.json");
 
 // Configuration
 
 var sourceSet = {
     src: './app',
+    src_ts: './app/**/*.ts',
     app: './public/app/my-app.js',
     css: './public/app/app.css',
     tags: './app/**/*.tag'
@@ -34,6 +36,7 @@ var sourceSet = {
 var destSet = {
     dest: './public/app',
     bundleJs: 'bundle.js',
+    ts: 'typescript.js',
     bundleCss: 'bundle.css',
     dist: './dist'
 }
@@ -123,6 +126,14 @@ gulp.task('bundle:css', function () {
 
 gulp.task("riot", function () {
     return tags().pipe(gulp.dest(destSet.dest));
+});
+
+gulp.task("typescript", function () {
+    return gulp.src(sourceSet.src_ts).pipe(ts({
+                            noImplicitAny: true,
+                            module: 'umd'
+                        }))
+                        .pipe(gulp.dest(destSet.dest));
 });
 
 gulp.task('watchify', function () {
