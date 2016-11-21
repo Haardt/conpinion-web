@@ -1,11 +1,11 @@
 package de.conpinion.web;
 
 import de.conpinion.web.web.WebServerVerticle;
+
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
-import java.util.function.BiFunction;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

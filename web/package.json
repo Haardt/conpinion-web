@@ -21,6 +21,12 @@
     "babel-preset-es2015-riot": "*"
   },
   "devDependencies": {
+    "tag-pug-loader":"*",
+    "riotjs-loader":"*",
+    "webpack":"*",
+    "webpack-dev-server":"*",
+
+
     "babel-plugin-external-helpers-2": "^6.3.13",
     "babelify": "*",
     "bower": "*",
