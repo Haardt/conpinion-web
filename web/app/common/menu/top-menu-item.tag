@@ -3,11 +3,11 @@
         <yield/>
     </a>
 
-    <script type="text/typescript">
+    <script type="text/es6">
         this.active = this.opts.active;
 
         this.on('update', () => {
-//            console.log(this.opts.active == "true");
+            console.log(this.opts.active == "true");
 
         });
     </script>

@@ -2,11 +2,8 @@
     <div>
         Test123456 { hello }
     </div>
-    <script type="text/typescript">
-        var text: string = 'hallo!!!1';
-        this.hello = text;
-        this.on ('update', function() {
-          this.hello = text;
-          });
+    <script type="text/es6">
+      console.log('test');
+      this.hello = 'Hello World!!!';
     </script>
 </my-test>

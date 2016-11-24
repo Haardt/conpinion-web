@@ -1,11 +1,3 @@
-require('./bundle.css');
-require('./common/section/section-manager');
-require('./common/menu/top-menu');
-require('./common/menu/top-menu-item');
-require('./my-test');
-require('./common/redux/redux-mixin');
-require('./common/redux/redux-test');
-
 <my-app>
     <top-menu>
         <top-menu-item>Menu-Item-1</top-menu-item>
@@ -20,18 +12,12 @@ require('./common/redux/redux-test');
         </site-ssection>
     </section-manager>
 
-    <my-test>
-
-    </my-test>
-    <script type="text/typescript">
-        mixin('name');
-        import * as test from './common/redux/redux-test';
-        test.helloWorld();
-        var hello: string = 'Hallo World';
-        helloWorld();
-        //var redux = new ReduxMixin();
-        console.log(this.ReduxMixin);
-//        console.log(ReduxMixin);
+    <my-test> </my-test>
+    <script type="text/es6">
+      import './my-test.tag';
+      import './common/menu/top-menu.tag';
+      import './common/menu/top-menu-item.tag';
+      console.log("app");
     </script>
 </my-app>
 
