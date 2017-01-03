@@ -1,5 +1,3 @@
-require('./site-section');
-
 <section-manager>
     <yield></yield>
 
@@ -7,8 +5,9 @@ require('./site-section');
 
     </style>
 
-    <script type="text/typescript">
-        
+    <script type="text/es6">
+        import './site-section.tag';
+
         this.on('update', function() {
             console.log("section-manager");
             });

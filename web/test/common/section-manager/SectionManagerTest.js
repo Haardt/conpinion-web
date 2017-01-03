@@ -1,10 +1,10 @@
-var riot = require("riot");
-var chai = require('chai');
-require('jasmine-jquery');
+import 'riot';
+import 'chai';
+import 'jasmine-jquery';
 var expect = chai.expect;
 jasmine.getFixtures().fixturesPath = 'base/test/common/section-manager';
 
-require("../../../public/app/common/section/section-manager");
+import '../../../app/common/section/section-manager.tag';
 
 describe('section-manager', () => {
     describe('site-section', () => {

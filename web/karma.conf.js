@@ -1,5 +1,7 @@
 // Karma configuration
 // Generated on Sat Oct 01 2016 00:11:28 GMT+0200 (CEST)
+var webpackConfig = require('./webpack.config.js');
+webpackConfig.entry = {};
 
 module.exports = function (config) {
     config.set({
@@ -9,13 +11,17 @@ module.exports = function (config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine', 'mocha', 'browserify'],
+        frameworks: ['jasmine', 'mocha', 'chai'],
         plugins: [
             'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-mocha',
+            'karma-chai',
             'karma-mocha-reporter',
-            'karma-browserify'
+            'karma-webpack',
+            'karma-babel-preprocessor',
+            'karma-chrome-launcher',
+            'babel-plugin-transform-es2015-modules-umd'
         ],
         // list of files / patterns to load in the browser
         files: [
@@ -32,15 +38,24 @@ module.exports = function (config) {
         exclude: [
         ],
 
-        // preprocess matching files before serving them to the browser
-        // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            './test/**/*.js': ['browserify']
+            // add webpack as preprocessor
+            'test/*Test.js': ['webpack'],
+            'test/**/*.js': ['webpack']
+          },
+        babelPreprocessor: {
+            options: {
+
+                "plugins": ["transform-es2015-modules-umd"]
+            }
         },
-        browserify: {
-            transform: [ ["babelify" ] ],
-            debug: true
-        },
+          webpack: webpackConfig,
+
+          webpackMiddleware: {
+            // webpack-dev-middleware configuration
+            // i. e.
+            stats: 'errors-only'
+          },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
@@ -55,15 +70,20 @@ module.exports = function (config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_DEBUG,
 
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: false,
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'],
-
+        browsers: ['Chrome_without_security'],
+        customLaunchers: {
+              Chrome_without_security: {
+                base: 'Chrome',
+                flags: ['--disable-web-security']
+              }
+           },
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: true,

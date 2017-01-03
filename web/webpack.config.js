@@ -14,6 +14,13 @@ module.exports = {
       { test: /\.tag$/, exclude: /node_modules/, loader: 'riotjs-loader', query: { module:'true', type: 'es6' } }
     ],
     loaders: [
+    { test: /\.js$/,
+          exclude: /(node_modules|bower_components)/,
+          loader: 'babel-loader',
+          query: {
+            presets: ['es2015']
+          }
+    },
       { test: /\.html$/, loader: 'html-loader' },
       { test: /\.css$/,  loaders: ['style', 'css']}
     ]
