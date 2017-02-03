@@ -8,13 +8,10 @@
 
     </style>
 
-    <script type="text/typescript">
+    <script type="text/es6">
        this.active = this.opts.active == 'true';
-
         this.on('update', function() {
-
-            console.log("site-section");
+            console.log("site-section update");
             });
-
     </script>
 </site-section>

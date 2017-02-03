@@ -1,4 +1,4 @@
-import 'riot';
+import * as riot from 'riot';
 import 'chai';
 import 'jasmine-jquery';
 var expect = chai.expect;

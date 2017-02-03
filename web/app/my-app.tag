@@ -7,13 +7,14 @@
     <section-manager>
         <site-section active="true">
             <div class="ui center aligned header">
-                Section-Test123
+                Section-Test123456
             </div>
-        </site-ssection>
+        </site-section>
     </section-manager>
 
     <my-test> </my-test>
     <script type="text/es6">
+      import 'riot-hot-reload'
       import './my-test.tag';
       import './common/menu/top-menu.tag';
       import './common/menu/top-menu-item.tag';

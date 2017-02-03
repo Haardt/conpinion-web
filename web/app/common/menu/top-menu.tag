@@ -7,7 +7,7 @@
 
 
     <script type='text/es6'>
-        import "../../../public/app/semantic/components/menu.css";
+        import "./../../../public/app/semantic/components/menu.css";
 
         this.on('mount', () => {
             for (let menuItem of this.root.querySelectorAll('top-menu-item')) {

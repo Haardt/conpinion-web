@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Sat Oct 01 2016 00:11:28 GMT+0200 (CEST)
 var webpackConfig = require('./webpack.config.js');
-webpackConfig.entry = {};
+//webpackConfig.entry = {};
 
 module.exports = function (config) {
     config.set({
@@ -20,8 +20,8 @@ module.exports = function (config) {
             'karma-mocha-reporter',
             'karma-webpack',
             'karma-babel-preprocessor',
-            'karma-chrome-launcher',
-            'babel-plugin-transform-es2015-modules-umd'
+            'karma-chrome-launcher'
+            //'babel-plugin-transform-es2015-modules-umd'
         ],
         // list of files / patterns to load in the browser
         files: [
@@ -46,7 +46,7 @@ module.exports = function (config) {
         babelPreprocessor: {
             options: {
 
-                "plugins": ["transform-es2015-modules-umd"]
+               // "plugins": ["transform-es2015-modules-umd"]
             }
         },
           webpack: webpackConfig,
@@ -77,7 +77,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome_without_security'],
+        browsers: ['PhantomJS'], //'Chrome_without_security'],
         customLaunchers: {
               Chrome_without_security: {
                 base: 'Chrome',

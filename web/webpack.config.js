@@ -1,7 +1,9 @@
 'use strict';
 
-let webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const webpack = require('webpack');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './app/my-app.tag',
@@ -10,28 +12,32 @@ module.exports = {
     filename: 'my-app.js'
   },
   module: {
-    preLoaders: [
-      { test: /\.tag$/, exclude: /node_modules/, loader: 'riotjs-loader', query: { module:'true', type: 'es6' } }
-    ],
     loaders: [
-    { test: /\.js$/,
-          exclude: /(node_modules|bower_components)/,
-          loader: 'babel-loader',
-          query: {
-            presets: ['es2015']
-          }
+    {
+      test: /\.tag$/,
+      exclude: /node_modules/,
+      loader: 'riot-tag-loader',
+      query: {
+        type: 'es6', // transpile the riot tags using babel
+        hot: true,
+        debug: true
+      }
     },
-      { test: /\.html$/, loader: 'html-loader' },
-      { test: /\.css$/,  loaders: ['style', 'css']}
-    ]
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: 'babel-loader'
+    },
+    { test: /\.html$/, loader: 'html-loader' },
+    { test: /\.css$/,  loaders: ['style-loader', 'css-loader']},
+   ]
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
                               title: 'my-app',
                               template: './app/my-app.ejs', // Load a custom template (ejs by default see the FAQ for details)
-                            }),
-    new webpack.ProvidePlugin({riot: 'riot'})
+                            })
+//    new webpack.ProvidePlugin({riot: 'riot'})
   ]
 };
 
