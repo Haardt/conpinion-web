@@ -3,23 +3,42 @@
         <top-menu-item>Menu-Item-1</top-menu-item>
         <top-menu-item active='true'>Menu-Item-3</top-menu-item>
     </top-menu>
-    
-    <section-manager>
-        <site-section active="true">
+
+    <site-manager section="s1">
+        <site-section name="s1">
             <div class="ui center aligned header">
-                Section-Test123456
+              <p>S1</p>
             </div>
         </site-section>
-    </section-manager>
+        <site-section name="s2">
+            <div class="ui center aligned header">
+              <p>S2</p>
+            </div>
+        </site-section>
+    </site-manager>
 
-    <my-test> </my-test>
+
+    <redux-reducer>
+    </redux-reducer>
+
+    <redux-config>
+    </redux-config>
+
+
     <script type="text/es6">
       import 'riot-hot-reload'
-      import './my-test.tag';
+      import './common/redux/redux-reducer.tag';
+      import './common/redux/redux-subscriber.tag';
+      import './common/redux/redux-config.tag';
+      import './common/section/site-manager.tag';
       import './common/menu/top-menu.tag';
-      import './common/menu/top-menu-item.tag';
-      console.log("app");
     </script>
 </my-app>
 
+import {ReduxMixin} from './common/redux/redux-mixin.js';
+
+let reduxMixin = new ReduxMixin(5,5);
+console.log ("redux:", reduxMixin.toString());
+
+riot.mixin('redux', reduxMixin);
 riot.mount('*');

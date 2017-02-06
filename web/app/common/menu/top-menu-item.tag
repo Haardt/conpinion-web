@@ -7,7 +7,7 @@
         this.active = this.opts.active;
 
         this.on('update', () => {
-            console.log(this.opts.active == "true");
+//            console.log(this.opts.active == "true");
 
         });
     </script>

@@ -1,6 +1,6 @@
-<site-section if="{ active }">
+<site-section>
 
-    <div>
+    <div if="{ visible }">
         <yield></yield>
     </div>
     
@@ -9,9 +9,15 @@
     </style>
 
     <script type="text/es6">
-       this.active = this.opts.active == 'true';
-        this.on('update', function() {
-            console.log("site-section update");
-            });
+       this.visible = false;
+
+       this.show = () => {
+        this.visible = true;
+        this.update();
+       }
+       this.hide = () => {
+        this.visible = false;
+        this.update();
+       }
     </script>
 </site-section>
