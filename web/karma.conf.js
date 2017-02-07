@@ -21,17 +21,17 @@ module.exports = function (config) {
             'karma-webpack',
             'karma-babel-preprocessor',
             'karma-chrome-launcher'
-            //'babel-plugin-transform-es2015-modules-umd'
+         //   'babel-plugin-transform-es2015-modules-umd'
         ],
         // list of files / patterns to load in the browser
         files: [
             {
-                pattern: 'test/**/*.html',
+                pattern: 'app/**/*.html',
                 watched: true,
                 served: true,
                 included: false
             },
-            './test/**/*.js'
+            './app/**/*.js'
         ],
 
         // list of files to exclude
@@ -40,13 +40,13 @@ module.exports = function (config) {
 
         preprocessors: {
             // add webpack as preprocessor
-            'test/*Test.js': ['webpack'],
-            'test/**/*.js': ['webpack']
+            'app/*Test.js': ['webpack'],
+            'app/**/*.js': ['webpack']
           },
         babelPreprocessor: {
             options: {
 
-               // "plugins": ["transform-es2015-modules-umd"]
+              //  "plugins": ["transform-es2015-modules-umd"]
             }
         },
           webpack: webpackConfig,
@@ -77,7 +77,7 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['PhantomJS'], //'Chrome_without_security'],
+        browsers: ['Chrome_without_security'], //['PhantomJS'] ,
         customLaunchers: {
               Chrome_without_security: {
                 base: 'Chrome',

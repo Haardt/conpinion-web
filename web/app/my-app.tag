@@ -26,7 +26,7 @@
 
 
     <script type="text/es6">
-      import 'riot-hot-reload'
+      import 'riot-hot-reload';
       import './common/redux/redux-reducer.tag';
       import './common/redux/redux-subscriber.tag';
       import './common/redux/redux-config.tag';
@@ -37,7 +37,7 @@
 
 import {ReduxMixin} from './common/redux/redux-mixin.js';
 
-let reduxMixin = new ReduxMixin(5,5);
+let reduxMixin = new ReduxMixin();
 console.log ("redux:", reduxMixin.toString());
 
 riot.mixin('redux', reduxMixin);
