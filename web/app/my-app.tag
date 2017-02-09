@@ -19,11 +19,8 @@
 
 
     <redux-reducer>
+      <site-reducer/>
     </redux-reducer>
-
-    <redux-config>
-    </redux-config>
-
 
     <script type="text/es6">
       import 'riot-hot-reload';
@@ -31,6 +28,7 @@
       import './common/redux/redux-subscriber.tag';
       import './common/redux/redux-config.tag';
       import './common/section/site-manager.tag';
+      import './common/section/site-reducer.tag';
       import './common/menu/top-menu.tag';
     </script>
 </my-app>
@@ -38,7 +36,9 @@
 import {ReduxMixin} from './common/redux/redux-mixin.js';
 
 let reduxMixin = new ReduxMixin();
-console.log ("redux:", reduxMixin.toString());
 
 riot.mixin('redux', reduxMixin);
 riot.mount('*');
+reduxMixin.createStore();
+reduxMixin.dispatch({type:'STATE1'});
+reduxMixin.dumpState();

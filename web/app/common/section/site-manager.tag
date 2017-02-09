@@ -10,9 +10,8 @@
 
         this.mixin('redux');
         this.visibleSections = [this.opts.section];
-
         this.addSubscriber((store) => {
-          console.log ('Store:', store);
+          console.log ('Manager-Store-Subscribe', this.getState());
         });
         this.on('mount', () => {
             if (this.tags['site-section']) {

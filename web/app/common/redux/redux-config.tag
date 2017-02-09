@@ -5,7 +5,7 @@
 
   <script type='text/es6'>
     this.mixin('redux');
-    this.createReduxStore();
+    //this.createReduxStore();
   </script>
 
 </redux-config>
