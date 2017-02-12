@@ -10,21 +10,21 @@
 
         this.mixin('redux');
         this.visibleSections = [this.opts.section];
+
         this.addSubscriber((store) => {
-          console.log ('Manager-Store-Subscribe', this.getState()[0].section);
-          this.show(this.getState()[0].section);
+          console.log ('Manager-Store-Subscribe ->', this.getState());
+          this.show(this.getState()['site-manager'].section);
         });
+
         this.on('mount', () => this.show(this.visibleSections));
 
         this.show = (section) => {
           if (this.tags['site-section']) {
-            this.tags['site-section'].forEach((tag, index) => {
-                    console.log("nnn", section.find);
-
-              if (section.find(elm => elm === tag.opts.name)) {
-                tag.show();
+            this.tags['site-section'].forEach((sectionTag) => {
+              if (section.find(elm => elm === sectionTag.opts.name)) {
+                sectionTag.show();
               } else {
-                tag.hide();
+                sectionTag.hide();
               }
           });
         }

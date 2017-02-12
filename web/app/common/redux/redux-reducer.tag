@@ -7,13 +7,11 @@
     this.mixin('redux');
 
     this.on('mount', () => {
-      console.log ("Object-Keys:", Object.keys(this.tags));
       Object.keys(this.tags).forEach( (tagName) => {
-        console.log ("-->", tagName);
+        let reducerName = this.tags[tagName].name();
         let reducer = this.tags[tagName].reducer;
         let initState = this.tags[tagName].initState;
-        console.log ("InitState: ", initState);
-        this.addReducer(this._createReducer(initState, reducer));
+        this.addReducer(reducerName, this._createReducer(initState, reducer));
       });
     });
 
@@ -28,5 +26,4 @@
       }
 
   </script>
-
 </redux-reducer>

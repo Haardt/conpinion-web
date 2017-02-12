@@ -5,19 +5,12 @@
         section: ['']
       }
 
+      this.name = () => 'site-manager';
+
       this.reducer = {
-        ['STATE1'](state = initialState, action) {
-            console.log ('State reducer called');
+        ['SHOW_SECTION'](state = initialState, action) {
             return {'section': action.section};
           },
-        ['STATE2'](state = initialState, action) {
-            console.log ('State1 reducer called', state);
-            return {'section': action.section};
-          },
-        ['STATE3'](state = initialState, action) {
-            console.log ('State1 reducer called', state);
-            return {'section': action.section};
-          }
         };
     </script>
 </site-reducer>
