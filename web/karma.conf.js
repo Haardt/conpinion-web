@@ -40,7 +40,7 @@ module.exports = function (config) {
 
         preprocessors: {
             // add webpack as preprocessor
-            'app/*Test.js': ['webpack'],
+            'app/*-test.js': ['webpack'],
             'app/**/*.js': ['webpack']
           },
         babelPreprocessor: {

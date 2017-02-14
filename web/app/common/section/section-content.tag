@@ -1,4 +1,4 @@
-<site-section>
+<section-content>
 
     <div if="{ visible }">
         <yield></yield>
@@ -20,4 +20,4 @@
         this.update();
        }
     </script>
-</site-section>
+</section-content>

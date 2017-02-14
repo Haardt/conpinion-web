@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
+<head>
+    <title>section-manager test</title>
+    <meta charset="UTF-8">
+</head>
+<body>
 
-    <site-manager section="s1">
-        <site-section name="s1">
-            <p id="visible">Test1</p>
-        </site-section>
-        <site-section name="s2">
-            <p id="invisible">Test2</p>
-        </site-section>
-    </site-manager>
+<section-manager>
+    <section-content name="s1">
+        <p id="visible1">Test1</p>
+    </section-content>
+    <section-content name="s2">
+        <p id="visible2">Test2</p>
+    </section-content>
+</section-manager>
 
+<redux-reducer>
+    <section-reducer></section-reducer>
+</redux-reducer>
 
 </body>
 </html>

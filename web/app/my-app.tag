@@ -4,22 +4,22 @@
         <top-menu-item active='true'>Menu-Item-3</top-menu-item>
     </top-menu>
 
-    <site-manager section="s1">
-        <site-section name="s1">
+    <section-manager section="s1">
+        <section-content name="s1">
             <div class="ui center aligned header">
               <p>S1</p>
             </div>
-        </site-section>
-        <site-section name="s2">
+        </section-content>
+        <section-content name="s2">
             <div class="ui center aligned header">
               <p>S2</p>
             </div>
-        </site-section>
-    </site-manager>
+        </section-content>
+    </section-manager>
 
 
     <redux-reducer>
-      <site-reducer/>
+      <section-reducer/>
     </redux-reducer>
 
     <script type="text/es6">
@@ -27,20 +27,20 @@
       import './common/redux/redux-reducer.tag';
       import './common/redux/redux-subscriber.tag';
       import './common/redux/redux-config.tag';
-      import './common/section/site-manager.tag';
-      import './common/section/site-reducer.tag';
+      import './common/section/section-manager.tag';
+      import './common/section/section-reducer.tag';
       import './common/menu/top-menu.tag';
     </script>
 </my-app>
 
 import {ReduxMixin} from './common/redux/redux-mixin.js';
+import { SHOW_SECTION, showSection } from './common/section/section-actions.js'
 
 let reduxMixin = new ReduxMixin();
 
 riot.mixin('redux', reduxMixin);
 riot.mount('*');
 reduxMixin.createStore();
-reduxMixin.dispatch({type:'SHOW_SECTION', section:['s1']});
-//reduxMixin.dispatch({type:'SHOW_SECTION', section:['s2']});
-//reduxMixin.dispatch({type:'SHOW_SECTION', section:['s1','s2']});
+reduxMixin.dispatch(showSection('s2'));
+reduxMixin.dispatch(showSection('s1'));
 reduxMixin.dumpState();
