@@ -26,7 +26,6 @@ describe('section-manager shows s1 section', () => {
 });
 
 describe('section-manager shows s2 section', () => {
-
     it('should show section s2', function () {
         loadFixtures('section-manager-test.html');
         let redux = new ReduxMixin();
