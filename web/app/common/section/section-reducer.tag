@@ -1,13 +1,12 @@
 <section-reducer>
     <script type="text/es6">
-     import { SHOW_SECTION } from './section-actions.js'
-
+      import { SHOW_SECTION } from './section-actions.js'
 
       this.initState = {
         section: ['']
       }
 
-      this.name = () => 'site-manager';
+      this.name = () => 'section-manager';
 
       this.reducer = {
         [SHOW_SECTION](state = initialState, action) {
