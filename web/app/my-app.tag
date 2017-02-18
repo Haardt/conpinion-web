@@ -41,6 +41,6 @@ let reduxMixin = new ReduxMixin();
 riot.mixin('redux', reduxMixin);
 riot.mount('*');
 reduxMixin.createStore();
-reduxMixin.dispatch(showSection('s2'));
-reduxMixin.dispatch(showSection('s1'));
+reduxMixin.dispatch(showSection(['s2']));
+reduxMixin.dispatch(showSection(['s1']));
 reduxMixin.dumpState();
