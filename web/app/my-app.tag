@@ -33,10 +33,14 @@
     </script>
 </my-app>
 
+import {RouterMixin} from './common/router/router-mixin.js';
 import {ReduxMixin} from './common/redux/redux-mixin.js';
 import { SHOW_SECTION, showSection } from './common/section/section-actions.js'
 
 let reduxMixin = new ReduxMixin();
+let routerMixin = new RouterMixin();
+
+routerMixin.init();
 
 riot.mixin('redux', reduxMixin);
 riot.mount('*');
