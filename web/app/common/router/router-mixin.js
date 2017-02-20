@@ -1,29 +1,43 @@
 import route from 'riot-route';
 
+import { showSection, hideSection } from '../section/section-actions.js';
+
 let instance = null;
 
 export class RouterMixin {
 
-  constructor() {
+  constructor(redux) {
     if (instance){
       return instance;
     }
-
-    this.routes = {};
+    this.redux = redux;
+    this.routes = [];
     instance = this;
   }
 
-  init() {
+  setupRouter() {
     console.log("Init router");
-    route( (collection, id, action) => {
-      console.log("Route: ", collection);
-    });
+
+    this.routes.forEach( (routeDef) => {
+      route(routeDef.route, (collection, id, action) => {
+          console.log("Enter route:", routeDef.route);
+        });
+      });
     route('customers/267393/edit');
     route.start(true);
   }
 
-  addRoute(route) {
-    this.routes[route] = '';
+  addRoute(route, managers, sections, func = this._showSection) {
+    this.routes.push({
+      route: route,
+      managers: managers,
+      sections: sections,
+      func: func
+    });
+  }
+
+  _showSection(managerName, sections) {
+    this.redux.showSection(sections)
   }
 
   dumpRoutes() {
