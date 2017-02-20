@@ -8,7 +8,7 @@ ext.versions = [
     commons_lang               : '3.4',
     completable_futures        : '1.0.6',
     crash                      : '1.3.1',
-    dagger                     : '1.2.2',
+    dagger                     : '2.9',
     dropwizard_metrics         : '3.1.2',
     dropwizard_metrics_influxdb: '1.0.1',
     groovy                     : '2.4.7',
@@ -23,6 +23,7 @@ ext.versions = [
     spock                      : '1.1-groovy-2.4-rc-1',
     vertx                      : '3.3.2',
     vertx_helper               : '0.0.40',
+    vertx_nubes                : '1.3',
 ]
 
 ext.libraries = [
@@ -36,8 +37,8 @@ ext.libraries = [
 //    completable_futures        : "de.telcat:completable-futures:${versions.completable_futures}",
     crash_shell                : "org.crashub:crash.shell:${versions.crash}",
     crash_shell_ssh            : "org.crashub:crash.connectors.ssh:${versions.crash}",
-    dagger                     : "com.squareup.dagger:dagger:${versions.dagger}",
-    dagger_compiler            : "com.squareup.dagger:dagger-compiler:${versions.dagger}",
+    dagger                     : "com.google.dagger:dagger:${versions.dagger}",
+    dagger_compiler            : "com.google.dagger:dagger-compiler:${versions.dagger}",
     dropwizard_metrics         : "io.dropwizard.metrics:metrics-core:${versions.dropwizard_metrics}",
     dropwizard_metrics_jvm     : "io.dropwizard.metrics:metrics-jvm:${versions.dropwizard_metrics}",
     dropwizard_metrics_influxdb: "de.telcat:dropwizard-metrics-influxdb:${versions.dropwizard_metrics_influxdb}",
@@ -57,6 +58,7 @@ ext.libraries = [
     vertx_codegen              : "io.vertx:vertx-codegen:${versions.vertx}",
     vertx_core                 : "io.vertx:vertx-core:${versions.vertx}",
     vertx_hazelcast            : "io.vertx:vertx-hazelcast:${versions.vertx}",
+    vertx_nubes                : "com.github.aesteve:nubes:${versions.vertx}",
     vertx_web                  : "io.vertx:vertx-web:${versions.vertx}",
     vertx_routematcher         : "io.vertx:vertx-routematcher:${versions.vertx}",
 //    vertx_service_proxy        : "io.vertx:vertx-service-proxy:${versions.vertx}",

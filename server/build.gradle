@@ -3,6 +3,8 @@ apply plugin: 'application'
 dependencies {
   compile([
       project(":web"),
+      libraries.dagger,
+      libraries.dagger_compiler,
 //      libraries.completable_futures,
       libraries.guava,
 //      libraries.guava_collectors,
@@ -16,6 +18,7 @@ dependencies {
   runtime([
       libraries.log4j_slf4j_impl,
       libraries.log4j_core,
+      libraries.dagger,
   ])
 
   testCompile([
