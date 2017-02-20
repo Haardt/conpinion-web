@@ -10,11 +10,13 @@
           console.log("Routedefs:", routes);
           if (Array.isArray(routes)) {
             routes.forEach( (routeEntry) => {
-              console.log("MRoute:", routeEntry.route);
+              console.log("MRoute:", routeEntry.opts.route);
+              console.log("MRoute:", JSON.parse(routeEntry.opts.section));
             });
           } else {
-            this.addRoute(routes.opts.route,
-              '', '');
+            this.addRoute(routes.opts.route,'', '');
+              console.log("MRoute:", routes.opts.section.replace(/\'/g,"\""));
+              console.log("MRoute:", JSON.parse(routes.opts.section.replace(/\'/g,"\"")));
 
             console.log("Route:", routes.opts.route);
           }

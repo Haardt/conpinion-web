@@ -5,7 +5,7 @@
     </top-menu>
 
     <section-manager section="s1">
-        <section-group hide-others='true' only-on-members='false'>
+        <section-group hide-others='true' only-on-members='true'>
           <section-content name="s1">
               <div class="ui center aligned header">
                 <p>S1</p>
@@ -33,7 +33,7 @@
 
 
     <route-definitions>
-      <route-entry route="/tests/*" hideManager/>
+      <route-entry route="/users/10/profile/2" section="['users','profile']">
     </route-definitions>
 
 
