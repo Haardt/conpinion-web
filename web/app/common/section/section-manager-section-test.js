@@ -15,7 +15,7 @@ describe('section-manager', () => {
     var redux;
 
     beforeEach(() => {
-      loadFixtures('section-manager-test.html');
+      loadFixtures('section-manager-section-test.html');
       redux = new ReduxMixin();
       riot.mixin('redux', redux);
       riot.mount('*');

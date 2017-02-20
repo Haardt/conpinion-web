@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>section-manager test</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+<section-manager section="s1">
+    <section-group hide-others="true" only-on-members="true">
+        <section-content name="s1">
+            <p id="visible1">Test1</p>
+        </section-content>
+        <section-content name="s2">
+            <p id="visible2">Test2</p>
+        </section-content>
+    </section-group>
+    <section-group hide-others="true" only-on-members="false">
+        <section-content name="s3">
+            <p id="visible3">Test3</p>
+        </section-content>
+        <section-content name="s4">
+            <p id="visible4">Test4</p>
+        </section-content>
+    </section-group>
+    <section-group hide-others="false" only-on-members="true">
+        <section-content name="s5">
+            <p id="visible5">Test5</p>
+        </section-content>
+        <section-content name="s6">
+            <p id="visible6">Test6</p>
+        </section-content>
+    </section-group>
+</section-manager>
+
+<redux-reducer>
+    <section-reducer></section-reducer>
+</redux-reducer>
+
+</body>
+</html>

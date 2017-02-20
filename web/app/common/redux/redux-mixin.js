@@ -32,9 +32,6 @@ export class ReduxMixin {
   }
 
   createStore() {
-    console.log('Reducer:', this.reducer);
-    console.log('Subsciber:', this.subscriber);
-
     let appReducer = combineReducers(this.reducer);
     instance.store = createStore(appReducer);
     instance.subscriber.forEach ( subscriber => this.store.subscribe(subscriber))
