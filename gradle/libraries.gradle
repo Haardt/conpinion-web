@@ -58,7 +58,7 @@ ext.libraries = [
     vertx_codegen              : "io.vertx:vertx-codegen:${versions.vertx}",
     vertx_core                 : "io.vertx:vertx-core:${versions.vertx}",
     vertx_hazelcast            : "io.vertx:vertx-hazelcast:${versions.vertx}",
-    vertx_nubes                : "com.github.aesteve:nubes:${versions.vertx}",
+    vertx_nubes                : "com.github.aesteve:nubes:${versions.vertx_nubes}",
     vertx_web                  : "io.vertx:vertx-web:${versions.vertx}",
     vertx_routematcher         : "io.vertx:vertx-routematcher:${versions.vertx}",
 //    vertx_service_proxy        : "io.vertx:vertx-service-proxy:${versions.vertx}",

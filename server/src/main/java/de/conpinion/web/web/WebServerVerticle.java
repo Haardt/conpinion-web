@@ -15,35 +15,35 @@ public class WebServerVerticle extends AbstractVerticle
 	@Override
 	public void start(Future<Void> startFuture) throws Exception
 	{
-		log.info("Starting static web server...");
-
-		System.out.println("Working Directory = " +
-				System.getProperty("user.dir"));
-
-		HttpServer server = vertx.createHttpServer();
-		Router router = Router.router(vertx);
-
-		server.requestHandler(router::accept);
-
-		server.listen(8081, res -> {
-			if (res.succeeded())
-			{
-				log.info ("Web-Server ready...blub");
-			}
-			else
-			{
-				log.error("Can't bind Web-Server...{}", res.cause());
-			}
-		});
-
-		router.route("/public/*").handler(
-				StaticHandler.create()
-							 .setCachingEnabled(false)
-
-							 .setDirectoryListing(true)
-							 .setWebRoot("../web/public"));
-
-
+//		log.info("Starting static web server...");
+//
+//		System.out.println("Working Directory = " +
+//				System.getProperty("user.dir"));
+//
+//		HttpServer server = vertx.createHttpServer();
+//		Router router = Router.router(vertx);
+//
+//		server.requestHandler(router::accept);
+//
+//		server.listen(8081, res -> {
+//			if (res.succeeded())
+//			{
+//				log.info ("Web-Server ready...blub");
+//			}
+//			else
+//			{
+//				log.error("Can't bind Web-Server...{}", res.cause());
+//			}
+//		});
+//
+//		router.route("/public/*").handler(
+//				StaticHandler.create()
+//							 .setCachingEnabled(false)
+//
+//							 .setDirectoryListing(true)
+//							 .setWebRoot("../web/public"));
+//
+//
 
 		startFuture.complete(null);
 

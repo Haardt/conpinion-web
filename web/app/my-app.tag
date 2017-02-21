@@ -33,7 +33,7 @@
 
 
     <route-definitions>
-      <route-entry route="/users/10/profile/2" section="['users','profile']">
+      <route-entry route="/users/:user/profile/:id" section="['users','profile']">
     </route-definitions>
 
 

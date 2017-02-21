@@ -8,18 +8,13 @@
         this.on('mount', () => {
           let routes = this.tags['route-entry'];
           console.log("Routedefs:", routes);
-          if (Array.isArray(routes)) {
-            routes.forEach( (routeEntry) => {
-              console.log("MRoute:", routeEntry.opts.route);
-              console.log("MRoute:", JSON.parse(routeEntry.opts.section));
-            });
-          } else {
-            this.addRoute(routes.opts.route,'', '');
-              console.log("MRoute:", routes.opts.section.replace(/\'/g,"\""));
-              console.log("MRoute:", JSON.parse(routes.opts.section.replace(/\'/g,"\"")));
-
-            console.log("Route:", routes.opts.route);
+          if (!Array.isArray(routes)) {
+            routes = [routes];
           }
+          routes.forEach( (routeEntry) => {
+            let sections = routes.opts.section.replace(/\'/g,"\""));
+            this.addRoute(routes.opts.route, sections);
+          });
         });
   </script>
 </route-definitions>

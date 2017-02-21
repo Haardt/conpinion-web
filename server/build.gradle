@@ -11,6 +11,7 @@ dependencies {
       libraries.slf4j_api,
       libraries.vertx_codegen,
       libraries.vertx_web,
+      libraries.vertx_nubes,
 //      libraries.vertx_service_proxy,
 //      libraries.vertx_helper,
   ])

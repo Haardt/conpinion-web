@@ -68,7 +68,7 @@ allprojects {
 // public alternatives for the nexus connection:
     mavenLocal() // for javax.xml.namespace and javax.xml.jax-qname
     mavenCentral()
-//    maven { url 'https://repository.jboss.org/nexus/content/repositories/thirdparty-releases' } // for net.java.stun4j:stun4j:1.0.MOBICENTS
+    jcenter()
   }
 }
 

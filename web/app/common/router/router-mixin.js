@@ -27,10 +27,9 @@ export class RouterMixin {
     route.start(true);
   }
 
-  addRoute(route, managers, sections, func = this._showSection) {
+  addRoute(route, sections, func = this._showSection) {
     this.routes.push({
       route: route,
-      managers: managers,
       sections: sections,
       func: func
     });
