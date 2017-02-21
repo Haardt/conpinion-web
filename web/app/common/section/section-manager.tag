@@ -13,14 +13,17 @@
         this.visibleSections = [this.opts.section];
         this.on('mount', () => this.processGroups(this.visibleSections, (sections) => sections.show()));
 
-        this.addSubscriber((store) => {
-          let state = this.getState()['section-manager'];
+        this.addSubscriber((storeState) => {
+          let state = storeState['section-manager'];
           let processTag = !!state.added ? (sections) => sections.show() : (sections) => sections.hide();
           let sections = !!state.added ? state.added : state.removed;
           this.processGroups(sections, processTag);
         });
 
         this.processGroups = (sections, processTag) => {
+          if (! sections)
+            return;
+
           let groups = this.tags['section-group'];
           if (!groups) {
               this.processSections(sections, this.tags, processTag, false);

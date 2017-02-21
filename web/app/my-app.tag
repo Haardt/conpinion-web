@@ -33,12 +33,13 @@
 
 
     <route-definitions>
-      <route-entry route="/users/:user/profile/:id" section="['users','profile']">
+      <route-entry route="/users/*/edit" title="user.edit" section="['users','profile']">
     </route-definitions>
 
 
     <redux-reducer>
       <section-reducer/>
+      <route-reducer/>
     </redux-reducer>
 
     <script type="text/es6">
@@ -46,15 +47,17 @@
       import './common/redux/redux-reducer.tag';
       import './common/redux/redux-subscriber.tag';
       import './common/router/route-definitions.tag';
+      import './common/router/route-reducer.tag';
       import './common/section/section-manager.tag';
       import './common/section/section-reducer.tag';
       import './common/menu/top-menu.tag';
     </script>
 </my-app>
 
-import {RouterMixin} from './common/router/router-mixin.js';
-import {ReduxMixin} from './common/redux/redux-mixin.js';
-import { SHOW_SECTION, showSection } from './common/section/section-actions.js'
+import { RouterMixin } from './common/router/router-mixin.js';
+import { ReduxMixin } from './common/redux/redux-mixin.js';
+import { showSection } from './common/section/section-actions.js'
+import { newRoute } from './common/router/route-actions.js'
 
 let reduxMixin = new ReduxMixin();
 let routerMixin = new RouterMixin(reduxMixin);
@@ -64,8 +67,6 @@ riot.mixin('router', routerMixin);
 riot.mount('*');
 routerMixin.setupRouter();
 reduxMixin.createStore();
-reduxMixin.dispatch(showSection(['s2']));
-reduxMixin.dispatch(showSection(['s1']));
-reduxMixin.dispatch(showSection(['s2']));
-reduxMixin.dispatch(showSection(['s4']));
+
+reduxMixin.dispatch(newRoute('/users/20/edit'));
 reduxMixin.dumpState();

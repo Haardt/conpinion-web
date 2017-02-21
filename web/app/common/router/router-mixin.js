@@ -1,7 +1,5 @@
 import route from 'riot-route';
 
-import { showSection, hideSection } from '../section/section-actions.js';
-
 let instance = null;
 
 export class RouterMixin {
@@ -16,18 +14,19 @@ export class RouterMixin {
   }
 
   setupRouter() {
-    console.log("Init router");
-
-    this.routes.forEach( (routeDef) => {
+    this.routes.forEach((routeDef) => {
       route(routeDef.route, (collection, id, action) => {
           console.log("Enter route:", routeDef.route);
         });
       });
-    route('customers/267393/edit');
     route.start(true);
+
+    this.redux.addSubscriber((state) => {
+      route(state['router'].route)
+    });
   }
 
-  addRoute(route, sections, func = this._showSection) {
+  addRoute(route, sections, func = this._defaultFunction) {
     this.routes.push({
       route: route,
       sections: sections,
@@ -35,8 +34,7 @@ export class RouterMixin {
     });
   }
 
-  _showSection(managerName, sections) {
-    this.redux.showSection(sections)
+  _defaultFunction(managerName, sections) {
   }
 
   dumpRoutes() {

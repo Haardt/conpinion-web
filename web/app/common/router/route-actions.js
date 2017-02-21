@@ -1,10 +1,10 @@
 
-export const SHOW_SECTION = 'NEW_ROUTE';
+export const NEW_ROUTE = 'NEW_ROUTE';
 
 export function newRoute(route) {
   return {
     type: NEW_ROUTE,
-    route: route
+    route: route,
     data: {}
   }
 };

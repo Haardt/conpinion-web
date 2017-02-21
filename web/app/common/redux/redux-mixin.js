@@ -10,7 +10,7 @@ export class ReduxMixin {
     }
 
     this.reducer = {};
-    this.subscriber = [];
+    this.subscribers = [];
     this.store = null;
     instance = this;
   }
@@ -20,11 +20,11 @@ export class ReduxMixin {
   }
 
   addReducer(reducerName, reducer) {
-    this.reducer[reducerName] = reducer;
+    instance.reducer[reducerName] = reducer;
   }
 
   addSubscriber(subscriber) {
-    this.subscriber.push(subscriber);
+    instance.subscribers.push(() => subscriber(this.getState()));
   }
 
   dispatch(action) {
@@ -34,8 +34,11 @@ export class ReduxMixin {
   createStore() {
     let appReducer = combineReducers(this.reducer);
     instance.store = createStore(appReducer);
-    instance.subscriber.forEach ( subscriber => this.store.subscribe(subscriber))
+    instance.subscribers.forEach((subscriber) => {
+        instance.store.subscribe(subscriber);
+      });
   }
+
 
   getState() {
     return instance.store.getState();
