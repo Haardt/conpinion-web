@@ -2,16 +2,16 @@
 export const SHOW_SECTION = 'SHOW_SECTION';
 export const HIDE_SECTION = 'HIDE_SECTION';
 
-export function showSection(section) {
+export function showSection(sections) {
   return {
     type: SHOW_SECTION,
-    section: section
+    sections: sections
   }
 };
 
-export function hideSection(section) {
+export function hideSection(sections) {
   return {
     type: HIDE_SECTION,
-    section: section
+    sections: sections
   }
 };

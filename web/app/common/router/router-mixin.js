@@ -1,40 +1,58 @@
 import route from 'riot-route';
+import { routingFinished} from './route-actions.js'
 
 let instance = null;
 
-export class RouterMixin {
+export default class RouterMixin {
 
   constructor(redux) {
     if (instance){
       return instance;
     }
     this.redux = redux;
-    this.routes = [];
+    this.routes = {};
     instance = this;
   }
 
+  static instance() {
+    return instance;
+  }
+
   setupRouter() {
-    this.routes.forEach((routeDef) => {
-      route(routeDef.route, (collection, id, action) => {
-          console.log("Enter route:", routeDef.route);
+    Object.keys(this.routes).forEach((routeEntry) => {
+      route(routeEntry, (...args) => {
+          console.log('Enter route:', routeEntry);
+          this.redux.dispatch(routingFinished(
+            routeEntry,
+            this.routes[routeEntry].sections,
+            route.query(),
+            args,
+            {}
+          ));
         });
       });
     route.start(true);
 
     this.redux.addSubscriber((state) => {
-      route(state['router'].route)
+      if (! state['router'].IGNORE_URL_LINE) {
+        route(state['router'].route)
+      }
     });
   }
 
   addRoute(route, sections, func = this._defaultFunction) {
-    this.routes.push({
+    this.routes[route] ={
       route: route,
       sections: sections,
       func: func
-    });
+    };
   }
 
   _defaultFunction(managerName, sections) {
+  }
+
+  getRoutes() {
+    return this.routes;
   }
 
   dumpRoutes() {

@@ -31,11 +31,10 @@
         </section-group>
     </section-manager>
 
-
     <route-definitions>
-      <route-entry route="/users/*/edit" title="user.edit" section="['users','profile']">
+      <route-entry route="/users/*/edit" title="user.edit" section="['s1']" />
+      <route-entry route="/profile/*" title="user.edit" section="['s2','s4']" />
     </route-definitions>
-
 
     <redux-reducer>
       <section-reducer/>
@@ -54,7 +53,7 @@
     </script>
 </my-app>
 
-import { RouterMixin } from './common/router/router-mixin.js';
+import RouterMixin from './common/router/router-mixin.js';
 import { ReduxMixin } from './common/redux/redux-mixin.js';
 import { showSection } from './common/section/section-actions.js'
 import { newRoute } from './common/router/route-actions.js'
@@ -68,5 +67,6 @@ riot.mount('*');
 routerMixin.setupRouter();
 reduxMixin.createStore();
 
+reduxMixin.dispatch(showSection(['s2']));
 reduxMixin.dispatch(newRoute('/users/20/edit'));
 reduxMixin.dumpState();

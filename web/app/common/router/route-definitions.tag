@@ -12,7 +12,7 @@
           }
           routes.forEach(routeEntry => {
             let sections = routeEntry.opts.section.replace(/\'/g,"\"");
-            this.addRoute(routeEntry.opts.route, sections);
+            this.addRoute(routeEntry.opts.route, JSON.parse(sections));
           });
         });
   </script>
