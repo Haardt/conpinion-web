@@ -44,6 +44,16 @@ export class ReduxMixin {
     return instance.store.getState();
   }
 
+  createReducer (initState, handlers, getStateSlice) {
+    return (state = initState, action) => {
+      if (handlers.hasOwnProperty(action.type)) {
+        return handlers[action.type](state, action, (getStateSlice || (()=>{})) (this.getState()));
+      } else {
+        return state;
+      }
+    }
+  }
+
   dumpState() {
     console.log(this.store.getState());
   }

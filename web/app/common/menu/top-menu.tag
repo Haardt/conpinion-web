@@ -1,5 +1,5 @@
 <top-menu>
-    <div class='ui attached stackable menu'>
+    <div class='ui secondary menu'>
         <div class='ui container'>
             <yield/>
         </div>

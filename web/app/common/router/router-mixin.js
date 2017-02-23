@@ -1,5 +1,5 @@
 import route from 'riot-route';
-import { routingFinished} from './route-actions.js'
+import { newRouteSet } from './route-actions.js'
 
 let instance = null;
 
@@ -21,13 +21,13 @@ export default class RouterMixin {
   setupRouter() {
     Object.keys(this.routes).forEach((routeEntry) => {
       route(routeEntry, (...args) => {
-          console.log('Enter route:', routeEntry);
-          this.redux.dispatch(routingFinished(
+          console.log('Enter route:', this.routes[routeEntry]);
+          this.redux.dispatch(newRouteSet(
             routeEntry,
+            this.routes[routeEntry].view,
             this.routes[routeEntry].sections,
             route.query(),
-            args,
-            {}
+            args
           ));
         });
       });
@@ -40,9 +40,10 @@ export default class RouterMixin {
     });
   }
 
-  addRoute(route, sections, func = this._defaultFunction) {
+  addRoute(route, view, sections, func = this._defaultFunction) {
     this.routes[route] ={
       route: route,
+      view: view,
       sections: sections,
       func: func
     };

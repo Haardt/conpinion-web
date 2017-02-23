@@ -1,5 +1,5 @@
 <my-app>
-  <con-app>
+  <con-app name="testing-app">
     <top-menu>
         <top-menu-item>Menu-Item-1</top-menu-item>
         <top-menu-item active='true'>Menu-Item-3</top-menu-item>
@@ -8,45 +8,7 @@
 
     <user />
 
-
-
-
-
-
-
-
-
-
-
-    <section-manager section="s1">
-        <section-group hide-others='true' only-on-members='true'>
-          <section-content name="s1">
-              <div class="ui center aligned header">
-                <p>S1</p>
-              </div>
-          </section-content>
-          <section-content name="s2">
-              <div class="ui center aligned header">
-                <p>S2</p>
-              </div>
-          </section-content>
-        </section-group>
-        <section-group hide-others='true'>
-          <section-content name="s3">
-              <div class="ui center aligned header">
-                <p>S3</p>
-              </div>
-          </section-content>
-          <section-content name="s4">
-              <div class="ui center aligned header">
-                <p>S4</p>
-              </div>
-          </section-content>
-        </section-group>
-    </section-manager>
-
     <route-definitions>
-      <route-entry route="/users/*/edit" section="['s1']" />
       <route-entry route="/profile/*" section="['s2','s4']" />
     </route-definitions>
 
@@ -55,11 +17,12 @@
       <route-reducer/>
     </redux-reducer>
   <con-app>
-    <script type="text/es6">
-      import 'riot-hot-reload';
-      import './common/app/con-app.tag';
+  <script type="text/es6">
+    import 'riot-hot-reload';
+    import './common/app/con-app.tag';
+    import './user/user.tag';
 
-    </script>
+  </script>
 </my-app>
 
 import RouterMixin from './common/router/router-mixin.js';
@@ -77,5 +40,5 @@ routerMixin.setupRouter();
 reduxMixin.createStore();
 
 reduxMixin.dispatch(showSection(['s2']));
-reduxMixin.dispatch(newRoute('/users/20/edit'));
+reduxMixin.dispatch(newRoute('/users/20'));
 reduxMixin.dumpState();

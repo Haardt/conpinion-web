@@ -12,19 +12,8 @@
         let reducer = this.tags[tagName].reducer;
         let initState = this.tags[tagName].initState;
         let getStateSlice = this.tags[tagName].getStateSlice;
-        this.addReducer(reducerName, this._createReducer(initState, reducer, getStateSlice));
+        this.addReducer(reducerName, this.createReducer(initState, reducer, getStateSlice));
       });
     });
-
-    this._createReducer = (initState, handlers, getStateSlice) => {
-        return (state = initState, action) => {
-          if (handlers.hasOwnProperty(action.type)) {
-            return handlers[action.type](state, action, (getStateSlice || (()=>{})) (this.getState()));
-          } else {
-            return state
-          }
-        }
-      }
-
   </script>
 </redux-reducer>

@@ -1,24 +1,26 @@
 <user>
-  <view name="user-liste">
+  <con-view name="user">
+    <section-manager>
+      <section-group>
+        <section-content name="user-list">
+          user-list
+        </section-content>
+        <section-content name="user-editor">
+          user-editor
+        </section-content>
+      </section-group>
+    </section-manager>
+  </con-view>
 
-  </view>
-  <view name="user-editor">
-
-   </view>
   <route-definitions>
-        <route-entry route="/users/.." view="user" />
+    <route-entry route="/users" view="user" section="['user-list']"/>
+    <route-entry route="/users/*" view="user" section="['user-editor']"/>
   </route-definitions>
 
-  <resources>
-    <entry
-
-
   <style>
-
   </style>
 
   <script type="text/es6">
-      import '../redux/redux-reducer.tag';
 
   </script>
 </user>
