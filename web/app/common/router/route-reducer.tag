@@ -1,6 +1,6 @@
 <route-reducer>
     <script type="text/es6">
-      import { NEW_ROUTE, ROUTING_FINISHED } from './route-actions.js'
+      import { NEW_ROUTE, NEW_ROUTE_SET } from './route-actions.js'
 
       this.initState = {
         route: '/'
@@ -18,7 +18,7 @@
               'data': action.data
             };
           },
-        [ROUTING_FINISHED](state = initialState, action, slicedState) {
+        [NEW_ROUTE_SET](state = initialState, action, slicedState) {
             return {
               'route': action.route,
               'data': action.data,

@@ -1,8 +1,22 @@
 <my-app>
+  <con-app>
     <top-menu>
         <top-menu-item>Menu-Item-1</top-menu-item>
         <top-menu-item active='true'>Menu-Item-3</top-menu-item>
     </top-menu>
+
+
+    <user />
+
+
+
+
+
+
+
+
+
+
 
     <section-manager section="s1">
         <section-group hide-others='true' only-on-members='true'>
@@ -32,24 +46,19 @@
     </section-manager>
 
     <route-definitions>
-      <route-entry route="/users/*/edit" title="user.edit" section="['s1']" />
-      <route-entry route="/profile/*" title="user.edit" section="['s2','s4']" />
+      <route-entry route="/users/*/edit" section="['s1']" />
+      <route-entry route="/profile/*" section="['s2','s4']" />
     </route-definitions>
 
     <redux-reducer>
       <section-reducer/>
       <route-reducer/>
     </redux-reducer>
-
+  <con-app>
     <script type="text/es6">
       import 'riot-hot-reload';
-      import './common/redux/redux-reducer.tag';
-      import './common/redux/redux-subscriber.tag';
-      import './common/router/route-definitions.tag';
-      import './common/router/route-reducer.tag';
-      import './common/section/section-manager.tag';
-      import './common/section/section-reducer.tag';
-      import './common/menu/top-menu.tag';
+      import './common/app/con-app.tag';
+
     </script>
 </my-app>
 

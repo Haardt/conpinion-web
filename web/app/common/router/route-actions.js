@@ -1,5 +1,5 @@
 export const NEW_ROUTE = 'NEW_ROUTE';
-export const ROUTING_FINISHED = 'ROUTING_FINISHED';
+export const NEW_ROUTE_SET = 'NEW_ROUTE_SET';
 
 export function newRoute(route) {
   return {
@@ -11,7 +11,7 @@ export function newRoute(route) {
 
 export function routingFinished(route, sections, query, params, data) {
   return {
-    type: ROUTING_FINISHED,
+    type: NEW_ROUTE_SET,
     route: route,
     sections: sections,
     query: query,

@@ -1,7 +1,7 @@
 <section-reducer>
     <script type="text/es6">
       import { SHOW_SECTION, HIDE_SECTION } from './section-actions.js'
-      import { ROUTING_FINISHED } from '../router/route-actions.js'
+      import { NEW_ROUTE_SET } from '../router/route-actions.js'
 
       this.initState = {
         sections: ['']
@@ -25,7 +25,7 @@
               'removed': action.sections
             };
           },
-        [ROUTING_FINISHED](state = initialState, action) {
+        [NEW_ROUTE_SET](state = initialState, action) {
             return {
               'sections': self._combineSections(state, action.sections.slice(0)),
               'added': action.sections
