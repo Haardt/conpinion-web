@@ -1,16 +1,14 @@
 <my-app>
-  <con-app name="testing-app">
-    <top-menu>
-        <top-menu-item>Menu-Item-1</top-menu-item>
-        <top-menu-item active='true'>Menu-Item-3</top-menu-item>
-    </top-menu>
-
-
-    <user />
-
-    <route-definitions>
-      <route-entry route="/profile/*" section="['s2','s4']" />
-    </route-definitions>
+  <con-app name="testing-app" class="ui grid">
+    <div class="sixteen wide column">
+      <top-menu>
+          <top-menu-item>Menu-Item-1</top-menu-item>
+          <top-menu-item active='true'>Menu-Item-3</top-menu-item>
+      </top-menu>
+    </div>
+    <div class="sixteen wide column">
+      <user />
+    </div>
 
     <redux-reducer>
       <section-reducer/>
@@ -24,6 +22,8 @@
 
   </script>
 </my-app>
+import "./../public/app/semantic/components/reset.css";
+import "./../public/app/semantic/components/grid.css";
 
 import RouterMixin from './common/router/router-mixin.js';
 import { ReduxMixin } from './common/redux/redux-mixin.js';
