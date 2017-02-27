@@ -48,6 +48,8 @@ public class Flux<STATE, ACTION extends CalcAction> {
         subscriptions.forEach((subscriber) -> subscriber.accept(state));
     }
 
+    public BiFunction<Integer, ACTION, Integer> addReducer = (state, action) -> state + action.getDigit();
+    public BiFunction<Integer, ACTION, Integer> subReducer = (state, action) -> state - action.getDigit();
     public BiFunction<Integer, ACTION, Integer> mulReducer = (state, action) -> state * action.getDigit();
 
     public static void main(String[] args) {
@@ -59,8 +61,8 @@ public class Flux<STATE, ACTION extends CalcAction> {
         });
 
         flux.addReducers(
-                immutableEntry("ADD", (state, action) -> state + action.getDigit()),
-                immutableEntry("SUB", (state, action) -> state - action.getDigit()),
+                immutableEntry("ADD", flux.addReducer),
+                immutableEntry("SUB", flux.subReducer),
                 immutableEntry("MUL", flux.mulReducer)
         );
 
