@@ -19,7 +19,7 @@ public class TestController {
 	public String getAll(@Param("bla") String bla) {
 		String id = bla;
 
-		log.info("Id: {}", id);
+		//log.info("Id: {}", id);
 		return "hallo" + id;
 	}
 }

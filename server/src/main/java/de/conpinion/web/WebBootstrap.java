@@ -37,7 +37,7 @@ public class WebBootstrap extends AbstractVerticle {
 
     @Override
     public void start(Future<Void> startFuture) throws Exception {
-        log.info("web-comfort starting...{}");
+        //log.info("web-comfort starting...{}");
 
         HttpServerOptions options = new HttpServerOptions();
         options.setPort(PORT);
