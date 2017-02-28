@@ -1,6 +1,6 @@
 <section-content>
 
-    <div if="{ visible }">
+    <div show="{ visible }">
         <yield></yield>
     </div>
     

@@ -3,7 +3,7 @@
     <section-manager>
       <section-group>
         <section-content name="user-list">
-          user-list
+          <user-list></user-list>
         </section-content>
         <section-content name="user-editor">
           user-editor
@@ -21,6 +21,6 @@
   </style>
 
   <script type="text/es6">
-
+    import './user-list.tag';
   </script>
 </user>

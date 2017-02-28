@@ -28,6 +28,7 @@ import "./../public/app/semantic/components/grid.css";
 import RouterMixin from './common/router/router-mixin.js';
 import { ReduxMixin } from './common/redux/redux-mixin.js';
 import { showSection } from './common/section/section-actions.js'
+import { showTable, showTableData } from './common/table/con-table-actions.js'
 import { newRoute } from './common/router/route-actions.js'
 
 let reduxMixin = new ReduxMixin();
@@ -39,6 +40,8 @@ riot.mount('*');
 routerMixin.setupRouter();
 reduxMixin.createStore();
 
-reduxMixin.dispatch(showSection(['s2']));
-reduxMixin.dispatch(newRoute('/users/20'));
+reduxMixin.dispatch(showSection(['s1']));
+reduxMixin.dispatch(newRoute('/users'));
+reduxMixin.dispatch(showTable('users', '/users'));
+reduxMixin.dispatch(showTableData('users', {data:'Max Mustermann'}));
 reduxMixin.dumpState();
