@@ -40,8 +40,11 @@ riot.mount('*');
 routerMixin.setupRouter();
 reduxMixin.createStore();
 
-reduxMixin.dispatch(showSection(['s1']));
 reduxMixin.dispatch(newRoute('/users'));
 reduxMixin.dispatch(showTable('users', '/users'));
-reduxMixin.dispatch(showTableData('users', {data:'Max Mustermann'}));
+reduxMixin.dispatch(showTableData('users',
+  {
+    firstName:'Max',
+    lastName: 'Mustermann'
+  }));
 reduxMixin.dumpState();
