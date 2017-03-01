@@ -1,4 +1,4 @@
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 
 let instance = null;
 
@@ -11,6 +11,7 @@ export class ReduxMixin {
 
     this.reducer = {};
     this.subscribers = [];
+    this.middleware = [];
     this.store = null;
     instance = this;
   }
@@ -28,13 +29,18 @@ export class ReduxMixin {
     instance.subscribers.push(() => subscriber(this.getState()));
   }
 
+  addMiddleware(middleware) {
+    instance.middleware.push(middleware);
+  }
+
   dispatch(action) {
+    console.log('Before dispatch: ', action.type);
     instance.store.dispatch(action);
   }
 
   createStore() {
     let appReducer = combineReducers(this.reducer);
-    instance.store = createStore(appReducer);
+    instance.store = createStore(appReducer, applyMiddleware.apply(null, this.middleware));
     instance.subscribers.forEach((subscriber) => {
         instance.store.subscribe(subscriber);
       });

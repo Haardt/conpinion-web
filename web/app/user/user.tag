@@ -24,20 +24,17 @@
     import './user-list.tag';
     import { showView } from '.././common/app/view-actions.js'
     import { showSection } from '.././common/section/section-actions.js'
-    import { showTable, showTableData } from '.././common/table/con-table-actions.js'
+    import { loadTableData, showTableData } from '.././common/table/con-table-actions.js'
 
     this.mixin('redux');
 
     this.on('mount', () => {
-      console.log('REFS: ', this.refs);
     });
 
     this.showUsers = (args) => {
       this.dispatch(showView('user'));
       this.dispatch(showSection(['user-list']));
-      this.dispatch(showTable('users', '/users'));
-      this.dispatch(showTableData('users', { firstName: 'Max',
-        lastName: 'Muster'}));
+      this.dispatch(loadTableData('users', '/users'));
     }
 
     this.showUser = (args) => {

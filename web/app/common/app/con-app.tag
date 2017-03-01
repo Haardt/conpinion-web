@@ -15,6 +15,7 @@
     import '../section/section-reducer.tag';
     import '../menu/top-menu.tag';
     import './con-view.tag';
+    import { tableMiddleware } from '../table/con-table-rest-middleware.js';
     import ConAppReducer from './con-app-reducer.js';
 
     this.mixin('redux');
@@ -23,6 +24,7 @@
 
     this.on('mount', () => {
       let conAppReducer = new ConAppReducer();
+      this.addMiddleware(tableMiddleware);
       this.addReducer(conAppReducer.name(), this.createReducer(conAppReducer.initState(),
         conAppReducer.reducer(), (state) => state));
     });

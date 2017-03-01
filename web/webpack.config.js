@@ -32,6 +32,9 @@ module.exports = {
     { test: /\.css$/,  loaders: ['style-loader', 'css-loader']},
    ]
   },
+  devServer: {
+      contentBase: path.resolve(__dirname, './src'),  // New
+  },
   plugins: [
     new HtmlWebpackPlugin({
                               title: 'my-app',

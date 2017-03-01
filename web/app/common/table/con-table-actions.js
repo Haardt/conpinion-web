@@ -1,10 +1,9 @@
-export const SHOW_TABLE = 'SHOW_TABLE';
-export const FETCH_TABLE_DATA = 'FETCH_TABLE_DATA';
-export const TABLE_DATA = 'TABLE_DATA';
+export const LOAD_TABLE_DATA = 'LOAD_TABLE_DATA';
+export const SHOW_TABLE_DATA = 'SHOW_TABLE_DATA';
 
-export function showTable(tableName, resource) {
+export function loadTableData(tableName, resource) {
   return {
-    type: SHOW_TABLE,
+    type: LOAD_TABLE_DATA,
     tableName: tableName,
     resource: resource
   }
@@ -12,7 +11,7 @@ export function showTable(tableName, resource) {
 
 export function showTableData(tableName, data) {
   return {
-    type: TABLE_DATA,
+    type: SHOW_TABLE_DATA,
     tableName: tableName,
     data: data
   }

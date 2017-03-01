@@ -12,7 +12,7 @@
 
     <script type="text/es6">
         import './con-column.tag';
-        import { SHOW_TABLE, TABLE_DATA, showTable } from './con-table-actions.js';
+        import { LOAD_TABLE_DATA, SHOW_TABLE_DATA } from './con-table-actions.js';
         this.mixin('redux');
 
         this.columns = [];
@@ -23,14 +23,14 @@
 
           this.addReducer('table', this.createReducer({},
                   {
-                    [SHOW_TABLE](state = initialState, action, slicedState) {
+                    [LOAD_TABLE_DATA](state = initialState, action, slicedState) {
                         return {
                           ["" + action.tableName]: {
                             loading: true
                           }
                         }
                       },
-                      [TABLE_DATA](state = initialState, action, slicedState) {
+                      [SHOW_TABLE_DATA](state = initialState, action, slicedState) {
                         return {
                           ["" + action.tableName]: {
                             loading: false,
@@ -54,10 +54,6 @@
           }
           this.update();
         });
-
-        this.loadTable = (resource) => {
-          this.dispatch(showTable(this.opts.tableName, resource));
-        }
 
         this.createColumns = (columnTags) => {
           if (! Array.isArray(columnTags)) {
