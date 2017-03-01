@@ -25,12 +25,6 @@
               'removed': action.sections
             };
           },
-        [NEW_ROUTE_SET](state = initialState, action) {
-            return {
-              'sections': self._combineSections(state, action.sections.slice(0)),
-              'added': action.sections
-            };
-          }
         };
 
       this._combineSections = (state, sections) => {

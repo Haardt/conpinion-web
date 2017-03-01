@@ -41,10 +41,5 @@ routerMixin.setupRouter();
 reduxMixin.createStore();
 
 reduxMixin.dispatch(newRoute('/users'));
-reduxMixin.dispatch(showTable('users', '/users'));
-reduxMixin.dispatch(showTableData('users',
-  {
-    firstName:'Max',
-    lastName: 'Mustermann'
-  }));
+
 reduxMixin.dumpState();

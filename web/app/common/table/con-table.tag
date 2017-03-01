@@ -6,7 +6,7 @@
         <th each={ columns }> { label } </th>
       </tr>
       <tr each={ dataList }>
-        <td each={ columns } > { dataList[key] } </td>
+        <td each={ columns }> { dataList[key] } </td>
       </tr>
     </table>
 
@@ -52,9 +52,10 @@
               }
             }
           }
+          this.update();
         });
 
-        this.showTable = (resource) => {
+        this.loadTable = (resource) => {
           this.dispatch(showTable(this.opts.tableName, resource));
         }
 

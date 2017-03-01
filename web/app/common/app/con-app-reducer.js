@@ -1,4 +1,4 @@
-import { NEW_ROUTE_SET } from '../router/route-actions.js'
+import { SHOW_VIEW } from './view-actions.js'
 
 export default class ConAppReducer {
 
@@ -12,7 +12,7 @@ export default class ConAppReducer {
       name() { return 'views'; }
 
       reducer () { return {
-        [NEW_ROUTE_SET](state = initialState, action) {
+        [SHOW_VIEW](state = initialState, action) {
             return {
               'view': action.view
             }

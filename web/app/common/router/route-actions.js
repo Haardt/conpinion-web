@@ -13,8 +13,6 @@ export function newRouteSet(route, view, sections, query, params) {
   return {
     type: NEW_ROUTE_SET,
     route: route,
-    view: view,
-    sections: sections,
     query: query,
     params: params
   }

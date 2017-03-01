@@ -24,11 +24,11 @@ export default class RouterMixin {
           console.log('Enter route:', this.routes[routeEntry]);
           this.redux.dispatch(newRouteSet(
             routeEntry,
-            this.routes[routeEntry].view,
-            this.routes[routeEntry].sections,
             route.query(),
             args
           ));
+          console.log("Controller: ", this.routes[routeEntry].controller);
+          this.routes[routeEntry].controller[this.routes[routeEntry].callbackFunction](args);
         });
       });
     route.start(true);
@@ -40,11 +40,11 @@ export default class RouterMixin {
     });
   }
 
-  addRoute(route, view, sections, func = this._defaultFunction) {
+  addRoute(route, callbackFunction, controller, func = this._defaultFunction) {
     this.routes[route] ={
       route: route,
-      view: view,
-      sections: sections,
+      callbackFunction: callbackFunction,
+      controller: controller,
       func: func
     };
   }

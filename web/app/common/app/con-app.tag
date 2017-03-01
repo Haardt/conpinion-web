@@ -14,7 +14,7 @@
     import '../section/section-manager.tag';
     import '../section/section-reducer.tag';
     import '../menu/top-menu.tag';
-    import '../view/con-view.tag';
+    import './con-view.tag';
     import ConAppReducer from './con-app-reducer.js';
 
     this.mixin('redux');

@@ -10,9 +10,9 @@
           if (!Array.isArray(routes)) {
             routes = [routes];
           }
+          let domainController = this.parent;
           routes.forEach(routeEntry => {
-            let sections = routeEntry.opts.section.replace(/\'/g,"\"");
-            this.addRoute(routeEntry.opts.route, routeEntry.opts.view, JSON.parse(sections));
+            this.addRoute(routeEntry.opts.route, routeEntry.opts.function, domainController);
           });
         });
   </script>
