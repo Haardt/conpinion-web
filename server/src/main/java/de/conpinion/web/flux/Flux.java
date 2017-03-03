@@ -62,6 +62,13 @@ public class Flux<STATE, ACTION extends Action> {
 		subscriptions.forEach(subscriber -> subscriber.accept(oldState, state));
 	}
 
+
+
+
+
+
+	// example
+
 	public BiFunction<Integer, CalcAction, Integer> addReducer = (state, action) -> state + action.getDigit();
 	public BiFunction<Integer, CalcAction, Integer> subReducer = (state, action) -> state - action.getDigit();
 	public BiFunction<Integer, CalcAction, Integer> mulReducer = (state, action) -> state * action.getDigit();

@@ -7,14 +7,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WarehouseVerticle extends AbstractVerticle
 {
+	private boolean toggle = false;
+
 	@Override
 	public void start(Future<Void> startFuture) throws Exception
 	{
 		log.info("Warehouse verticle started...");
 
-		vertx.eventBus().consumer("warehouse.validation", message -> {
+		vertx.eventBus().consumer("warehouse.process", message -> {
 			log.info("warehouse validation request");
-			message.reply("OK");
+			toggle = ! toggle;
+			message.reply(toggle);
 		});
 
 		startFuture.complete(null);

@@ -1,19 +1,18 @@
-package de.conpinion.web.order;
+package de.conpinion.web.order.actions;
 
 import de.conpinion.web.flux.Action;
 
 public class WarehouseAction implements Action {
 
-    private String type;
+    public static final String TYPE ="warehouse";
     private boolean warehouseValid;
 
-    private WarehouseAction(String type, boolean warehouseValid) {
-        this.type = type;
+    private WarehouseAction(boolean warehouseValid) {
         this.warehouseValid = warehouseValid;
     }
 
     @Override
-    public String type() { return type; }
+    public String type() { return TYPE; }
 
     public boolean isWarehouseValid() {
         return warehouseValid;
@@ -21,14 +20,14 @@ public class WarehouseAction implements Action {
 
     @Override
     public String toString() {
-        return type + ":" + warehouseValid;
+        return TYPE + ":" + warehouseValid;
     }
 
     public static WarehouseAction ok() {
-        return new WarehouseAction("warehouse", true);
+        return new WarehouseAction(true);
     }
 
     public static WarehouseAction error() {
-        return new WarehouseAction("warehouse", false);
+        return new WarehouseAction(false);
     }
 }

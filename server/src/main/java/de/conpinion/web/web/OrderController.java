@@ -1,13 +1,11 @@
 package de.conpinion.web.web;
 
 import com.github.aesteve.vertx.nubes.annotations.Controller;
-import com.github.aesteve.vertx.nubes.annotations.mixins.ContentType;
-import com.github.aesteve.vertx.nubes.annotations.params.Param;
 import com.github.aesteve.vertx.nubes.annotations.params.RequestBody;
 import com.github.aesteve.vertx.nubes.annotations.routing.http.GET;
 import com.github.aesteve.vertx.nubes.annotations.routing.http.POST;
 
-import de.conpinion.web.order.NewOrderAction;
+import de.conpinion.web.order.actions.NewOrderAction;
 
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.ext.web.RoutingContext;
@@ -22,7 +20,7 @@ public class OrderController {
 	public String getOrders(EventBus eventBus) {
 		log.info("{}", eventBus);
 		eventBus.send("order.new", "order");
-		return "hallo";
+		return "order";
 	}
 
 	@POST("/:id")

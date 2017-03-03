@@ -3,18 +3,22 @@ package de.conpinion.web.order;
 import de.conpinion.web.flux.Action;
 import de.conpinion.web.flux.Flux;
 import de.conpinion.web.flux.Middleware;
-import de.conpinion.web.flux.Process;
+import de.conpinion.web.order.actions.NewOrderAction;
+import de.conpinion.web.order.actions.PaymentAction;
+import de.conpinion.web.order.actions.WarehouseAction;
 
 import java.util.Properties;
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
+import io.vertx.core.eventbus.Message;
 import lombok.extern.slf4j.Slf4j;
 
-import com.google.common.collect.Maps;
-
-import static com.google.common.collect.Maps.*;
+import static com.google.common.base.MoreObjects.firstNonNull;
+import static com.google.common.collect.Maps.immutableEntry;
 
 @Slf4j
 public class OrderVerticle extends AbstractVerticle {
@@ -23,30 +27,25 @@ public class OrderVerticle extends AbstractVerticle {
 		log.info("Order verticle started...");
 		vertx.eventBus().consumer("order.new", message -> {
 			Flux<Properties, Action> flux = new Flux<>(new Properties(), (Properties state) -> (Properties) state.clone());
-
 			flux.addMiddleware(loggingMiddleware());
 			flux.addMiddleware(orderMiddleware());
 
 			flux.addReducers(
-				immutableEntry("payment", paymentReducer),
-				immutableEntry("warehouse", warehouseReducer),
-				immutableEntry("payment", deliveryReducer),
-				immutableEntry("warehouse", deliveryReducer)
+				immutableEntry(PaymentAction.TYPE, paymentReducer),
+				immutableEntry(WarehouseAction.TYPE, warehouseReducer),
+
+				immutableEntry(PaymentAction.TYPE, deliveryReducer),
+				immutableEntry(WarehouseAction.TYPE, deliveryReducer)
 			);
 
-			flux.addSubscribers((oldState, currentState) -> {
-				boolean oldDeliveryStatus = Boolean.valueOf(oldState.getProperty("delivery.status", "false"));
-				boolean newDeliveryStatus = Boolean.valueOf(currentState.getProperty("delivery.status", "false"));
-				log.info("Delivery status: O: {} / C: {}", oldDeliveryStatus, newDeliveryStatus);
-				if ((oldDeliveryStatus != newDeliveryStatus) && newDeliveryStatus) {
-					log.error("Start delivery...");
-				}
-			});
-
+			flux.addSubscribers(
+				deliverySubscriber,
+				errorSubscriber
+				);
 
 			log.info("new order received...");
 
-			flux.dispatch(OrderAction.newOrder());
+			flux.dispatch(NewOrderAction.newOrder("2343-4445-666-8888", 2));
 		});
 
 		startFuture.complete(null);
@@ -54,51 +53,80 @@ public class OrderVerticle extends AbstractVerticle {
 
 	private Middleware<Properties, Action> loggingMiddleware() {
 		return (action, state, next) -> {
-			log.info("Action: " + action.toString());
+			log.info("ACTION: " + action.toString());
 			next.process(action);
 		};
 	}
 
 	private Middleware<Properties, Action> orderMiddleware() {
 		return (action, state, next) -> {
-			if (action.type().equals("order")) {
-				vertx.eventBus().send("creditCard.validation", "123", reply -> {
-					if (reply.result().body().equals("OK")) {
-						next.process(PaymentAction.ok());
-					} else {
-						next.process(PaymentAction.error());
-					}
-				});
-				vertx.eventBus().send("warehouse.validation", "10", reply -> {
-					if (reply.result().body().equals("OK")) {
-						next.process(WarehouseAction.ok());
-					} else {
-						next.process(WarehouseAction.error());
-					}
-				});
+			if (action.type().equals(NewOrderAction.TYPE)) {
+				vertx.eventBus().send("creditCard.process", ((NewOrderAction) action).getCreditCardNumber(),
+					(AsyncResult<Message<Boolean>> reply) -> {
+						if (reply.result().body()) {
+							next.process(PaymentAction.ok());
+						} else {
+							next.process(PaymentAction.error());
+						}
+					});
+				vertx.eventBus().send("warehouse.process", ((NewOrderAction) action).getItems(),
+					(AsyncResult<Message<Boolean>> reply) -> {
+						if (reply.result().body()) {
+							next.process(WarehouseAction.ok());
+						} else {
+							next.process(WarehouseAction.error());
+						}
+					});
 				return;
 			}
 			next.process(action);
 		};
 	}
 
-	private BiFunction<Properties, Action, Properties> paymentReducer = (state, action) -> {
+	BiFunction<Properties, Action, Properties> paymentReducer = (state, action) -> {
 		log.info("payment reducer");
-		state.setProperty("payment.status", ((PaymentAction) action).isPaymentValid() ? "true" : "false");
+		boolean paymentValid = ((PaymentAction) action).isPaymentValid();
+		state.put("payment.status", paymentValid);
+		if (!paymentValid)
+			state.put("payment.error", "insufficient funds...");
 		return state;
 	};
 
-	public BiFunction<Properties, Action, Properties> warehouseReducer = (state, action) -> {
+	BiFunction<Properties, Action, Properties> warehouseReducer = (state, action) -> {
 		log.info("warehouse reducer");
-		state.setProperty("warehouse.status", ((WarehouseAction) action).isWarehouseValid() ? "true" : "false");
+		boolean warehouseValid = ((WarehouseAction) action).isWarehouseValid();
+		state.put("warehouse.status", warehouseValid);
+		if (!warehouseValid)
+			state.put("warehouse.error", "not available...");
 		return state;
 	};
 
-	public BiFunction<Properties, Action, Properties> deliveryReducer = (state, action) -> {
-		boolean newPaymentStatus = Boolean.valueOf(state.getProperty("payment.status", "false"));
-		boolean newWarehouseStatus = Boolean.valueOf(state.getProperty("warehouse.status", "false"));
+	BiFunction<Properties, Action, Properties> deliveryReducer = (state, action) -> {
+		boolean newPaymentStatus = firstNonNull((Boolean) state.get("payment.status"), false);
+		boolean newWarehouseStatus = firstNonNull((Boolean) state.get("warehouse.status"), false);
 		log.info("Delivery reducer status: P: {} / W: {}", newPaymentStatus, newWarehouseStatus);
-		state.setProperty("delivery.status", (newPaymentStatus && newWarehouseStatus) ? "true" : "false");
+		state.put("delivery.status", newPaymentStatus && newWarehouseStatus);
 		return state;
+	};
+
+	BiConsumer<Properties, Properties> deliverySubscriber = (oldState, currentState) -> {
+		boolean oldDeliveryStatus = firstNonNull((Boolean) oldState.get("delivery.status"), false);
+		boolean newDeliveryStatus = firstNonNull((Boolean) currentState.get("delivery.status"), false);
+		log.info("Delivery status: O: {} / C: {}", oldDeliveryStatus, newDeliveryStatus);
+		if ((oldDeliveryStatus != newDeliveryStatus) && newDeliveryStatus) {
+			log.error("Start delivery...");
+		}
+	};
+
+	BiConsumer<Properties, Properties> errorSubscriber = (oldState, currentState) -> {
+		boolean paymentError = currentState.containsKey("payment.error");
+		if (paymentError) {
+			log.error("Order error: {}", currentState.getProperty("payment.error"));
+		}
+		boolean warehouseError = currentState.containsKey("warehouse.error");
+		if (warehouseError) {
+			log.error("Order error: {}", currentState.getProperty("warehouse.error"));
+		}
+		log.info("Error status: P: {} / W: {}", paymentError, warehouseError);
 	};
 }
