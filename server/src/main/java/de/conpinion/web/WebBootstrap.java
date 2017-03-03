@@ -3,6 +3,9 @@ package de.conpinion.web;
 import com.github.aesteve.vertx.nubes.NubesServer;
 import com.github.aesteve.vertx.nubes.VertxNubes;
 
+import de.conpinion.web.order.OrderVerticle;
+import de.conpinion.web.order.PaymentVerticle;
+import de.conpinion.web.order.WarehouseVerticle;
 import de.conpinion.web.web.WebServerVerticle;
 
 import java.util.Locale;
@@ -44,7 +47,16 @@ public class WebBootstrap extends AbstractVerticle {
         options.setHost(HOST);
         HttpServer server = vertx.createHttpServer(options);
 
-        VertxNubes nubes = new VertxNubes(vertx, new JsonObject("{\"controller-packages\":[\"de.conpinion.web.web\"]}"));
+        VertxNubes nubes = new VertxNubes(vertx, new JsonObject("{\n" +
+            "  \"src-package\": \n" +
+            "    \"de.conpinion.web\"\n" +
+            "  ,\n" +
+            "  \"controller-packages\": \n[" +
+            "    \"de.conpinion.web.web\"]\n" +
+            "  ,\n" +
+            "  \"webroot\": \"./../web/public/app\",\n" +
+            "  \"static-path\": \"/app\"\n" +
+            "}"));
 
 
        // nubes.setDefaultLocale(Locale.GERMAN);
@@ -62,6 +74,10 @@ public class WebBootstrap extends AbstractVerticle {
 
         DeploymentOptions webServerOptions = new DeploymentOptions();
         vertx.deployVerticle(WebServerVerticle.class.getName(), webServerOptions);
+
+        vertx.deployVerticle(new OrderVerticle(), webServerOptions);
+        vertx.deployVerticle(new WarehouseVerticle(), webServerOptions);
+        vertx.deployVerticle(new PaymentVerticle(), webServerOptions);
     }
 
     private static JsonObject createConfig() {
