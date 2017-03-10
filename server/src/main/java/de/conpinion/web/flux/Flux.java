@@ -25,6 +25,7 @@ public class Flux<STATE, ACTION extends Action> {
 	private Process<ACTION> processMiddleware = action -> processAction(action);
 	private STATE state;
 	private Function<STATE, STATE> cloneFunction;
+	private boolean subscriberEnabled = true;
 
 	public Flux(STATE initialState, Function<STATE, STATE> cloneFunction) {
 		this.state = initialState;
@@ -49,7 +50,7 @@ public class Flux<STATE, ACTION extends Action> {
 	}
 
 	public void addSubscribers(BiConsumer<STATE, STATE>... subscriber) {
-		this.subscriptions = new ArrayList<>(Arrays.asList(subscriber));
+		this.subscriptions = Arrays.asList(subscriber);
 	}
 
 	public void dispatch(ACTION action) {
@@ -59,52 +60,20 @@ public class Flux<STATE, ACTION extends Action> {
 	private void processAction(ACTION action) {
 		STATE oldState = cloneFunction.apply(state);
 		reducers.get(action.type()).stream().forEach( reducer -> state = reducer.apply(state, action));
-		subscriptions.forEach(subscriber -> subscriber.accept(oldState, state));
+		if (subscriberEnabled) {
+			subscriptions.forEach(subscriber -> subscriber.accept(oldState, state));
+		}
 	}
 
+	public void disableSubscriber() {
+		this.subscriberEnabled = false;
+	}
 
+	public void enableSubscriber() {
+		this.subscriberEnabled = true;
+	}
 
-
-
-
-	// example
-
-	public BiFunction<Integer, CalcAction, Integer> addReducer = (state, action) -> state + action.getDigit();
-	public BiFunction<Integer, CalcAction, Integer> subReducer = (state, action) -> state - action.getDigit();
-	public BiFunction<Integer, CalcAction, Integer> mulReducer = (state, action) -> state * action.getDigit();
-
-	public Middleware<STATE, ACTION> logging = (action, state, next) -> {
-		System.out.println("LOG: " + action);
-		next.process(action);
-	};
-
-	public Middleware<STATE, CalcAction> manipulate = (action, state, next) -> {
-		if (action.getDigit() != 5) {
-			next.process(action);
-			return;
-		}
-		next.process(CalcAction.add(1));
-	};
-
-	public static void main(String[] args) {
-
-		Flux<Integer, CalcAction> flux = new Flux<>(1, state -> state);
-
-		// Reverse execution order
-		flux.addMiddleware(flux.manipulate);
-		flux.addMiddleware(flux.logging);
-
-		flux.addReducers(
-			immutableEntry("ADD", flux.addReducer),
-			immutableEntry("SUB", flux.subReducer),
-			immutableEntry("MUL", flux.mulReducer)
-		);
-
-		flux.addSubscribers(
-			(oldState, currentState) -> System.out.println("Subscriber: " + oldState + " : " + currentState));
-
-		flux.dispatch(CalcAction.add(2));
-		flux.dispatch(CalcAction.add(5));
-
+	public boolean subscriberEnabled() {
+		return subscriberEnabled;
 	}
 }

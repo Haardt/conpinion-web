@@ -5,8 +5,8 @@
       <tr>
         <th each={ columns }> { label } </th>
       </tr>
-      <tr each={ dataList }>
-        <td each={ columns }> { dataList[key] } </td>
+      <tr each={ data in dataList }>
+        <td each={ columns }> { data[key] } </td>
       </tr>
     </table>
 

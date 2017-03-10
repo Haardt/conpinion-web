@@ -21,13 +21,11 @@ export default class RouterMixin {
   setupRouter() {
     Object.keys(this.routes).forEach((routeEntry) => {
       route(routeEntry, (...args) => {
-          console.log('Enter route:', this.routes[routeEntry]);
           this.redux.dispatch(newRouteSet(
             routeEntry,
             route.query(),
             args
           ));
-          console.log("Controller: ", this.routes[routeEntry].controller);
           this.routes[routeEntry].controller[this.routes[routeEntry].callbackFunction](args);
         });
       });
@@ -54,6 +52,10 @@ export default class RouterMixin {
 
   getRoutes() {
     return this.routes;
+  }
+
+  routeTo(newRoute) {
+    route(newRoute);
   }
 
   dumpRoutes() {

@@ -2,8 +2,8 @@
   <con-app name="testing-app" class="ui grid">
     <div class="sixteen wide column">
       <top-menu>
-          <top-menu-item>Menu-Item-1</top-menu-item>
-          <top-menu-item active='true'>Menu-Item-3</top-menu-item>
+          <top-menu-item route='/users'>Users</top-menu-item>
+          <top-menu-item route='/users/123' active='true'>User-123</top-menu-item>
       </top-menu>
     </div>
     <div class="sixteen wide column">
@@ -42,4 +42,4 @@ reduxMixin.createStore();
 
 reduxMixin.dispatch(newRoute('/users'));
 
-reduxMixin.dumpState();
+//reduxMixin.dumpState();

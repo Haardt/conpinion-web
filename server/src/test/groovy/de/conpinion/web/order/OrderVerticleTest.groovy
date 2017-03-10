@@ -3,6 +3,7 @@ package de.conpinion.web.order
 import de.conpinion.web.order.actions.PaymentAction
 import de.conpinion.web.order.actions.WarehouseAction
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class OrderVerticleTest extends Specification {
     def '#paymentReducer'() {
@@ -32,8 +33,9 @@ class OrderVerticleTest extends Specification {
         WarehouseAction.error() || ['warehouse.status': false, 'warehouse.error': 'not available...']
     }
 
-    def '#deliveryReducer'() {
-        setup:
+    @Unroll
+    def 'With status #currentState.warehouse.status expect to be deliveryReducer'(currentState) {
+        setup 'sdfsdf':
         OrderVerticle orderVerticle = new OrderVerticle()
 
         expect:

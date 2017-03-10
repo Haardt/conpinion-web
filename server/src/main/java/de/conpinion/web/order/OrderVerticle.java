@@ -26,6 +26,7 @@ public class OrderVerticle extends AbstractVerticle {
 	public void start(Future<Void> startFuture) throws Exception {
 		log.info("Order verticle started...");
 		vertx.eventBus().consumer("order.new", message -> {
+			
 			Flux<Properties, Action> flux = new Flux<>(new Properties(), (Properties state) -> (Properties) state.clone());
 			flux.addMiddleware(loggingMiddleware());
 			flux.addMiddleware(orderMiddleware());
@@ -86,7 +87,7 @@ public class OrderVerticle extends AbstractVerticle {
 	BiFunction<Properties, Action, Properties> paymentReducer = (state, action) -> {
 		log.info("payment reducer");
 		boolean paymentValid = ((PaymentAction) action).isPaymentValid();
-		state.put("payment.status", paymentValid);
+		state.put("payment.valid", paymentValid);
 		if (!paymentValid)
 			state.put("payment.error", "insufficient funds...");
 		return state;
@@ -95,23 +96,24 @@ public class OrderVerticle extends AbstractVerticle {
 	BiFunction<Properties, Action, Properties> warehouseReducer = (state, action) -> {
 		log.info("warehouse reducer");
 		boolean warehouseValid = ((WarehouseAction) action).isWarehouseValid();
-		state.put("warehouse.status", warehouseValid);
+		state.put("warehouse.valid", warehouseValid);
 		if (!warehouseValid)
 			state.put("warehouse.error", "not available...");
 		return state;
 	};
 
 	BiFunction<Properties, Action, Properties> deliveryReducer = (state, action) -> {
-		boolean newPaymentStatus = firstNonNull((Boolean) state.get("payment.status"), false);
-		boolean newWarehouseStatus = firstNonNull((Boolean) state.get("warehouse.status"), false);
+		boolean newPaymentStatus = firstNonNull((Boolean) state.get("payment.valid"), false);
+		boolean newWarehouseStatus = firstNonNull((Boolean) state.get("warehouse.valid"), false);
 		log.info("Delivery reducer status: P: {} / W: {}", newPaymentStatus, newWarehouseStatus);
-		state.put("delivery.status", newPaymentStatus && newWarehouseStatus);
+		state.put("delivery.start", newPaymentStatus && newWarehouseStatus);
 		return state;
 	};
 
+	//Idempotent
 	BiConsumer<Properties, Properties> deliverySubscriber = (oldState, currentState) -> {
-		boolean oldDeliveryStatus = firstNonNull((Boolean) oldState.get("delivery.status"), false);
-		boolean newDeliveryStatus = firstNonNull((Boolean) currentState.get("delivery.status"), false);
+		boolean oldDeliveryStatus = firstNonNull((Boolean) oldState.get("delivery.start"), false);
+		boolean newDeliveryStatus = firstNonNull((Boolean) currentState.get("delivery.start"), false);
 		log.info("Delivery status: O: {} / C: {}", oldDeliveryStatus, newDeliveryStatus);
 		if ((oldDeliveryStatus != newDeliveryStatus) && newDeliveryStatus) {
 			log.error("Start delivery...");

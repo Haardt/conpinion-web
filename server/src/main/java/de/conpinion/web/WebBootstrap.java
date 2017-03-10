@@ -1,17 +1,15 @@
 package de.conpinion.web;
 
-import com.github.aesteve.vertx.nubes.NubesServer;
 import com.github.aesteve.vertx.nubes.VertxNubes;
 
+import de.conpinion.web.flux.FluxNubes;
 import de.conpinion.web.order.OrderVerticle;
 import de.conpinion.web.order.PaymentVerticle;
 import de.conpinion.web.order.WarehouseVerticle;
 import de.conpinion.web.web.WebServerVerticle;
 
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
-
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.AsyncResult;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Future;
 import io.vertx.core.Vertx;
@@ -19,7 +17,9 @@ import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
+import io.vertx.ext.web.handler.StaticHandler;
 import lombok.extern.slf4j.Slf4j;
+
 import static com.github.aesteve.vertx.nubes.utils.async.AsyncUtils.onSuccessOnly;
 
 @Slf4j
@@ -47,7 +47,7 @@ public class WebBootstrap extends AbstractVerticle {
         options.setHost(HOST);
         HttpServer server = vertx.createHttpServer(options);
 
-        VertxNubes nubes = new VertxNubes(vertx, new JsonObject("{\n" +
+        VertxNubes nubes = new FluxNubes(vertx, new JsonObject("{\n" +
             "  \"src-package\": \n" +
             "    \"de.conpinion.web\"\n" +
             "  ,\n" +
@@ -62,6 +62,13 @@ public class WebBootstrap extends AbstractVerticle {
        // nubes.setDefaultLocale(Locale.GERMAN);
 
         nubes.bootstrap(onSuccessOnly(startFuture, router -> {
+            router.route("/public/*").handler(
+                    StaticHandler.create()
+                                 .setCachingEnabled(false)
+
+                                 .setDirectoryListing(true)
+                                 .setWebRoot("../web/public"));
+
             server.requestHandler(router::accept);
             server.listen(res -> {
                 if (res.failed()) {

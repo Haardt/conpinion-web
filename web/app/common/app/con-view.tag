@@ -8,21 +8,18 @@
   </style>
 
   <script type="text/es6">
+  import { findConTag } from './con-app-utils.js';
+
   this.on('mount', () => {
-    let conApp = this.findConAppTag(this.parent);
+    let conApp = findConTag('con-app', this.parent);
     conApp.addView(this);
    });
 
-   this.findConAppTag = (parent) => {
-      if (parent.root.localName !== 'con-app') {
-        return this.findConAppTag(parent.parent);
-      }
-      return parent;
-   }
    this.show = () => {
       this.visible = true;
       this.update();
    }
+
    this.hide = () => {
       this.visible = false;
       this.update();

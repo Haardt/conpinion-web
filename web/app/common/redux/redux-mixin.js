@@ -22,7 +22,6 @@ export class ReduxMixin {
 
   addReducer(reducerName, reducer) {
     instance.reducer[reducerName] = reducer;
-    console.log ('Reducer added: ', reducerName);
   }
 
   addSubscriber(subscriber) {
@@ -34,7 +33,6 @@ export class ReduxMixin {
   }
 
   dispatch(action) {
-    console.log('Before dispatch: ', action.type);
     instance.store.dispatch(action);
   }
 
@@ -44,7 +42,6 @@ export class ReduxMixin {
     instance.subscribers.forEach((subscriber) => {
         instance.store.subscribe(subscriber);
       });
-    console.log("Store created.");
   }
 
 
