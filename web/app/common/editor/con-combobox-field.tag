@@ -1,9 +1,10 @@
-<con-string-field>
+<con-combobox-field>
 
   <p>
-  {label}
+  <b>{label}</b>
   <input name={key} value={fieldValue}/>
   </p>
+
 
   <script type="text/es6">
     import { findConTag } from './../app/con-app-utils.js';
@@ -24,4 +25,4 @@
         editor.addFieldDescription(this);
     });
   </script>
-</con-string-field>
+</con-combobox-field>

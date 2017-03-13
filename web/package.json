@@ -37,6 +37,7 @@
     "babel-core": "*",
     "babel-preset-es2015-riot": "*",
     "chai": "*",
+    "chai-jq": "*",
     "chalk": "*",
     "mocha": "*",
     "requirejs": "*",

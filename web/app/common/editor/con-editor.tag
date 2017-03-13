@@ -1,8 +1,6 @@
 <con-editor>
-    <yield />
-
     <form>
-      <p each={ field in fields}>{field.label}<input name="{field.key}" value="{data[field.key]}"/></p>
+      <yield />
     </form>
 
     <script type="text/es6">
@@ -10,22 +8,21 @@
         import { LOAD_EDITOR_DATA, SHOW_EDITOR_DATA } from './con-editor-actions.js';
         this.mixin('redux');
 
-        this.fields = [];
-        this.data = {};
+        this.fields = {};
 
         this.on('mount', () => {
           this.addReducer('editor', this.createReducer({},
             {
               [LOAD_EDITOR_DATA](state = initialState, action, slicedState) {
                   return {
-                    ["" + action.editorName]: {
+                    [action.editorName]: {
                       loading: true
                     }
                   }
                 },
-                [SHOW_EDITOR_DATA](state = initialState, action, slicedState) {
+              [SHOW_EDITOR_DATA](state = initialState, action, slicedState) {
                   return {
-                    ["" + action.editorName]: {
+                    [action.editorName]: {
                       loading: false,
                       data: action.data
                     }
@@ -41,15 +38,23 @@
             }
             if (editorData.loading == false) {
               if (editorData.data) {
-                this.data = editorData.data;
+                let keys = Object.keys(editorData.data);
+                keys.forEach((key) => {
+                  this.fields[key].tag.updateValue(editorData.data[key]);
+                  this.fields[key].tag.update();
+                 }
+                );
               }
             }
           }
           this.update();
         });
 
-        this.addField = field => {
-          this.fields.push({key: field.opts.key, label: field.opts.label});
+        this.addFieldDescription = field => {
+          this.fields[field.opts.key] =
+            {
+              tag: field
+            };
         }
     </script>
 </con-editor>

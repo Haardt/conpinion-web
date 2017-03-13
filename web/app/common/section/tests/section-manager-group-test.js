@@ -1,21 +1,22 @@
 import * as riot from 'riot';
 import 'chai';
+import 'chai-jq';
 import 'jasmine-jquery';
 var expect = chai.expect;
-jasmine.getFixtures().fixturesPath = 'base/app/common/section';
+jasmine.getFixtures().fixturesPath = 'base/app';
 
-import './section-manager.tag';
-import './section-reducer.tag';
-import '../redux/redux-reducer.tag';
-import { showSection, hideSection} from './section-actions.js';
-import { ReduxMixin } from '../redux/redux-mixin.js';
+import './../section-manager.tag';
+import './../section-reducer.tag';
+import '../../redux/redux-reducer.tag';
+import { showSection, hideSection} from './../section-actions.js';
+import { ReduxMixin } from './../../redux/redux-mixin.js';
 
 
 describe('section-manager with configured groups', () => {
     var redux;
 
     beforeEach(() => {
-      loadFixtures('section-manager-group-test.html');
+      loadFixtures('common/section/tests/section-manager-group-test.html');
       redux = new ReduxMixin();
       riot.mixin('redux', redux);
       riot.mount('*');
@@ -54,7 +55,7 @@ describe('section-manager with configured groups', () => {
          });
 
         it('shouldn\'t show section s3', () => {
-            expect(document.querySelector('#visible3')).to.equal(null);
+            expect(document.querySelector('[name="s3"] > div')).to.be.$hidden;
         });
 
         it('should show section s5', () => {

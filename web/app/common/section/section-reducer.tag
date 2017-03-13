@@ -19,7 +19,7 @@
             };
           },
         [HIDE_SECTION](state = initialState, action) {
-            let newState = state.section.filter( (elm) => ! action.sections.includes(elm) );
+            let newState = state.sections.filter( (elm) => ! action.sections.includes(elm) );
             return {
               'sections': newState,
               'removed': action.sections

@@ -7,9 +7,6 @@
       }
 
       this.name = () => 'router';
-      this.getStateSlice = (state) => {
-        return state['section-manager'];
-      }
 
       this.reducer = {
         [NEW_ROUTE](state = initialState, action, slicedState) {

@@ -10,9 +10,9 @@
           if (!Array.isArray(routes)) {
             routes = [routes];
           }
-          let domainController = this.parent;
+          let controller = this.parent;
           routes.forEach(routeEntry => {
-            this.addRoute(routeEntry.opts.route, routeEntry.opts.function, domainController);
+            this.addRoute(routeEntry.opts.route, routeEntry.opts.function, controller);
           });
         });
   </script>

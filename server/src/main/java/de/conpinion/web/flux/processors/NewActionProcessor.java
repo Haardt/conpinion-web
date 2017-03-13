@@ -32,7 +32,7 @@ public class NewActionProcessor implements AnnotationProcessor<NewAction> {
 		PaginationContext payload = context.get(PaginationContext.DATA_ATTR);
 		Payload<String> newPayload = new Payload<>();
 		context.put(ContentTypeProcessor.BEST_CONTENT_TYPE, "application/json");
-		newPayload.set("[{\"firstName\":\"Max\", \"lastName\":\"Mustermann\"}, {\"firstName\":\"Alice\", \"lastName\":\"Mustermann\"}]");
+		newPayload.set("[{\"id\":123, \"firstName\":\"Max\", \"lastName\":\"Mustermann\"}, {\"id\":124, \"firstName\":\"Alice\", \"lastName\":\"Mustermann\"}]");
 		context.put(Payload.DATA_ATTR, newPayload);
 		context.next();
 	}

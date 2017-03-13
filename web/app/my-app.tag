@@ -27,8 +27,6 @@ import "./../public/app/semantic/components/grid.css";
 
 import RouterMixin from './common/router/router-mixin.js';
 import { ReduxMixin } from './common/redux/redux-mixin.js';
-import { showSection } from './common/section/section-actions.js'
-import { showTable, showTableData } from './common/table/con-table-actions.js'
 import { newRoute } from './common/router/route-actions.js'
 
 let reduxMixin = new ReduxMixin();
