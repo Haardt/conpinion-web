@@ -1,4 +1,4 @@
-<test>
+<router-test>
     <route-definitions>
         <route-entry route="/tests/*" function='callbackTest1'/>
         <route-entry route="/tests" function='callbackTest2'/>
@@ -16,7 +16,7 @@
             this.test2 = true;
         };
 
-        this.getTest1 = ()=> this.test1;
-        this.getTest2 = ()=> this.test2;
+        this.getTest1 = () => this.test1;
+        this.getTest2 = () => this.test2;
     </script>
-</test>
+</router-test>

@@ -8,7 +8,6 @@
   <script type="text/es6">
     import 'jquery';
     import '../redux/redux-reducer.tag';
-    import '../redux/redux-subscriber.tag';
     import '../router/route-definitions.tag';
     import '../router/route-reducer.tag';
     import '../section/section-manager.tag';

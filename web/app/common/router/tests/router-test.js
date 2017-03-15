@@ -25,7 +25,7 @@ describe('router', () => {
       router = new RouterMixin(redux);
       riot.mixin('redux', redux);
       riot.mixin('router', router);
-      testTag = riot.mount('test')[0];
+      testTag = riot.mount('router-test')[0];
       router.setupRouter();
       redux.createStore();
     });
