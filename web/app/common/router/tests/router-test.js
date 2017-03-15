@@ -20,8 +20,6 @@ describe('router', () => {
     var testTag
 
     beforeEach(() => {
-      console.log('adadsd', RouterMixin);
-
       loadFixtures('common/router/tests/router-test.html');
       redux = new ReduxMixin();
       router = new RouterMixin(redux);
@@ -44,6 +42,25 @@ describe('router', () => {
 
         it('should executed the callback test2', () => {
             expect(testTag.getTest2()).to.equal(true);
+         });
+    });
+
+    describe('if the event newRoute to /tests/123 is dispatched ', () => {
+        beforeEach(() => {
+          redux.dispatch(newRoute('/ignore'));
+          redux.dispatch(newRoute('/tests/123'));
+        });
+
+        it('should set the new route', () => {
+            expect(redux.getState()['router'].route).to.equal('/tests/*');
+         });
+
+        it('should have 123 in the application state', () => {
+            expect(redux.getState()['router'].params[0]).to.equal('123');
+         });
+
+        it('should executed the callback test2', () => {
+            expect(testTag.getTest1()).to.equal(true);
          });
     });
 });

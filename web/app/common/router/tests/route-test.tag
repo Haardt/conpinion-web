@@ -16,6 +16,7 @@
             this.test2 = true;
         };
 
+        this.getTest1 = ()=> this.test1;
         this.getTest2 = ()=> this.test2;
     </script>
 </test>

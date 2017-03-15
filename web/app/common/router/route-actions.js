@@ -9,7 +9,7 @@ export function newRoute(route) {
   }
 };
 
-export function newRouteSet(route, view, sections, query, params) {
+export function newRouteSet(route, query, params) {
   return {
     type: NEW_ROUTE_SET,
     route: route,

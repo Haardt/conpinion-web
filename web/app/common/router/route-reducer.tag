@@ -18,7 +18,8 @@
         [NEW_ROUTE_SET](state = initialState, action, slicedState) {
             return {
               'route': action.route,
-              'data': action.data,
+              'query': action.query,
+              'params': action.params,
               'IGNORE_URL_LINE': true
             };
           }
