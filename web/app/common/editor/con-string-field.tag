@@ -1,18 +1,36 @@
 <con-string-field>
 
   <p>
+  <div show={hasValidationError}>
+    <b>{validationError}</b>
+  </div>
   {label}
-  <input name={key} value={fieldValue}/>
+  <input ref="string" name={key} value={fieldValue}/>
   </p>
 
   <script type="text/es6">
     import { findConTag } from './../app/con-app-utils.js';
 
+    this.hasValidationError = false;
+    this.validationError = '';
     this.key = this.opts.key;
     this.label = this.opts.label;
     this.fieldValue = this.opts.fieldValue;
 
-    this.updateValue = (value) => this.fieldValue = value;
+    this.updateState = (state) => {
+      this.hasValidationError = false;
+      if (state.loading === true) {
+        this.fieldValue = 'Loading';
+      }
+      else if (state.loading === false) {
+        this.fieldValue = state.data[this.opts.key];
+        }
+      else if (state.error) {
+          this.validationError = state.data.validation[this.opts.key];
+          this.hasValidationError = !!state.data.validation[this.opts.key];
+        }
+      }
+    this.save = data => data[this.key] = this.refs.string.value;
 
     this.on('update', () => {
       this.key = this.opts.key;

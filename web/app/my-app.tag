@@ -16,7 +16,7 @@
     </redux-reducer>
   <con-app>
   <script type="text/es6">
-    import 'riot-hot-reload';
+    //import 'riot-hot-reload';
     import './common/app/con-app.tag';
     import './user/user.tag';
 
@@ -29,8 +29,8 @@ import RouterMixin from './common/router/router-mixin.js';
 import { ReduxMixin } from './common/redux/redux-mixin.js';
 import { newRoute } from './common/router/route-actions.js'
 
-let reduxMixin = new ReduxMixin();
-let routerMixin = new RouterMixin(reduxMixin);
+var reduxMixin = new ReduxMixin();
+var routerMixin = new RouterMixin(reduxMixin);
 
 riot.mixin('redux', reduxMixin);
 riot.mixin('router', routerMixin);

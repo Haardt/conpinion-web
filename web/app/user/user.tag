@@ -42,9 +42,7 @@
     this.showUser = (args) => {
       this.dispatch(showView('user'));
       this.dispatch(showSection(['user-editor']));
-      this.dispatch(loadEditorData('user', '/users/123'));
+      this.dispatch(loadEditorData('user', '/users/' + args[0]));
     }
-
-
   </script>
 </user>

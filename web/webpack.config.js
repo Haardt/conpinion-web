@@ -4,6 +4,7 @@
 const webpack = require('webpack');
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
   entry: './app/my-app.tag',
@@ -12,7 +13,7 @@ module.exports = {
     filename: 'my-app.js'
   },
   module: {
-    loaders: [
+    rules: [
     {
       test: /\.tag$/,
       exclude: /node_modules/,
@@ -29,13 +30,21 @@ module.exports = {
       loader: 'babel-loader'
     },
     { test: /\.html$/, loader: 'html-loader' },
-    { test: /\.css$/,  loaders: ['style-loader', 'css-loader']},
-   ]
+//    { test: /\.css$/,  loaders: ['style-loader', 'css-loader']},
+    {
+      test: /\.css$/,
+      loader: ExtractTextPlugin.extract({
+        fallback: "style-loader",
+        use: "css-loader"
+      })
+    }
+    ]
   },
   devServer: {
       contentBase: path.resolve(__dirname, './src'),  // New
   },
   plugins: [
+    new ExtractTextPlugin("styles.css"),
     new HtmlWebpackPlugin({
                               title: 'my-app',
                               template: './app/my-app.ejs', // Load a custom template (ejs by default see the FAQ for details)

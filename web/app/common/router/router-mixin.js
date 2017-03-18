@@ -26,7 +26,7 @@ export default class RouterMixin {
             route.query(),
             args
           ));
-          this.routes[routeEntry].controller[this.routes[routeEntry].callbackFunction](args);
+          this.routes[routeEntry].controller[this.routes[routeEntry].callbackFunction](args, route.query());
         });
       });
     route.start(true);

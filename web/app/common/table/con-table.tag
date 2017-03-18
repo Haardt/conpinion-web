@@ -1,5 +1,5 @@
 <con-table>
-    <yield />
+    <yield from="columns"/>
 
     <table>
       <tr>
@@ -10,13 +10,20 @@
           <virtual data-is={tag} column-value={data[key]}></virtual>
         </td>
         <td>
-          <button row-id="{data.id}" onclick={rowEdit}>E</button>
+          <con-row row-id="{data.id}" >
+            <yield from="buttons"/>
+          </con-row>
         </td>
       </tr>
     </table>
+    <style>
+    </style>
+
 
     <script type="text/es6">
         import './con-column.tag';
+        import './con-row.tag';
+        import './con-table-button.tag';
         import './con-string-column.tag';
         import './con-input-column.tag';
         import { LOAD_TABLE_DATA, SHOW_TABLE_DATA } from './con-table-actions.js';
@@ -25,13 +32,6 @@
 
         this.columns = [];
         this.dataList = {};
-
-        this.editCallback = (callback) => this.editCallback = callback;
-
-        this.rowEdit = (event) => {
-          let id = event.srcElement.attributes['row-id'].nodeValue;
-          this.editCallback(id);
-        }
 
         this.on('mount', () => {
           this.columns = this.createColumns(this.tags['con-column']);
@@ -57,7 +57,7 @@
            });
 
         this.addSubscriber( (state) => {
-          let tableData = state['table'][this.opts.name];
+          let tableData = state['table'][this.opts.ref];
           if (tableData) {
             if (tableData.loading == true) {
             }

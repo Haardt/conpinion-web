@@ -16,4 +16,3 @@ export function showTableData(tableName, data) {
     data: data
   }
 };
-

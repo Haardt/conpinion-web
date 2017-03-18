@@ -5,7 +5,6 @@
         </div>
     </div>
 
-
     <script type='text/es6'>
         import "./../../../public/app/semantic/components/menu.css";
         import './top-menu-item.tag';
