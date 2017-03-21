@@ -1,5 +1,5 @@
 <section-reducer>
-    <script type="text/es6">
+    <script type="es6">
       import { SHOW_SECTION, HIDE_SECTION } from './section-actions.js'
       import { NEW_ROUTE_SET } from '../router/route-actions.js'
 

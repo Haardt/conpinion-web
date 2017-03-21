@@ -5,7 +5,7 @@
 
   </style>
 
-  <script type="text/es6">
+  <script type="es6">
     //import 'jquery';
     import '../redux/redux-reducer.tag';
     import '../router/route-definitions.tag';

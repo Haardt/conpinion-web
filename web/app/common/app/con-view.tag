@@ -7,7 +7,7 @@
   <style>
   </style>
 
-  <script type="text/es6">
+  <script type="es6">
   import { findConTag } from './con-app-utils.js';
 
   this.on('mount', () => {

@@ -3,7 +3,7 @@
         <yield/>
     </a>
 
-    <script type="text/es6">
+    <script type="es6">
         this.mixin('router');
 
 

@@ -1,5 +1,5 @@
 <redux-test-reducer>
-    <script type="text/es6">
+    <script type="es6">
       import { TEST_REDUX} from './redux-actions.js'
 
       this.initState = {

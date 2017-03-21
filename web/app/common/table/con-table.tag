@@ -1,9 +1,10 @@
 <con-table>
     <yield from="columns"/>
 
-    <table>
+    <table class="ui very selectable padded orange table">
       <tr>
         <th each={ columns }> { label } </th>
+        <th></th>
       </tr>
       <tr each={ data in dataList }>
         <td each={ columns }>
@@ -20,7 +21,12 @@
     </style>
 
 
-    <script type="text/es6">
+    <script type="es6">
+        import "./../../../public/app/semantic/components/table.css";
+        import "./../../../public/app/semantic/components/button.css";
+        //import "./../../../public/app/semantic/components/icon.css";
+        import "./../../../public/app/semantic/components/label.css";
+
         import './con-column.tag';
         import './con-row.tag';
         import './con-table-button.tag';

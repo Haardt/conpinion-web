@@ -1,14 +1,14 @@
 <con-string-field>
 
-  <p>
-  <div show={hasValidationError}>
-    <b>{validationError}</b>
-  </div>
-  {label}
-  <input ref="string" name={key} value={fieldValue}/>
-  </p>
+    <p>
+    <div show={hasValidationError}>
+        <b>{validationError}</b>
+    </div>
+    {label}
+    <input ref="string" name={key} value={fieldValue}/>
+    </p>
 
-  <script type="text/es6">
+    <script type="es6">
     import { findConTag } from './../app/con-app-utils.js';
 
     this.hasValidationError = false;
@@ -41,5 +41,6 @@
         let editor = findConTag('con-editor', this.parent);
         editor.addFieldDescription(this);
     });
-  </script>
+
+    </script>
 </con-string-field>

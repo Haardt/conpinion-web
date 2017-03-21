@@ -1,9 +1,8 @@
 <redux-reducer>
 
-  <yield>
-  </yield>
+  <yield />
 
-  <script type='text/es6'>
+  <script type='es6'>
     this.mixin('redux');
 
     this.on('mount', () => {

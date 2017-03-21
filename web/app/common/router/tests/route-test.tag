@@ -8,7 +8,7 @@
         <route-reducer></route-reducer>
     </redux-reducer>
 
-    <script type="text/es6">
+    <script type="es6">
         this.callbackTest1 = () => {
             this.test1 = true;
         };

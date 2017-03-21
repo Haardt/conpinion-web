@@ -8,7 +8,7 @@
 
     </style>
 
-    <script type="text/es6">
+    <script type="es6">
        this.visible = false;
 
        this.show = () => {

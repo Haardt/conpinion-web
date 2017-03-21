@@ -1,5 +1,5 @@
 <route-reducer>
-    <script type="text/es6">
+    <script type="es6">
       import { NEW_ROUTE, NEW_ROUTE_SET } from './route-actions.js'
 
       this.initState = {

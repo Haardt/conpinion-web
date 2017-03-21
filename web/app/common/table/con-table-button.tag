@@ -2,7 +2,7 @@
 
   <button onclick={buttonClicked}>{label}</button>
 
-  <script type="text/es6">
+  <script type="es6">
     import { findFunction, findConTag } from './../app/con-app-utils.js';
 
     this.row = {};

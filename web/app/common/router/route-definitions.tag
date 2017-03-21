@@ -1,6 +1,6 @@
 <route-definitions>
     <yield></yield>
-    <script type="text/es6">
+    <script type="es6">
         import './route-entry.tag';
 
         this.mixin('router');

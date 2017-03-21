@@ -13,6 +13,7 @@
   </con-view>
 
   <route-definitions>
+    <route-entry route="/users/new" function='showCreateUser'/>
     <route-entry route="/users/*" function='showUser'/>
     <route-entry route="/users" function='showUsers' />
   </route-definitions>
@@ -20,7 +21,7 @@
   <style>
   </style>
 
-  <script type="text/es6">
+  <script type="es6">
     import './user-list.tag';
     import './user-editor.tag';
     import { showView } from '.././common/app/view-actions.js'
@@ -43,6 +44,11 @@
       this.dispatch(showView('user'));
       this.dispatch(showSection(['user-editor']));
       this.dispatch(loadEditorData('user', '/users/' + args[0]));
+    }
+
+    this.showCreateUser = (args) => {
+      this.dispatch(showView('user'));
+      this.dispatch(showSection(['user-editor']));
     }
   </script>
 </user>

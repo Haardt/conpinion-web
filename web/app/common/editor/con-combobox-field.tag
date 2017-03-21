@@ -9,7 +9,7 @@
   </p>
 
 
-  <script type="text/es6">
+  <script type="es6">
     import { findConTag } from './../app/con-app-utils.js';
 
     this.hasValidationError = false;

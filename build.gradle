@@ -20,7 +20,7 @@ plugins {
 
 }
 
-task wrapper(type: Wrapper) { gradleVersion = '2.14.1' }
+task wrapper(type: Wrapper) { gradleVersion = '3.4.1' }
 apply plugin: 'com.github.ben-manes.versions'
 dependencyUpdates { revision = 'release' }
 

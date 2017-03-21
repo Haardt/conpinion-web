@@ -4,7 +4,7 @@
     <style>
     </style>
 
-    <script type="text/es6">
+    <script type="es6">
 
     this.on('mount', () => {
       this.onlyOnMembers = this.opts.onlyOnMembers === 'false' ? false : true;
