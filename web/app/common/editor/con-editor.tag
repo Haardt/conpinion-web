@@ -34,60 +34,84 @@
         }
 
         this.on('mount', () => {
-            this.addReducer('editor', this.createReducer({},
-             {
-                 [LOAD_EDITOR_DATA](state = initialState, action,
-                                    slicedState) {
-                     return {
-                         [action.editorName]: {
-                             loading: true
-                         }
-                     }
-                 },
-                 [SHOW_EDITOR_DATA](state = initialState, action,
-                                    slicedState) {
-                     return {
-                         [action.editorName]: {
-                             loading: false,
-                             data: action.data
-                         }
-                     }
-                 },
-                 [SAVE_EDITOR_DATA](state = initialState, action,
-                                    slicedState) {
-                     return {
-                         [action.editorName]: {
-                             error: false,
-                             saving: true
-                         }
-                     }
-                 },
-                 [SAVE_EDITOR_ERROR](state = initialState, action,
-                                     slicedState) {
-                     return {
-                         [action.editorName]: {
-                             error: true,
-                             saving: false,
-                             data: action.data
-                         }
-                     }
-                 },
-             }));
+            this.addReducer('editor', this.createReducer(
+                {},
+                {
+                    [LOAD_EDITOR_DATA](state = initialState, action,
+                                       slicedState) {
+
+                        return {
+                            ...state,
+                            loadingId: action.id,
+                            loadingEditor: action.editorName,
+                            [action.editorName]: {
+                                ...state[action.editorName],
+                                [action.id]: {
+                                    loading: true,
+                                    cachedData: state[action.editorName]
+                                                && state[action.editorName]
+                                                && state[action.editorName][action.id]
+                                                && state[action.editorName][action.id].data
+                                }
+                            }
+                        }
+                    },
+                    [SHOW_EDITOR_DATA](state = initialState, action,
+                                       slicedState) {
+                        return {
+                            ...state,
+                            [action.editorName]: {
+                                ...state[action.editorName],
+                                [action.id]: {
+                                    loading: false,
+                                    data: action.data
+                                }
+
+                            }
+                        };
+                    }
+                    ,
+                    [SAVE_EDITOR_DATA](state = initialState, action,
+                                       slicedState)
+                    {
+                        return {
+                            [action.editorName]: {
+                                error: false,
+                                saving: true
+                            }
+                        }
+                    }
+                    ,
+                    [SAVE_EDITOR_ERROR](state = initialState, action,
+                                        slicedState)
+                    {
+                        return {
+                            [action.editorName]: {
+                                error: true,
+                                saving: false,
+                                data: action.data
+                            }
+                        }
+                    }
+                    ,
+                }));
         });
 
         this.addSubscriber((state) => {
-            let editorData = state['editor'][this.opts.name];
-            if (editorData) {
-                if (editorData.data && editorData.data.id) {
-                    this.editorDataId = editorData.data.id;
+            let editor = state.editor;
+            if (this.opts.name === editor.loadingEditor) {
+                let editorData = editor[this.opts.name][editor.loadingId];
+                if (editorData) {
+                    if (editorData.data && editorData.data.id) {
+                        this.editorDataId = editorData.data.id;
+                    }
+                    this.fields.forEach(field => {
+                        field.updateState(editorData);
+                    });
+                    this.update();
                 }
-                this.fields.forEach(field => {
-                    field.updateState(editorData);
-                });
-                this.update();
             }
         });
-
         this.addFieldDescription = field => {
             this.fields.push(field);
         }

@@ -4,12 +4,22 @@ export const SAVE_EDITOR_ERROR    = 'SAVE_EDITOR_ERROR';
 export const SAVE_EDITOR_SUCCESS  = 'SAVE_EDITOR_SUCCESS';
 export const SHOW_EDITOR_DATA     = 'SHOW_EDITOR_DATA';
 
-export function loadEditorData(editorName, resource) {
+export function loadEditorData(editorName, id, resource) {
   return {
     type: LOAD_EDITOR_DATA,
     editorName: editorName,
+    id: id,
     resource: resource
   }
+};
+
+export function showEditorData(editorName, id, data) {
+    return {
+        type: SHOW_EDITOR_DATA,
+        editorName: editorName,
+        data: data,
+        id: id
+    }
 };
 
 export function saveEditorData(editorName, resource, data) {
@@ -37,12 +47,3 @@ export function saveEditorSuccess(editorName, resource, data) {
     data: data
   }
 };
-
-export function showEditorData(editorName, data) {
-  return {
-    type: SHOW_EDITOR_DATA,
-    editorName: editorName,
-    data: data
-  }
-};
-

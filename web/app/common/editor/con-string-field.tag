@@ -9,38 +9,43 @@
     </p>
 
     <script type="es6">
-    import { findConTag } from './../app/con-app-utils.js';
+        import {findConTag} from './../app/con-app-utils.js';
 
-    this.hasValidationError = false;
-    this.validationError = '';
-    this.key = this.opts.key;
-    this.label = this.opts.label;
-    this.fieldValue = this.opts.fieldValue;
+        this.hasValidationError = false;
+        this.validationError = '';
+        this.key = this.opts.key;
+        this.label = this.opts.label;
+        this.fieldValue = this.opts.fieldValue;
 
-    this.updateState = (state) => {
-      this.hasValidationError = false;
-      if (state.loading === true) {
-        this.fieldValue = 'Loading';
-      }
-      else if (state.loading === false) {
-        this.fieldValue = state.data[this.opts.key];
+        this.updateState = (state) => {
+            this.hasValidationError = false;
+            if (state.loading === true) {
+                if (state.cachedData) {
+                    this.fieldValue = state.cachedData[this.opts.key] + ' ...Loading';
+                } else {
+                    this.fieldValue = 'Loading';
+                }
+
+            }
+            else if (state.loading === false) {
+                this.fieldValue = state.data[this.opts.key];
+            }
+            else if (state.error) {
+                this.validationError = state.data.validation[this.opts.key];
+                this.hasValidationError = !!state.data.validation[this.opts.key];
+            }
         }
-      else if (state.error) {
-          this.validationError = state.data.validation[this.opts.key];
-          this.hasValidationError = !!state.data.validation[this.opts.key];
-        }
-      }
-    this.save = data => data[this.key] = this.refs.string.value;
+        this.save = data => data[this.key] = this.refs.string.value;
 
-    this.on('update', () => {
-      this.key = this.opts.key;
-      this.label = this.opts.label;
-    });
+        this.on('update', () => {
+            this.key = this.opts.key;
+            this.label = this.opts.label;
+        });
 
-    this.on('mount', () => {
-        let editor = findConTag('con-editor', this.parent);
-        editor.addFieldDescription(this);
-    });
+        this.on('mount', () => {
+            let editor = findConTag('con-editor', this.parent);
+            editor.addFieldDescription(this);
+        });
 
     </script>
 </con-string-field>
