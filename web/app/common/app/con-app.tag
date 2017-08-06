@@ -16,6 +16,7 @@
     import './con-view.tag';
     import { tableMiddleware } from '../table/con-table-rest-middleware.js';
     import { editorMiddleware } from '../editor/con-editor-rest-middleware.js';
+    import ConEditorReducer from '../editor/con-editor-reducer.js';
     import ConAppReducer from './con-app-reducer.js';
 
     this.mixin('redux');
@@ -24,10 +25,13 @@
 
     this.on('mount', () => {
       let conAppReducer = new ConAppReducer();
+      let conEditorReducer = new ConEditorReducer();
       this.addMiddleware(tableMiddleware);
       this.addMiddleware(editorMiddleware);
       this.addReducer(conAppReducer.name(), this.createReducer(conAppReducer.initState(),
         conAppReducer.reducer(), (state) => state));
+      this.addReducer(conEditorReducer.name(), this.createReducer(conEditorReducer.initState(),
+        conEditorReducer.reducer(), (state) => state));
     });
 
     this.addSubscriber((state) => {

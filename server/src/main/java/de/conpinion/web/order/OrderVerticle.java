@@ -110,7 +110,6 @@ public class OrderVerticle extends AbstractVerticle {
 		return state;
 	};
 
-	//Idempotent
 	BiConsumer<Properties, Properties> deliverySubscriber = (oldState, currentState) -> {
 		boolean oldDeliveryStatus = firstNonNull((Boolean) oldState.get("delivery.start"), false);
 		boolean newDeliveryStatus = firstNonNull((Boolean) currentState.get("delivery.start"), false);

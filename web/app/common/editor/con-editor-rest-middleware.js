@@ -25,12 +25,12 @@ export function editorMiddleware(store) {
                 putJson(action.resource + action.data.id, action.data).then(json => {
                     console.log('Put response:', json);
                     //Why do i have to parse this - i use fetch->json
-                    next(saveEditorSuccess(action.editorName, json));
+                    next(saveEditorSuccess(action.editorName, action.editorId, json));
                 })
                     .catch(error => {
                         error.response.json().then(json => {
                             console.log('json:', json);
-                            next(saveEditorError(action.editorName, json));
+                            next(saveEditorError(action.editorName, action.editorId, json));
                         })
                     });
 

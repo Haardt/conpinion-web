@@ -10,10 +10,9 @@
     this.label = this.opts.label;
     this.fieldValue = this.opts.fieldValue;
 
-    this.updateValue = (value) => this.fieldValue = value;
-    this.buttonClicked = () => this.editor._updateData((data) => {
+    this.buttonClicked = () => this.editor._updateData((editorId, data) => {
       let func = this.opts.function;
-      findFunction(func, this.parent)[func](data);
+      findFunction(func, this.parent)[func](editorId, data);
     });
 
     this.on('update', () => {

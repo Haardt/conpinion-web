@@ -6,5 +6,5 @@ import java.util.function.Function;
 
 @FunctionalInterface
 public interface Middleware<STATE, ACTION> {
-	void process(ACTION action, STATE state, Process<ACTION> nextAction);
+	void process(ACTION action, STATE state, Process<ACTION> processNextAction);
 }

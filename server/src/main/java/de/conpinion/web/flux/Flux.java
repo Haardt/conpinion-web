@@ -1,22 +1,17 @@
 package de.conpinion.web.flux;
 
-import com.google.common.collect.Multimap;
+import com.mchange.v2.collection.MapEntry;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Properties;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import static com.google.common.collect.Maps.immutableEntry;
+import lombok.extern.log4j.Log4j2;
+
 import static java.util.stream.Collectors.*;
-
 
 public class Flux<STATE, ACTION extends Action> {
 
@@ -46,7 +41,7 @@ public class Flux<STATE, ACTION extends Action> {
 
 	public void addReducers(Map.Entry<String, BiFunction<STATE, ACTION, STATE>>... reducers) {
 		this.reducers = Arrays.asList(reducers)
-			.stream().collect(groupingBy(Map.Entry::getKey,	mapping(Map.Entry::getValue, toList())));
+			.stream().collect(groupingBy(Map.Entry::getKey, mapping(Map.Entry::getValue, toList())));
 	}
 
 	public void addSubscribers(BiConsumer<STATE, STATE>... subscriber) {
@@ -59,7 +54,7 @@ public class Flux<STATE, ACTION extends Action> {
 
 	private void processAction(ACTION action) {
 		STATE oldState = cloneFunction.apply(state);
-		reducers.get(action.type()).stream().forEach( reducer -> state = reducer.apply(state, action));
+		reducers.get(action.type()).stream().forEach(reducer -> state = reducer.apply(state, action));
 		if (subscriberEnabled) {
 			subscriptions.forEach(subscriber -> subscriber.accept(oldState, state));
 		}
@@ -76,4 +71,64 @@ public class Flux<STATE, ACTION extends Action> {
 	public boolean subscriberEnabled() {
 		return subscriberEnabled;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+	public static void main(String[] args) {
+		final Flux flux = new Flux<Integer, Action>(0, x -> x);
+		flux.example();
+	}
+
+	public void example() {
+		addMiddleware(logMiddleware);
+
+		addReducers(
+			new MapEntry("INC", incReducer),
+			new MapEntry("DEC", decReducer)
+			);
+
+		addSubscribers((oldState, newState) -> {
+			System.out.println("OldState: " + oldState + "/ NewState:" + newState);
+		});
+
+		dispatch((ACTION) new IncAction());
+		dispatch((ACTION) new IncAction());
+		dispatch((ACTION) new DecAction());
+	}
+
+	class IncAction implements Action {
+		@Override
+		public String type() {
+			return "INC";
+		}
+	}
+
+	class DecAction implements Action {
+		@Override
+		public String type() {
+			return "DEC";
+		}
+	}
+
+	BiFunction<Integer, IncAction, Integer> incReducer = (oldState, action) -> oldState + 1;
+
+	BiFunction<Integer, DecAction, Integer> decReducer = (oldState, action) -> oldState - 1;
+
+	Middleware logMiddleware = (currentAction, state, processNextAction) -> {
+		System.out.println("Action: " + currentAction);
+		processNextAction.process(currentAction);
+	};
+
+
+
+
 }

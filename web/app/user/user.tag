@@ -7,6 +7,19 @@
                 </section-content>
                 <section-content name="user-editor">
                     <user-editor name="user"></user-editor>
+                    <user-editor name="user2"></user-editor>
+                    <user-editor name="user3"></user-editor>
+                    <user-editor name="user4"></user-editor>
+                    <user-editor name="user5"></user-editor>
+                    <user-editor name="user6"></user-editor>
+                    <user-editor name="user7"></user-editor>
+                    <user-editor name="user8"></user-editor>
+                    <user-editor name="user9"></user-editor>
+                    <user-editor name="usera"></user-editor>
+                    <user-editor name="userb"></user-editor>
+                    <user-editor name="userc"></user-editor>
+                    <user-editor name="userd"></user-editor>
+                    <user-editor name="users"></user-editor>
                 </section-content>
             </section-group>
         </section-manager>
@@ -44,7 +57,7 @@
             let id = args[0];
             this.dispatch(showView('user'));
             this.dispatch(showSection(['user-editor']));
-            this.dispatch(loadEditorData('user', id, '/users/' + id));
+            this.dispatch(loadEditorData('user5', id, '/users/' + id));
         }
 
         this.showCreateUser = (args) => {

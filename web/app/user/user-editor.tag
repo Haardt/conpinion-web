@@ -1,5 +1,5 @@
 <user-editor>
-    <con-editor name="user">
+    <con-editor name={this.opts.name}>
         <con-string-field key="firstName" label="firstName"/>
         <con-combobox-field key="lastName" label="lastName"/>
         <con-editor-button label="save" function='save'/>
@@ -14,11 +14,12 @@
 
         this.mixin('redux');
 
-        this.save = (data) => {
-            this.dispatch(saveEditorData('user', '/users/', data));
+        this.save = (editorId, data) => {
+            console.log('Save:', data);
+            this.dispatch(saveEditorData(this.opts.name, editorId, '/users/', data));
         };
 
-        this.cancel = (data) => {
+        this.cancel = (editorId, data) => {
             this.dispatch(newRoute('/users/'));
         };
 
